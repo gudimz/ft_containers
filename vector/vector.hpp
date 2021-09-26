@@ -38,11 +38,12 @@ namespace ft
 		vector() : _alloc(allocator_type()), _arr(0), _size(0), _capacity(0) {}
 		explicit vector(const allocator_type& alloc) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
 		explicit vector( size_type n, const value_type& value = value_type(),
-						const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(n), _capacity(n) {
+						const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {
 			reserve(n);
 			for (size_t i = 0; i < n; ++i) {
 				_alloc.construct(_arr + i, value);
 			}
+			this->_size = n;
 		}
 		// ==== Capacity ====
 
@@ -54,8 +55,8 @@ namespace ft
 				_alloc.destroy(_arr + i);
 			}
 			_alloc.deallocate(_arr, _capacity);
-			_arr = newArr;
-			_capacity = n;
+			this->_arr = newArr;
+			this->_capacity = n;
 		}
 
 	private:
