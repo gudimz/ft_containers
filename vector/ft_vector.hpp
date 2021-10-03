@@ -1,13 +1,14 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef FT_VECTOR_HPP
+# define FT_VECTOR_HPP
 
+# include "../utils/ft_type_traits.hpp"
 # include <memory> // std::allocator<T>
 //# include "iterator.hpp"
 
 
 namespace ft
 {
-	template < class T, class Allocator = std::allocator<T> >
+	template <class T, class Allocator = std::allocator<T> >
 	class vector {
 	public:
 		/****************************/
@@ -37,6 +38,7 @@ namespace ft
 		//	Constuctors
 		vector() : _alloc(allocator_type()), _arr(0), _size(0), _capacity(0) {}
 		explicit vector(const allocator_type& alloc) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
+
 		explicit vector( size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {
 			reserve(n);
@@ -44,6 +46,16 @@ namespace ft
 				_alloc.construct(_arr + i, value);
 			}
 			this->_size = n;
+		}
+
+		template <class InputIt, typename ft::enable_if <!ft::is_integral InputIt>:: value, InputIt::type last>
+		vector(InputIt first, InputIt last,
+				const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {
+			reserve(ft::distance(first, last));
+			for (; first != last; ++first) {
+				_alloc.construct(_arr + _size, *first);
+				++_size;
+			}
 		}
 		// ==== Capacity ====
 
