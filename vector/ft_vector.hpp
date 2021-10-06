@@ -4,6 +4,7 @@
 # include "../utils/ft_type_traits.hpp"
 # include "../utils/ft_iterator.hpp"
 # include <memory> // std::allocator<T>
+# include <stdexcept> // std::out_of_range
 //# include "iterator.hpp"
 
 
@@ -28,10 +29,10 @@ namespace ft
 		/*****************/
 		/*	my_ierators	 */
 		/*****************/
-		// typedef implementation-defined                   iterator;
-		// typedef implementation-defined                   const_iterator;
-		// typedef std::reverse_iterator<iterator>          reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
+		typedef implementation                  iterator;
+		typedef implementation                  const_iterator;
+		typedef std::reverse_iterator<iterator>          reverse_iterator;
+		typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
 
 		/********************************/
 		/*		Member functions		*/
@@ -83,7 +84,7 @@ namespace ft
 
 		// Others
 		vector& operator=(const vector& other) {
-			if (this = &other) {
+			if (this == &other) {
 				return *this;
 			}
 			this->~vector();
@@ -103,8 +104,8 @@ namespace ft
 		}
 
 		template <class inputIt>
-		void assign(InputIt first, InputIt last,
-					typename ft::enable_if <!ft::is_integral<InputIt>::value, InputIt>::type* = 0) {
+		void assign(inputIt first, inputIt last,
+					typename ft::enable_if <!ft::is_integral<inputIt>::value, inputIt>::type* = 0) {
 			clear();
 			for (; first != last; ++first) {
 				push_back(*first);
@@ -115,7 +116,104 @@ namespace ft
 			return this->_alloc;
 		}
 
+		//Element access
+		reference at(size_type pos) {
+			if (pos >= _size) {
+				throw std::out_of_range("Out of range")
+			}
+			return *(_arr + pos);
+		}
+
+		const_reference at(size_type pos) const {
+			if (pos >= _size) {
+				throw std::out_of_range("Out of range")
+			}
+			return *(_arr + pos);
+		}
+
+		reference operator[](size_type pos) {
+			return *(_arr + pos);
+		}
+
+		const_reference operator[](size_type pos) const {
+			return *(_arr + pos);
+		}
+
+		reference front(void) {
+			return *_arr;
+		}
+
+		const_reference front(void) const {
+			return *_arr;
+		}
+
+		reference back(void) {
+			return *(_arr + (_size - 1));
+		}
+
+		const_reference back(void) const {
+			return *(_arr + (_size - 1));
+		}
+
+		T* data(void) {
+			return _arr;
+		}
+
+		const T* data(void) const {
+			return _arr;
+		}
+
+		// ==== Iterators ====
+
+		iterator begin(void) {
+			return iterator(_arr);
+		}
+
+		const_iterator begin(void) const {
+			return const_iterator(_arr);
+		}
+
+		iterator end(void) {
+			return iterator(_arr + _size);
+		}
+
+		const_iterator end(void) const {
+			return const_iterator(_arr + _size);
+		}
+
+		reverse_iterator rbegin(void) {
+			if (!_size) {
+				return reverse_iterator(_arr);
+			}
+			return reverse_iterator(_arr + (_size - 1));
+		}
+
+		const_reverse_iterator rbegin(void) const {
+			if (!_size) {
+				return const_reverse_iterator(_arr);
+			}
+			return const_reverse_iterator(_arr + (_size - 1));
+		}
+
+		reverse_iterator rend(void) {
+			if (!_size) {
+				return reverse_iterator(_arr);
+			}
+			return reverse_iterator(_arr - 1);
+		}
+
+		const_reverse_iterator rend(void) const {
+			if (!_size) {
+				return const_reverse_iterator(_arr);
+			}
+			return const_reverse_iterator(_arr - 1);
+		}
+
 		// ==== Capacity ====
+
+		size_type size(void) const {
+			return this->_size;
+		}
 
 		void reserve(size_type n) {
 			if (n <= _capacity) return;
@@ -128,12 +226,25 @@ namespace ft
 			this->_arr = newArr;
 			this->_capacity = n;
 		}
+
+		size_type capacity(void) const {
+			return this->_capacity;
+		}
+
 		// ==== Modifiers ====
+
+		void push_back(const T& value) {
+			if (_capacity == _size) {
+				reserve(2 * _size);
+			}
+			_alloc.construct(_arr + _size, value);
+			++_size;
+		}
 
 		void clear(void) {
 			if (_arr) {
 				for (size_t i = 0; i < _size; ++i) {
-					_alloc.destroy(arr + i);
+					_alloc.destroy(_arr + i);
 				}
 			}
 			this->_size = 0;
