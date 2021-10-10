@@ -5,21 +5,21 @@
 
 namespace ft
 {
-	template <bool B, class T = void>
+	template<bool B, class T = void>
 	struct enable_if {};
 
-	template <class T>
-	struct enable_if <true, T> {
+	template<class T>
+	struct enable_if<true, T> {
 		typedef T type;
 	};
 
-	template <class T, T v>
+	template<class T, T v>
 	struct integral_constant {
 	/****************************/
 	/*		Member types		*/
 	/****************************/
 	typedef T value_type;
-	typedef integral_constant <T, v> type;
+	typedef integral_constant<T, v> type;
 	/****************************/
 	/*		Member constants	*/
 	/****************************/
@@ -32,24 +32,24 @@ namespace ft
 	}
 	};
 
-	typedef integral_constant <bool, true> true_type;
-	typedef integral_constant <bool, true> false_type;
+	typedef integral_constant< bool, true > true_type;
+	typedef integral_constant< bool, true > false_type;
 
-	template <class T> struct is_integral : ft::false_type {};
-	template <> struct is_integral<bool> : ft::true_type {};
-	template <> struct is_integral<char> : ft::true_type {};
-	template <> struct is_integral<char16_t> : ft::true_type {};
-	template <> struct is_integral<char32_t> : ft::true_type {};
-	template <> struct is_integral<wchar_t> : ft::true_type {};
-	template <> struct is_integral<short> : ft::true_type {};
-	template <> struct is_integral<int> : ft::true_type {};
-	template <> struct is_integral<long> : ft::true_type {};
-	template <> struct is_integral<long long> : ft::true_type {};
-	template <> struct is_integral<unsigned char> : ft::true_type {};
-	template <> struct is_integral<unsigned short> : ft::true_type {};
-	template <> struct is_integral<unsigned int> : ft::true_type {};
-	template <> struct is_integral<unsigned long> : ft::true_type {};
-	template <> struct is_integral<unsigned long long> : ft::true_type {};
+	template<class T> struct is_integral : ft::false_type {};
+	template<> struct is_integral<bool> : ft::true_type {};
+	template<> struct is_integral<char> : ft::true_type {};
+	template<> struct is_integral<char16_t> : ft::true_type {};
+	template<> struct is_integral<char32_t> : ft::true_type {};
+	template<> struct is_integral<wchar_t> : ft::true_type {};
+	template<> struct is_integral<short> : ft::true_type {};
+	template<> struct is_integral<int> : ft::true_type {};
+	template<> struct is_integral<long> : ft::true_type {};
+	template<> struct is_integral<long long> : ft::true_type {};
+	template<> struct is_integral<unsigned char> : ft::true_type {};
+	template<> struct is_integral<unsigned short> : ft::true_type {};
+	template<> struct is_integral<unsigned int> : ft::true_type {};
+	template<> struct is_integral<unsigned long> : ft::true_type {};
+	template<> struct is_integral<unsigned long long> : ft::true_type {};
 }
 
 

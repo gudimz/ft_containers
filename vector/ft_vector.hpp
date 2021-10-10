@@ -2,38 +2,40 @@
 # define FT_VECTOR_HPP
 
 # include "../utils/ft_type_traits.hpp"
-# include "../utils/ft_iterator.hpp"
+# include "../utils/ft_iterator/ft_random_access_iterator.hpp"
+# include "../utils/ft_iterator/ft_reverse_iterator.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
-//# include "iterator.hpp"
 
 
 namespace ft
 {
-	template <class T, class Allocator = std::allocator<T> >
+	template<class T, class Allocator = std::allocator<T> >
 	class vector {
 	public:
 		/****************************/
 		/*		Member types		*/
 		/****************************/
-		typedef T											value_type;
-		typedef Allocator									allocator_type;
+		typedef T																		value_type;
+		typedef Allocator																allocator_type;
 
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-		typedef typename allocator_type::size_type			size_type;
-		typedef typename allocator_type::difference_type	difference_type;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
+		typedef typename allocator_type::reference										reference;
+		typedef typename allocator_type::const_reference								const_reference;
+		typedef typename allocator_type::size_type										size_type;
+		typedef typename allocator_type::difference_type								difference_type;
+		typedef typename allocator_type::pointer										pointer;
+		typedef typename allocator_type::const_pointer									const_pointer;
 
-		/*****************/
-		/*	my_ierators	 */
-		/*****************/
-		typedef implementation                  iterator;
-		typedef implementation                  const_iterator;
-		typedef std::reverse_iterator<iterator>          reverse_iterator;
-		typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
-
+		typedef ft::random_access_iterator<value_type, pointer, reference>				iterator;
+		typedef ft::random_access_iterator<value_type, const_pointer, const_reference>	const_iterator;
+		typedef ft::reverse_iterator<iterator>											reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>									const_reverse_iterator;
+	private:
+		pointer _arr;
+		size_type _size;
+		size_type _capacity;
+		allocator_type _alloc;
+	public:
 		/********************************/
 		/*		Member functions		*/
 		/********************************/
@@ -51,10 +53,10 @@ namespace ft
 			this->_size = n;
 		}
 
-		template <class InputIt>
+		template<class InputIt>
 		vector(InputIt first, InputIt last,
 				const allocator_type& alloc = allocator_type(),
-				typename ft::enable_if <!ft::is_integral<InputIt>::value, InputIt>::type* = 0) : _alloc(alloc),
+				typename ft::enable_if< !ft::is_integral< InputIt >::value, InputIt >::type* = 0) : _alloc(alloc),
 																								_arr(0),
 																								_size(0),
 																								_capacity(0) {
@@ -103,9 +105,9 @@ namespace ft
 			}
 		}
 
-		template <class inputIt>
+		template<class inputIt>
 		void assign(inputIt first, inputIt last,
-					typename ft::enable_if <!ft::is_integral<inputIt>::value, inputIt>::type* = 0) {
+					typename ft::enable_if< !ft::is_integral< inputIt >::value, inputIt >::type* = 0) {
 			clear();
 			for (; first != last; ++first) {
 				push_back(*first);
@@ -249,12 +251,6 @@ namespace ft
 			}
 			this->_size = 0;
 		}
-
-	private:
-		pointer _arr;
-		size_type _size;
-		size_type _capacity;
-		allocator_type _alloc;
 	};
 }
 
