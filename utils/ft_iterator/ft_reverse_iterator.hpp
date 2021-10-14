@@ -8,7 +8,7 @@ namespace ft
 	template<class Iter>
 	class reverse_iterator {
 	public:
-		typedef Iter	iterator_type;
+		typedef Iter													iterator_type;
 		typedef typename ft::iterator_trait<Iter>::difference_type		difference_type;
 		typedef typename ft::iterator_trait<Iter>::value_type			value_type;
 		typedef typename ft::iterator_trait<Iter>::pointer				pointer;
