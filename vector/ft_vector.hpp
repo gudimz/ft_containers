@@ -84,7 +84,7 @@ namespace ft
 			}
 		}
 
-		// Others
+		// Assigns
 		vector& operator=(const vector& other) {
 			if (this == &other) {
 				return *this;
@@ -113,12 +113,12 @@ namespace ft
 				push_back(*first);
 			}
 		}
-
+		// Other
 		allocator_type get_allocator(void) const {
 			return this->_alloc;
 		}
 
-		//Element access
+		// === Element access ===
 		reference at(size_type pos) {
 			if (pos >= _size) {
 				throw std::out_of_range("Out of range")
