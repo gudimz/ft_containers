@@ -66,6 +66,12 @@ namespace ft
 			_ptr++;
 			return *this;
 		}
+		// Post increment
+		random_access_iterator operator++(int) {
+			random_access_iterator copy = *this;
+			++_ptr;
+			return copy;
+		}
 
 	};
 
