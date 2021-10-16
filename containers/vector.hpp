@@ -1,9 +1,9 @@
-#ifndef FT_VECTOR_HPP
-# define FT_VECTOR_HPP
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
-# include "../utils/ft_type_traits.hpp"
-# include "../utils/ft_iterator/ft_random_access_iterator.hpp"
-# include "../utils/ft_iterator/ft_reverse_iterator.hpp"
+# include "../utils/type_traits.hpp"
+# include "../utils/iterator/random_access_iterator.hpp"
+# include "../utils/iterator/reverse_iterator.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
 
@@ -44,7 +44,7 @@ namespace ft
 		vector() : _alloc(allocator_type()), _arr(0), _size(0), _capacity(0) {}
 		explicit vector(const allocator_type& alloc) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
 
-		explicit vector( size_type n, const value_type& value = value_type(),
+		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {
 			reserve(n);
 			for (size_t i = 0; i < n; ++i) {

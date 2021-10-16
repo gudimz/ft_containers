@@ -1,5 +1,5 @@
-#ifndef FT_RANDOM_ACCESS_ITERATOR
-# define FT_RANDOM_ACCESS_ITERATOR
+#ifndef RANDOM_ACCESS_ITERATOR
+# define RANDOM_ACCESS_ITERATOR
 
 # include <cstddef> // ptrdiff_t
 # include <iterator> //std::random_access_iterator_tag

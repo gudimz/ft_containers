@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include "ft_vector.hpp"
+#include "vector.hpp"
 
 int main() {
 	ft::vector <int> v(10, 42);

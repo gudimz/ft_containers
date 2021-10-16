@@ -1,5 +1,5 @@
-#ifndef FT_TYPE_TRAITS_HPP
-# define FT_TYPE_TRAITS_HPP
+#ifndef TYPE_TRAITS_HPP
+# define TYPE_TRAITS_HPP
 
 # include <limits>
 
