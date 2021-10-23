@@ -98,7 +98,7 @@ namespace ft
 			return *this;
 		}
 
-		void assign(size_type count, const T& value) {
+		void assign(size_type count, const value_type& value) {
 			clear();
 			for (size_t i = 0; i < count; ++i) {
 				push_back(value);
@@ -107,7 +107,7 @@ namespace ft
 
 		template<class inputIt>
 		void assign(inputIt first, inputIt last,
-					typename ft::enable_if< !ft::is_integral< inputIt >::value, inputIt >::type* = 0) {
+					typename ft::enable_if<!ft::is_integral<inputIt>::value, inputIt>::type* = 0) {
 			clear();
 			for (; first != last; ++first) {
 				push_back(*first);
@@ -157,11 +157,11 @@ namespace ft
 			return *(_arr + (_size - 1));
 		}
 
-		T* data(void) {
+		pointer data(void) {
 			return _arr;
 		}
 
-		const T* data(void) const {
+		const pointer data(void) const {
 			return _arr;
 		}
 
@@ -213,8 +213,16 @@ namespace ft
 
 		// ==== Capacity ====
 
+		bool empty() const {
+			return size() == 0;
+		}
+
 		size_type size(void) const {
 			return this->_size;
+		}
+
+		size_type max_size() const {
+			return _alloc.max_size();
 		}
 
 		void reserve(size_type n) {
@@ -235,14 +243,6 @@ namespace ft
 
 		// ==== Modifiers ====
 
-		void push_back(const T& value) {
-			if (_capacity == _size) {
-				reserve(2 * _size);
-			}
-			_alloc.construct(_arr + _size, value);
-			++_size;
-		}
-
 		void clear(void) {
 			if (_arr) {
 				for (size_t i = 0; i < _size; ++i) {
@@ -250,6 +250,81 @@ namespace ft
 				}
 			}
 			this->_size = 0;
+		}
+
+		iterator insert(iterator pos, const value_type& value) {
+			difference_type posInsert = std::distance(this->begin(), pos);
+			this->insert(pos, 1, value);
+			return iterator(_arr + posInsert);
+		}
+
+		void insert(iterator pos, size_type count, const value_type& value) {
+			vector tmp(pos, this->end());
+			iterator tmpIt(tmp.begin());
+
+			while (this->end() != pos) {
+				this->pop_back();
+			}
+			for (size_t i = count; i > 0; --i) {
+				this->push_back(value);
+			}
+			while (tmpIt != tmp.end()) {
+				this->push_back(*tmpIt);
+				++tmpIt;
+			}
+		}
+
+		template<class InputIt>
+		void insert(iterator pos, InputIt first, InputIt last,
+					typename ft::enable_if< !ft::is_integral< InputIt >::value, InputIt >::type* = 0) {
+			vector tmp(pos, this->end());
+			iterator tmpIt(tmp.begin());
+
+			while (this->end() != pos) {
+				this->pop_back();
+			}
+			while (first != last) {
+				this->push_back(*first);
+				++first;
+			}
+			while (tmpIt != tmp.end()) {
+				this->push_back(*tmpIt);
+				++tmpIt;
+			}
+		}
+
+		iterator erase(iteartor pos) {
+			vector tmp(pos + 1, this->end());
+			iterator tmpIt(tmp.begin());
+
+			while (this->end() != pos) {
+				this->pop_back();
+			}
+			this->pop_back();
+			while (tmpIt != tmp.end()) {
+				this->push_back(*tmpIt);
+				++tmpIt;
+			}
+			return pos;
+
+		}
+
+		iterator erase(iterator first, iterator last) {
+			iterator ret(first);
+
+			while (first != last) {
+				this->erase(first);
+				++first;
+			}
+			return ret;
+		}
+
+		void push_back(const T& value) {
+			if (_capacity == _size) {
+				reserve(2 * _size);
+			}
+			_alloc.construct(_arr + _size, value);
+			++_size;
 		}
 	};
 }
