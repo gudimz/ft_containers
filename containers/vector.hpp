@@ -4,6 +4,7 @@
 # include "../utils/type_traits.hpp"
 # include "../utils/iterator/random_access_iterator.hpp"
 # include "../utils/iterator/reverse_iterator.hpp"
+# include "../utils/lexicographical_compare.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
 
@@ -260,7 +261,7 @@ namespace ft
 
 		void insert(iterator pos, size_type count, const value_type& value) {
 			vector tmp(pos, this->end());
-			iterator tmpIt(tmp.begin());
+			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
 				this->pop_back();
@@ -268,9 +269,9 @@ namespace ft
 			for (size_t i = count; i > 0; --i) {
 				this->push_back(value);
 			}
-			while (tmpIt != tmp.end()) {
-				this->push_back(*tmpIt);
-				++tmpIt;
+			while (tmp_it != tmp.end()) {
+				this->push_back(*tmp_it);
+				++tmp_it;
 			}
 		}
 
@@ -278,7 +279,7 @@ namespace ft
 		void insert(iterator pos, InputIt first, InputIt last,
 					typename ft::enable_if< !ft::is_integral< InputIt >::value, InputIt >::type* = 0) {
 			vector tmp(pos, this->end());
-			iterator tmpIt(tmp.begin());
+			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
 				this->pop_back();
@@ -287,23 +288,23 @@ namespace ft
 				this->push_back(*first);
 				++first;
 			}
-			while (tmpIt != tmp.end()) {
-				this->push_back(*tmpIt);
-				++tmpIt;
+			while (tmp_it != tmp.end()) {
+				this->push_back(*tmp_it);
+				++tmp_it;
 			}
 		}
 
 		iterator erase(iteartor pos) {
 			vector tmp(pos + 1, this->end());
-			iterator tmpIt(tmp.begin());
+			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
 				this->pop_back();
 			}
 			this->pop_back();
-			while (tmpIt != tmp.end()) {
-				this->push_back(*tmpIt);
-				++tmpIt;
+			while (tmp_it != tmp.end()) {
+				this->push_back(*tmp_it);
+				++tmp_it;
 			}
 			return pos;
 
@@ -326,7 +327,80 @@ namespace ft
 			_alloc.construct(_arr + _size, value);
 			++_size;
 		}
+
+		void pop_back() {
+			if (!_size) {
+				return;
+			}
+			_alloc.destroy(_arr + (_size - 1));
+			--_size;
+		}
+
+		void resize(size_type count, value_type value = value_type()) {
+			if (count < _size) {
+				while (_size > count) {
+					pop_back();
+				}
+			} else if (count > _size) {
+				while (_size < count) {
+					push_back(value);
+				}
+			}
+		}
+
+		void swap(vector& other) {
+			pointer tmp_arr = this->_arr;
+			this->_arr = other._arr;
+			other._arr = tmp_arr;
+
+			size_type tmp_size = this->_size;
+			this->_size = other._size;
+			other._size = tmp_size;
+
+			size_type tmp_capacity = this->_capacity;
+			this->_capacity = other._capacity;
+			other._capacity = tmp_capacity;
+		}
 	};
+
+	/********************************/
+	/*		Non-member functions	*/
+	/********************************/
+
+	template<class T, class Alloc>
+	bool operator==(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+
+	template<class T, class Alloc>
+	bool operator!=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return !(lhs == rhs);
+	}
+
+	template<class T, class Alloc>
+	bool operator<(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template<class T, class Alloc>
+	bool operator<=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return !(rhs < lhs);
+	}
+
+	template<class T, class Alloc>
+	bool operator>(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return rhs < lhs;
+	}
+
+	template<class T, class Alloc>
+	bool operator>=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
+		return !(lhs < rhs);
+	}
+
+	template<class T, class Alloc>
+	void swap(ft::vector<T, Alloc>& lhs, ft::vector<T, Alloc>& rhs) {
+		lhs.swap(rhs);
+	}
 }
 
 
