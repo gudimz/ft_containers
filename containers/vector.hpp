@@ -4,6 +4,7 @@
 # include "../utils/type_traits.hpp"
 # include "../utils/iterator/random_access_iterator.hpp"
 # include "../utils/iterator/reverse_iterator.hpp"
+# include "../utils/equal.hpp"
 # include "../utils/lexicographical_compare.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
@@ -42,11 +43,11 @@ namespace ft
 		/********************************/
 
 		//	Constuctors
-		vector() : _alloc(allocator_type()), _arr(0), _size(0), _capacity(0) {}
+		vector() : _arr(0), _size(0), _capacity(0), _alloc(allocator_type()) {}
 		explicit vector(const allocator_type& alloc) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
 
 		explicit vector(size_type n, const value_type& value = value_type(),
-						const allocator_type& alloc = allocator_type()) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {
+						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
 			reserve(n);
 			for (size_t i = 0; i < n; ++i) {
 				_alloc.construct(_arr + i, value);
@@ -122,14 +123,14 @@ namespace ft
 		// === Element access ===
 		reference at(size_type pos) {
 			if (pos >= _size) {
-				throw std::out_of_range("Out of range")
+				throw std::out_of_range("Out of range");
 			}
 			return *(_arr + pos);
 		}
 
 		const_reference at(size_type pos) const {
 			if (pos >= _size) {
-				throw std::out_of_range("Out of range")
+				throw std::out_of_range("Out of range");
 			}
 			return *(_arr + pos);
 		}
@@ -294,7 +295,7 @@ namespace ft
 			}
 		}
 
-		iterator erase(iteartor pos) {
+		iterator erase(iterator pos) {
 			vector tmp(pos + 1, this->end());
 			iterator tmp_it(tmp.begin());
 
@@ -369,7 +370,7 @@ namespace ft
 
 	template<class T, class Alloc>
 	bool operator==(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
-		return lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin());
+		return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
 
 	template<class T, class Alloc>
