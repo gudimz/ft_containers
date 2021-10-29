@@ -58,19 +58,19 @@ namespace ft
 		template<class InputIt>
 		vector(InputIt first, InputIt last,
 				const allocator_type& alloc = allocator_type(),
-				typename ft::enable_if< !ft::is_integral< InputIt >::value, InputIt >::type* = 0) : _alloc(alloc),
-																								_arr(0),
+				typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = 0) :	_arr(0),
 																								_size(0),
-																								_capacity(0) {
+																								_capacity(0),
+																								_alloc(alloc) {
 			reserve(std::distance(first, last));
-			for (; first != last; ++first) {
-				_alloc.construct(_arr + _size, *first);
+			for (iterator it = first; it != last; ++it) {
+				_alloc.construct(_arr + _size, *it);
 				++_size;
 			}
 		}
 
 		//	Copy Constuctors
-		vector(const vector& other) : _alloc(other._alloc), _arr(0), _size(0), _capacity(0) {
+		vector(const vector& other) : _arr(0), _size(0), _capacity(0), _alloc(other._alloc) {
 			reserve(other._capacity);
 			for (size_t i = 0; i < other._size; ++i) {
 				this->_alloc.construct(this->_arr + i, other._arr[i]);
@@ -220,7 +220,7 @@ namespace ft
 		}
 
 		size_type size(void) const {
-			return this->_size;
+			return _size;
 		}
 
 		size_type max_size() const {
@@ -240,7 +240,7 @@ namespace ft
 		}
 
 		size_type capacity(void) const {
-			return this->_capacity;
+			return _capacity;
 		}
 
 		// ==== Modifiers ====
@@ -251,7 +251,7 @@ namespace ft
 					_alloc.destroy(_arr + i);
 				}
 			}
-			this->_size = 0;
+			_size = 0;
 		}
 
 		iterator insert(iterator pos, const value_type& value) {
@@ -265,13 +265,13 @@ namespace ft
 			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
-				this->pop_back();
+				pop_back();
 			}
 			for (size_t i = count; i > 0; --i) {
-				this->push_back(value);
+				push_back(value);
 			}
 			while (tmp_it != tmp.end()) {
-				this->push_back(*tmp_it);
+				push_back(*tmp_it);
 				++tmp_it;
 			}
 		}
@@ -283,14 +283,14 @@ namespace ft
 			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
-				this->pop_back();
+				pop_back();
 			}
 			while (first != last) {
-				this->push_back(*first);
+				push_back(*first);
 				++first;
 			}
 			while (tmp_it != tmp.end()) {
-				this->push_back(*tmp_it);
+				push_back(*tmp_it);
 				++tmp_it;
 			}
 		}
@@ -300,11 +300,11 @@ namespace ft
 			iterator tmp_it(tmp.begin());
 
 			while (this->end() != pos) {
-				this->pop_back();
+				pop_back();
 			}
-			this->pop_back();
+			pop_back();
 			while (tmp_it != tmp.end()) {
-				this->push_back(*tmp_it);
+				push_back(*tmp_it);
 				++tmp_it;
 			}
 			return pos;
@@ -315,7 +315,7 @@ namespace ft
 			iterator ret(first);
 
 			while (first != last) {
-				this->erase(first);
+				erase(first);
 				++first;
 			}
 			return ret;
@@ -350,16 +350,16 @@ namespace ft
 		}
 
 		void swap(vector& other) {
-			pointer tmp_arr = this->_arr;
-			this->_arr = other._arr;
+			pointer tmp_arr = _arr;
+			_arr = other._arr;
 			other._arr = tmp_arr;
 
-			size_type tmp_size = this->_size;
-			this->_size = other._size;
+			size_type tmp_size = _size;
+			_size = other._size;
 			other._size = tmp_size;
 
-			size_type tmp_capacity = this->_capacity;
-			this->_capacity = other._capacity;
+			size_type tmp_capacity = _capacity;
+			_capacity = other._capacity;
 			other._capacity = tmp_capacity;
 		}
 	};

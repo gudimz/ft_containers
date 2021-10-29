@@ -60,31 +60,78 @@ void test_constructors(void) {
 	std::cout << std::endl << "*** " << CYAN "TEST FT_VECTOR" REST << " ***" << std::endl << std::endl;
 	std::cout << "=== " << MAG "TEST №1 Constructors" REST << " ===" << std::endl;
 
-	std::cout << GREEN "Default" REST << std::endl;
+	std::cout << GREEN "*** Default ***" REST << std::endl;
 	{
-	ft::vector<int> ft_vec;
-	std::vector<int> std_vec;
-	std::cout << "Enter: " << CYAN "vector<int> vec" REST << std::endl;
-	vec_compare(ft_vec, std_vec);
+		ft::vector<int> ft_vec;
+		std::vector<int> std_vec;
+		std::cout << "Enter: " << CYAN "vector<int> vec" REST << std::endl;
+		vec_compare(ft_vec, std_vec);
 	}
 
-	std::cout << GREEN "Fill" REST << std::endl;
+	std::cout << GREEN "*** Fill ***" REST << std::endl;
 	{
-	ft::vector<int> ft_vec(10, 21);
-	std::vector<int> std_vec(10,21);
-	std::cout << "Enter: " << CYAN "vector<int> vec(10, 21)" REST << std::endl;
-	vec_compare(ft_vec, std_vec);
+		ft::vector<int> ft_vec(10, 21);
+		std::vector<int> std_vec(10,21);
+		std::cout << "Enter: " << CYAN "vector<int> vec(10, 21)" REST << std::endl;
+		vec_compare(ft_vec, std_vec);
 	}
 
 	{
-	ft::vector<std::string> ft_vec(1, "school ");
-	std::vector<std::string> std_vec(1, "school ");
-	std::cout << "Enter: " << CYAN "vector<int> vec(1, \"school \")" REST << std::endl;
-	ft_vec.push_back("21");
-	std_vec.push_back("21");
-	std::cout << "Enter: " << CYAN "vec.push_back(\"21\")" REST << std::endl;
-	vec_compare(ft_vec, std_vec);
+		ft::vector<std::string> ft_vec(1, "school ");
+		std::vector<std::string> std_vec(1, "school ");
+		std::cout << "Enter: " << CYAN "vector<int> vec(1, \"school \")" REST << std::endl;
+		ft_vec.push_back("21");
+		std_vec.push_back("21");
+		std::cout << "Enter: " << CYAN "vec.push_back(\"21\")" REST << std::endl;
+		vec_compare(ft_vec, std_vec);
 	}
+
+	std::cout << GREEN "*** Fill Range ***" REST << std::endl;
+	{
+		ft::vector<int> vec_fill(10, 21);
+		std::cout << "Enter: " << CYAN "vector<int> vec(10, 21)" REST << std::endl;
+		std::cout << "Enter: " << CYAN "vector<int> ft_vec_range(vec_fill.begin(), vec_fill.end())" REST << std::endl;
+		std::cout << "Enter: " << CYAN "vector<int> std_vec_range(vec_fill.begin(), vec_fill.end())" REST << std::endl;
+		ft::vector<int> ft_vec_range(vec_fill.begin(), vec_fill.end());
+		std::vector<int> std_vec_range(vec_fill.begin(), vec_fill.end());
+		vec_compare(ft_vec_range, std_vec_range);
+	}
+
+
+	std::cout << GREEN "*** Copy Constructor ***" REST << std::endl;
+	{
+		std::cout << RED "intenger" REST << std::endl;
+		{
+			std::cout << "Enter: " << CYAN "ft::vector<int> vec(10, 21)" REST << std::endl;
+			ft::vector<int> vec(10, 21);
+			vec_print(vec, 1);
+
+			std::cout << "Enter: " << CYAN "ft::vector<int> vec_copy(vec)" REST << std::endl;
+			ft::vector<int> vec_copy(vec);
+			vec_print(vec_copy, 1);
+
+			std::cout << "Enter: " << CYAN "ft::vector<int> vec_copy_2 = vec" REST << std::endl;
+			ft::vector<int> vec_copy_2 = vec;
+			vec_print(vec_copy_2, 1);
+		}
+		std::cout << RED "string" REST << std::endl;
+		{
+			std::cout << "Enter: " << CYAN "ft::vector<std::string> vec(3, \"string\")" REST << std::endl;
+			ft::vector<std::string> vec(3, "string");
+			vec_print(vec, 1);
+
+			std::cout << "Enter: " << CYAN "ft::vector<std::string> vec_copy(vec)" REST << std::endl;
+			ft::vector<std::string> vec_copy(vec);
+			vec_print(vec_copy, 1);
+
+			std::cout << "Enter: " << CYAN "ft::vector<std::string> vec_copy_2 = vec;" REST << std::endl;
+			ft::vector<std::string> vec_copy_2 = vec;
+			vec_print(vec_copy_2, 1);
+		}
+
+	}
+
+
 
 	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
 	std::cin.get();

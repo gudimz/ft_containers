@@ -50,109 +50,113 @@ namespace ft
 
 		// === Element access ===
 		random_access_iterator base() const {
-			return this->_ptr;
+			return _ptr;
 		}
 
 		reference operator*() {
-			return *this->_ptr;
+			return *_ptr;
 		}
 
 		const_reference operator*() const {
-			return *this->_ptr;
+			return *_ptr;
 		}
 
 		pointer operator->() {
-			return this->_ptr;
+			return _ptr;
 		}
 
 		const_pointer operator->() const {
-			return this->_ptr;
+			return _ptr;
 		}
 
 		reference operator[](difference_type n) {
-			return *(this->_ptr + n);
+			return *(_ptr + n);
 		}
 
 		const_reference operator[](difference_type n) const {
-			return *(this->_ptr + n);
+			return *(_ptr + n);
 		}
 
 		// === Increments and Decrements ===
 		// Prefix increment
 		random_access_iterator& operator++() {
-			++this->_ptr;
+			++_ptr;
 			return *this;
 		}
 
 		// Prefix decrement
 		random_access_iterator& operator--() {
-			--this->_ptr++;
+			--_ptr++;
 			return *this;
 		}
 
 		// Postfix increment
 		random_access_iterator operator++(int) {
 			random_access_iterator copy = *this;
-			++this->_ptr;
+			++_ptr;
 			return copy;
 		}
 
 		// Postfix decrement
 		random_access_iterator operator--(int) {
 			random_access_iterator copy = *this;
-			--this->_ptr;
+			--_ptr;
 			return copy;
 		}
 
 		random_access_iterator& operator+=(difference_type n) {
-			this->_ptr += n;
+			_ptr += n;
 			return *this;
 		}
 
 		random_access_iterator& operator-=(difference_type n) {
-			this->_ptr -= n;
+			_ptr -= n;
 			return *this;
 		}
 
 		random_access_iterator operator+(difference_type n) const {
-			return random_access_iterator<T>(this->_ptr + n);
+			return random_access_iterator<T>(_ptr + n);
 		}
 
 		random_access_iterator operator-(difference_type n) const {
-			return random_access_iterator<T>(this->_ptr - n);
+			return random_access_iterator<T>(_ptr - n);
 		}
 
 		difference_type operator+(const random_access_iterator& other) const {
-			return this->_ptr + other._ptr;
+			return _ptr + other._ptr;
 		}
 
 		difference_type operator-(const random_access_iterator& other) const {
-			return this->_ptr - other._ptr;
+			return _ptr - other._ptr;
 		}
 
 		// === Compares ===
 		bool operator==(const random_access_iterator& other) const {
-			return this->_ptr == other._ptr;
+			return _ptr == other._ptr;
 		}
 
 		bool operator!=(const random_access_iterator& other) const {
-			return this->_ptr != other._ptr;
+			return _ptr != other._ptr;
 		}
 
 		bool operator<(const random_access_iterator& other) const {
-			return this->_ptr < other._ptr;
+			return _ptr < other._ptr;
 		}
 
 		bool operator<=(const random_access_iterator& other) const {
-			return this->_ptr <= other._ptr;
+			return _ptr <= other._ptr;
 		}
 
 		bool operator>(const random_access_iterator& other) const {
-			return this->_ptr > other._ptr;
+			return _ptr > other._ptr;
 		}
 
 		bool operator>=(const random_access_iterator& other) const {
-			return this->_ptr >= other._ptr;
+			return _ptr >= other._ptr;
+		}
+
+		pointer& get_poiner(void) {
+			return _ptr;
 		}
 	};
 	/********************************/
@@ -161,32 +165,32 @@ namespace ft
 
 	template<class T, class U>
 	bool operator==(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr == rhs._ptr;
+		return lhs.get_poiner() == rhs.get_poiner();
 	}
 
 	template<class T, class U>
 	bool operator!=(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr != rhs._ptr;
+		return lhs.get_poiner() != rhs.get_poiner();
 	}
 
 	template<class T, class U>
 	bool operator<(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr < rhs._ptr;
+		return lhs.get_poiner() < rhs.get_poiner();
 	}
 
 	template<class T, class U>
 	bool operator<=(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr <= rhs._ptr;
+		return lhs.get_poiner() <= rhs.get_poiner();
 	}
 
 	template<class T, class U>
 	bool operator>(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr > rhs._ptr;
+		return lhs.get_poiner() > rhs.get_poiner();
 	}
 
 	template<class T, class U>
 	bool operator>=(random_access_iterator<T>& lhs, random_access_iterator<U>& rhs) {
-		return lhs._ptr >= rhs._ptr;
+		return lhs.get_poiner() >= rhs.get_poiner();
 	}
 
 	template<class T>

@@ -32,8 +32,8 @@ namespace ft
 	}
 	};
 
-	typedef integral_constant< bool, true > true_type;
-	typedef integral_constant< bool, true > false_type;
+	typedef integral_constant<bool, true> true_type;
+	typedef integral_constant<bool, false> false_type;
 
 	template<class T> struct is_integral : ft::false_type {};
 	template<> struct is_integral<bool> : ft::true_type {};
