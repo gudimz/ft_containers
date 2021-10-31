@@ -48,9 +48,11 @@ namespace ft
 
 		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
-			reserve(n);
-			for (size_t i = 0; i < n; ++i) {
-				_alloc.construct(_arr + i, value);
+			if (n) {
+				reserve(n);
+				for (size_t i = 0; i < n; ++i) {
+					_alloc.construct(_arr + i, value);
+				}
 			}
 			this->_size = n;
 		}
@@ -322,8 +324,10 @@ namespace ft
 		}
 
 		void push_back(const T& value) {
-			if (_capacity == _size) {
+			if (_capacity == _size && _capacity) {
 				reserve(2 * _size);
+			} else {
+				reserve(1);
 			}
 			_alloc.construct(_arr + _size, value);
 			++_size;
