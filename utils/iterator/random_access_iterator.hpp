@@ -86,7 +86,7 @@ namespace ft
 
 		// Prefix decrement
 		random_access_iterator& operator--() {
-			--_ptr++;
+			--_ptr;
 			return *this;
 		}
 

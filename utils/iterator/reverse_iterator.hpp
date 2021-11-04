@@ -30,7 +30,7 @@ namespace ft
 
 		//	Copy Constuctors
 		template<class U>
-		explicit reverse_iterator(const reverse_iterator<U>& other) : _it(other._it) {}
+		explicit reverse_iterator(const reverse_iterator<U>& other) : _it(other.base()) {}
 
 		// Destructor
 		virtual ~reverse_iterator() {}
@@ -46,7 +46,7 @@ namespace ft
 
 		// === Element access ===
 		iterator_type base() const {
-			return this->_it;
+			return _it;
 		}
 
 		reference operator*() const {
@@ -59,54 +59,54 @@ namespace ft
 		}
 
 		reference operator[](difference_type n) const {
-			base()[-n - 1];
+			return base()[-n - 1];
 		}
 		// === Increments and Decrements ===
 		// Prefix increment
 		reverse_iterator& operator++() {
-			--this->_it;
+			--_it;
 			return *this;
 		}
 
 		// Prefix decrement
 		reverse_iterator& operator--() {
-			++this->_it;
+			++_it;
 			return *this;
 		}
 
 		// Postfix increment
-		reverse_iterator& operator++(int) {
+		reverse_iterator operator++(int) {
 			reverse_iterator copy = *this;
-			--this->_it;
+			--_it;
 			return copy;
 		}
 
 		// Postfix decrement
-		reverse_iterator& operator--(int) {
+		reverse_iterator operator--(int) {
 			reverse_iterator copy = *this;
-			++this->_it;
+			++_it;
 			return copy;
 		}
 
 		reverse_iterator& operator+=(difference_type n) {
-			this->_ptr -= n;
+			_it -= n;
 			return *this;
 		}
 
 		reverse_iterator& operator-=(difference_type n) {
-			this->_ptr += n;
+			_it += n;
 			return *this;
 		}
 
 		reverse_iterator operator+(difference_type n) const {
-			for (difference_type i; i < n; ++i) {
+			for (difference_type i = 0; i < n; ++i) {
 				--reverse_iterator<Iter>(base());
 			}
 			return reverse_iterator<Iter>(base());
 		}
 
 		reverse_iterator operator-(difference_type n) const {
-			for (difference_type i; i < n; ++i) {
+			for (difference_type i = 0; i < n; ++i) {
 				++reverse_iterator<Iter>(base());
 			}
 			return reverse_iterator<Iter>(base());

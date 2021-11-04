@@ -188,31 +188,19 @@ namespace ft
 		}
 
 		reverse_iterator rbegin(void) {
-			if (!_size) {
-				return reverse_iterator(_arr);
-			}
-			return reverse_iterator(_arr + (_size - 1));
+			return reverse_iterator(end());
 		}
 
 		const_reverse_iterator rbegin(void) const {
-			if (!_size) {
-				return const_reverse_iterator(_arr);
-			}
-			return const_reverse_iterator(_arr + (_size - 1));
+			return const_reverse_iterator(end());
 		}
 
 		reverse_iterator rend(void) {
-			if (!_size) {
-				return reverse_iterator(_arr);
-			}
-			return reverse_iterator(_arr - 1);
+			return reverse_iterator(begin());
 		}
 
 		const_reverse_iterator rend(void) const {
-			if (!_size) {
-				return const_reverse_iterator(_arr);
-			}
-			return const_reverse_iterator(_arr - 1);
+			return const_reverse_iterator(begin());
 		}
 
 		// ==== Capacity ====

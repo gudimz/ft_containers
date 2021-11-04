@@ -341,14 +341,14 @@ void test_element_access(void) {
 		vec_compare(ft_vec, std_vec);
 	}
 
-	std::cout << GREEN "*** back ***" REST << std::endl;
+	std::cout << GREEN "*** data ***" REST << std::endl;
 	{
 		ft::vector<int> ft_vec(3, 42);
 		vec_print(ft_vec, 1);
 		std::vector<int> std_vec(3,42);
 		vec_print(std_vec, 2);
 		ft_vec.data()[1] = 21;
-		std::cout << "Enter: " << CYAN "vector<int> vec.back() = 21" REST << std::endl;
+		std::cout << "Enter: " << CYAN "vector<int> vec.data() = 21" REST << std::endl;
 		std_vec.data()[1] = 21;
 		vec_compare(ft_vec, std_vec);
 	}
@@ -358,10 +358,474 @@ void test_element_access(void) {
 	std::cout << CLEAR;
 }
 
+void test_iterators(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_VECTOR" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №4 Iterators" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** empty vector ***" REST << std::endl;
+	{
+		ft::vector<int> ft_vec;
+		ft::vector<const int> ft_const_vec;
+		std::cout << "Enter: " << CYAN "vector<int> ft_vec" REST << std::endl;
+		if (ft_vec.begin() == ft_vec.end()) {
+			std::cout << "ft_vec.begin() == ft_vec.end()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_vec.begin() != ft_vec.end()" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		if (ft_vec.rbegin() == ft_vec.rend()) {
+			std::cout << "ft_vec.rbegin() == ft_vec.rend()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_vec.rbegin() != ft_vec.rend()" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "vector<int> ft_const_vec" REST << std::endl;
+		if (ft_const_vec.begin() == ft_const_vec.end()) {
+			std::cout << "ft_const_vec.begin() == ft_const_vec.end()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_const_vec.begin() != ft_const_vec.end()" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		if (ft_const_vec.rbegin() == ft_const_vec.rend()) {
+			std::cout << "ft_const_vec.rbegin() == ft_const_vec.rend()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_const_vec.rbegin() != ft_const_vec.rend()" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "*** fill vector ***" REST << std::endl;
+	{
+		ft::vector<int> ft_vec;
+		std::vector<int> std_vec;
+		for (size_t i = 0; i < 10; ++i) {
+			ft_vec.push_back(i);
+			std_vec.push_back(i);
+		}
+		std::cout << "Enter: " << CYAN "vector<int> ft_vec(10, 21)" REST << std::endl;
+		if (*ft_vec.begin() == *std_vec.begin()) {
+			std::cout << "*ft_vec.begin() == *std_vec.begin()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "*ft_vec.begin() != *std_vec.begin()" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		if (*ft_vec.rbegin() == *std_vec.rbegin()) {
+			std::cout << "*ft_vec.rbegin() == *std_vec.rbegin()" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "*ft_vec.rbegin() != *std_vec.rbegin())" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+	}
+	std::cout << std::endl << GREEN "*** element access ***" REST << std::endl;
+	{
+		ft::vector<int> ft_vec;
+		std::vector<int> std_vec;
+		for (size_t i = 0; i < 10; ++i) {
+			ft_vec.push_back(i);
+			std_vec.push_back(i);
+		}
+		std::cout << "Enter: " << CYAN "*vec.begin()" REST << std::endl;
+		std::cout << CYAN "ft_vec.begin = " REST << GREEN <<*ft_vec.begin() << REST <<
+				" and " << YEL "std_vec.begin() = " REST << GREEN << *std_vec.begin() << REST << std::endl;
+		if (*(ft_vec.begin()) == *(std_vec.begin())) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "*vec.rbegin()" REST << std::endl;
+		std::cout << CYAN "ft_vec.rbegin = " REST << GREEN << *ft_vec.rbegin() << REST <<
+				" and " << YEL "std_vec.rbegin() = " REST << GREEN << *std_vec.rbegin() << REST << std::endl;
+		if (*(ft_vec.rbegin()) == *(std_vec.rbegin())) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "vec.begin()[3]" REST << std::endl;
+		std::cout << CYAN "ft_vec.begin()[3] = " REST << GREEN << ft_vec.begin()[3] << REST <<
+				" and " << YEL << "std_vec.begin()[3] = " REST << GREEN << std_vec.begin()[3] << REST << std::endl;
+		if (ft_vec.begin()[3] == std_vec.begin()[3]) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "vec.rbegin()[5]" REST << std::endl;
+		std::cout << CYAN "ft_vec.rbegin()[5] = " REST << GREEN << ft_vec.rbegin()[5] << REST <<
+				" and " << YEL << "std_vec.rbegin()[5] = " REST << GREEN << std_vec.rbegin()[5] << REST << std::endl;
+		if (ft_vec.rbegin()[5] == std_vec.rbegin()[5]) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "*** arithmetic with iterators ***" REST << std::endl;
+	{
+		ft::vector<int> ft_vec;
+		std::vector<int> std_vec;
+		for (size_t i = 0; i < 10; ++i) {
+			ft_vec.push_back(i);
+			std_vec.push_back(i);
+		}
+		std::cout << RED "=== for iterator ===" REST << std::endl;
+		ft::vector<int>::iterator ft_iter = ft_vec.begin();
+		std::vector<int>::iterator std_iter = std_vec.begin();
+		std::cout << "Enter: " << CYAN "++iter" REST << std::endl;
+		++ft_iter;
+		++std_iter;
+		if (ft_iter >= ft_vec.begin() && std_iter >= std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter++" REST << std::endl;
+		ft_iter++;
+		std_iter++;
+		if (ft_iter > ft_vec.begin() && std_iter > std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--iter" REST << std::endl;
+		--ft_iter;
+		--std_iter;
+		if (!(ft_iter < ft_vec.begin()) && !(std_iter < std_vec.begin()) && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter--" REST << std::endl;
+		ft_iter--;
+		std_iter--;
+		if (ft_iter <= ft_vec.begin() && std_iter <= std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter + 3" REST << std::endl;
+		ft_iter + 3;
+		std_iter + 3;
+		if (ft_iter == ft_vec.begin() && std_iter == std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter += 3" REST << std::endl;
+		ft_iter += 3;
+		std_iter += 3;
+		if (ft_iter != ft_vec.begin() && std_iter != std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter - 3" REST << std::endl;
+		ft_iter - 3;
+		std_iter - 3;
+		if (ft_iter > ft_vec.begin() && std_iter > std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter -= 3" REST << std::endl;
+		ft_iter -= 3;
+		std_iter -= 3;
+		if (ft_iter <= ft_vec.begin() && std_iter <= std_vec.begin() && *ft_iter == *std_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+
+		std::cout << RED "=== for reverse_iterator ===" REST << std::endl;
+		ft::vector<int>::reverse_iterator ft_rev_iter = ft_vec.rbegin();
+		std::vector<int>::reverse_iterator std_rev_iter = std_vec.rbegin();
+		std::cout << "Enter: " << CYAN "++rev_iter" REST << std::endl;
+		++ft_rev_iter;
+		++std_rev_iter;
+		if (ft_rev_iter >= ft_vec.rbegin() && std_rev_iter >= std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter++" REST << std::endl;
+		ft_rev_iter++;
+		std_rev_iter++;
+		if (ft_rev_iter > ft_vec.rbegin() && std_rev_iter > std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--rev_iter" REST << std::endl;
+		--ft_rev_iter;
+		--std_rev_iter;
+		if (!(ft_rev_iter < ft_vec.rbegin()) && !(std_rev_iter < std_vec.rbegin()) && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter--" REST << std::endl;
+		ft_rev_iter--;
+		std_rev_iter--;
+		if (ft_rev_iter <= ft_vec.rbegin() && std_rev_iter <= std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter + 3" REST << std::endl;
+		ft_rev_iter + 3;
+		std_rev_iter + 3;
+		if (ft_rev_iter == ft_vec.rbegin() && std_rev_iter == std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter += 3" REST << std::endl;
+		ft_rev_iter += 3;
+		std_rev_iter += 3;
+		if (ft_rev_iter != ft_vec.rbegin() && std_rev_iter != std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter - 3" REST << std::endl;
+		ft_rev_iter - 3;
+		std_rev_iter - 3;
+		if (ft_rev_iter > ft_vec.rbegin() && std_rev_iter > std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter -= 3" REST << std::endl;
+		ft_rev_iter -= 3;
+		std_rev_iter -= 3;
+		if (ft_rev_iter <= ft_vec.rbegin() && std_rev_iter <= std_vec.rbegin() && *ft_rev_iter == *std_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+	{
+	std::cout << RED "=== for const_iterator ===" REST << std::endl;
+		ft::vector<const int> ft_const_vec(10, 21);
+		std::vector<const int> std_const_vec(10, 21);
+		ft::vector<int>::const_iterator ft_const_iter = ft_const_vec.begin();
+		std::vector<int>::const_iterator std_const_iter = std_const_vec.begin();
+		std::cout << "Enter: " << CYAN "++const_iter" REST << std::endl;
+		++ft_const_iter;
+		++std_const_iter;
+		if (ft_const_iter >= ft_const_vec.begin() && std_const_iter >= std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter++" REST << std::endl;
+		ft_const_iter++;
+		std_const_iter++;
+		if (ft_const_iter > ft_const_vec.begin() && std_const_iter > std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--const_iter" REST << std::endl;
+		--ft_const_iter;
+		--std_const_iter;
+		if (!(ft_const_iter < ft_const_vec.begin()) && !(std_const_iter < std_const_vec.begin()) && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter--" REST << std::endl;
+		ft_const_iter--;
+		std_const_iter--;
+		if (ft_const_iter <= ft_const_vec.begin() && std_const_iter <= std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter + 3" REST << std::endl;
+		ft_const_iter + 3;
+		std_const_iter + 3;
+		if (ft_const_iter == ft_const_vec.begin() && std_const_iter == std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter += 3" REST << std::endl;
+		ft_const_iter += 3;
+		std_const_iter += 3;
+		if (ft_const_iter != ft_const_vec.begin() && std_const_iter != std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter - 3" REST << std::endl;
+		ft_const_iter - 3;
+		std_const_iter - 3;
+		if (ft_const_iter > ft_const_vec.begin() && std_const_iter > std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter -= 3" REST << std::endl;
+		ft_const_iter -= 3;
+		std_const_iter -= 3;
+		if (ft_const_iter <= ft_const_vec.begin() && std_const_iter <= std_const_vec.begin() && *ft_const_iter == *std_const_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		std::cout << RED "=== for const_reverse_iterator ===" REST << std::endl;
+		ft::vector<int>::const_reverse_iterator ft_const_rev_iter = ft_const_vec.rbegin();
+		std::vector<int>::const_reverse_iterator std_const_rev_iter = std_const_vec.rbegin();
+		std::cout << "Enter: " << CYAN "++const_rev_iter" REST << std::endl;
+		++ft_const_rev_iter;
+		++std_const_rev_iter;
+		if (ft_const_rev_iter >= ft_const_vec.rbegin() && std_const_rev_iter >= std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter++" REST << std::endl;
+		ft_const_rev_iter++;
+		std_const_rev_iter++;
+		if (ft_const_rev_iter > ft_const_vec.rbegin() && std_const_rev_iter > std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--const_rev_iter" REST << std::endl;
+		--ft_const_rev_iter;
+		--std_const_rev_iter;
+		if (!(ft_const_rev_iter < ft_const_vec.rbegin()) && !(std_const_rev_iter < std_const_vec.rbegin()) && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter--" REST << std::endl;
+		ft_const_rev_iter--;
+		std_const_rev_iter--;
+		if (ft_const_rev_iter <= ft_const_vec.rbegin() && std_const_rev_iter <= std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter + 3" REST << std::endl;
+		ft_const_rev_iter + 3;
+		std_const_rev_iter + 3;
+		if (ft_const_rev_iter == ft_const_vec.rbegin() && std_const_rev_iter == std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter += 3" REST << std::endl;
+		ft_const_rev_iter += 3;
+		std_const_rev_iter += 3;
+		if (ft_const_rev_iter != ft_const_vec.rbegin() && std_const_rev_iter != std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter - 3" REST << std::endl;
+		ft_const_rev_iter - 3;
+		std_const_rev_iter - 3;
+		if (ft_const_rev_iter > ft_const_vec.rbegin() && std_const_rev_iter > std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter -= 3" REST << std::endl;
+		ft_const_rev_iter -= 3;
+		std_const_rev_iter -= 3;
+		if (ft_const_rev_iter <= ft_const_vec.rbegin() && std_const_rev_iter <= std_const_vec.rbegin() && *ft_const_rev_iter == *std_const_rev_iter) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
 int main(void) {
 	// test_constructors();
 	// test_assigns();
-	test_element_access();
+	// test_element_access();
+	test_iterators();
 
 	return 0;
 }
