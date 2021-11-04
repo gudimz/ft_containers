@@ -44,7 +44,7 @@ namespace ft
 
 		//	Constuctors
 		vector() : _arr(0), _size(0), _capacity(0), _alloc(allocator_type()) {}
-		explicit vector(const allocator_type& alloc) : _alloc(alloc), _arr(0), _size(0), _capacity(0) {}
+		explicit vector(const allocator_type& alloc) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {}
 
 		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
@@ -289,7 +289,7 @@ namespace ft
 			vector tmp(pos + 1, this->end());
 			iterator tmp_it(tmp.begin());
 
-			while (this->end() != pos) {
+			for (size_t i = 0; i < tmp.size(); ++i) {
 				pop_back();
 			}
 			pop_back();
@@ -304,11 +304,11 @@ namespace ft
 		iterator erase(iterator first, iterator last) {
 			iterator ret(first);
 
-			while (first != last) {
+			while (ret != last) {
 				erase(first);
-				++first;
+				++ret;
 			}
-			return ret;
+			return first;
 		}
 
 		void push_back(const T& value) {
