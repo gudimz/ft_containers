@@ -30,7 +30,7 @@ namespace ft
 
 		//	Copy Constuctors
 		template<class U>
-		explicit reverse_iterator(const reverse_iterator<U>& other) : _it(other.base()) {}
+		reverse_iterator(const reverse_iterator<U>& other) : _it(other.base()) {}
 
 		// Destructor
 		virtual ~reverse_iterator() {}
@@ -43,7 +43,6 @@ namespace ft
 			this->_it = other._it;
 			return *this;
 		}
-
 		// === Element access ===
 		iterator_type base() const {
 			return _it;
