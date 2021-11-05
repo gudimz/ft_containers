@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include "vector.hpp"
+#include <stack>
 
 int main() {
 	ft::vector<int> ft_vec;

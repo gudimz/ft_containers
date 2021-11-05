@@ -30,7 +30,7 @@ void vec_compare(const ft::vector<T>& ft_vec, const std::vector<T>& std_vec) {
 	vec_print(ft_vec, 1);
 	vec_print(std_vec, 2);
 	bool flag = true;
-	for (size_t i = 0; i < std_vec.size(); ++i) {
+	for (size_t i = 0; i < std_vec.size() && i < ft_vec.size(); ++i) {
 		if (std_vec[i] != ft_vec[i]) {
 			std::cout << RED "KO :(" REST << std::endl;
 			flag = false;
@@ -1068,6 +1068,7 @@ void test_modifiers(void) {
 		}
 		vec_compare(ft_vec, std_vec);
 		std::cout << std::endl << GREEN "*** pop_back ***" REST << std::endl;
+		vec_compare(ft_vec, std_vec);
 		std::cout << "Enter: " << CYAN "for (size_t i = 0; i < 10; ++i) {vec.pop_back();}" REST << std::endl;
 		for (size_t i = 0; i < 10; ++i) {
 			ft_vec.pop_back();

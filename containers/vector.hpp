@@ -33,10 +33,13 @@ namespace ft
 		typedef ft::reverse_iterator<iterator>											reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>									const_reverse_iterator;
 	private:
-		pointer _arr;
-		size_type _size;
-		size_type _capacity;
-		allocator_type _alloc;
+		/********************************/
+		/*		Member object			*/
+		/********************************/
+		pointer			_arr;
+		size_type 		_size;
+		size_type 		_capacity;
+		allocator_type	_alloc;
 	public:
 		/********************************/
 		/*		Member functions		*/
