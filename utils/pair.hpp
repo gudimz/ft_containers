@@ -1,5 +1,5 @@
-#ifndef EQUAL_HPP
-# define EQUAL_HPP
+#ifndef PAIR_HPP
+# define PAIR_HPP
 
 namespace ft
 {
