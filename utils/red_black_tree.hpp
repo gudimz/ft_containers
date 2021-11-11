@@ -13,7 +13,9 @@ namespace ft
 
 	template<class T>
 	struct rbt_node {
-		typedef T		value_type;
+		typedef T									value_type;
+		typedef value_type*							pointer;
+		typedef value_type&							reference;
 
 		value_type		data;
 		rbt_node*		parent;
