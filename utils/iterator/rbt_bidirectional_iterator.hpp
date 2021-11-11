@@ -14,7 +14,7 @@ namespace ft
 		/*		Member types		*/
 		/****************************/
 		typedef Node								value_type;
-		typedef value_type*							node_pointer;
+		typedef value_type*							node_ptr;
 		typedef std::ptrdiff_t						difference_type;
 		typedef typename Node::value_type			data_type;
 		typedef typename Node::pointer				pointer;
@@ -24,18 +24,18 @@ namespace ft
 		/********************************/
 		/*		Member object			*/
 		/********************************/
-		node_pointer								_ptr;
+		node_ptr									_ptr;
 	private:
-		node_pointer								_root;
-		node_pointer								_nil;
+		node_ptr									_root;
+		node_ptr									_nil;
 	public:
 		/********************************/
 		/*		Member functions		*/
 		/********************************/
 		//	Constuctors
-		rbt_bidirectional_iterator() : ptr(NULL) _root(NULL) _nil(NULL) {}
+		rbt_bidirectional_iterator() : ptr(0) _root(0) _nil(0) {}
 
-		rbt_bidirectional_iterator(node_pointer ptr, node_pointer root, node_pointer nil) : _ptr(ptr)
+		rbt_bidirectional_iterator(node_ptr ptr, node_ptr root, node_ptr nil) : _ptr(ptr)
 																							_root(_root)
 																							_nil(nil)
 																							{}
@@ -65,7 +65,7 @@ namespace ft
 		}
 
 		// === Element access ===
-		node_pointer base() const {
+		node_ptr base() const {
 			return _ptr;
 		}
 
@@ -84,43 +84,50 @@ namespace ft
 		// === Increments and Decrements ===
 		// Prefix increment
 		rbt_bidirectional_iterator& operator++() {
-			_ptr = next_node(_ptr);
+			_ptr = _next_node(_ptr);
 			return *this;
 		}
 
 		// Prefix decrement
 		rbt_bidirectional_iterator& operator--() {
-			_ptr = next_node(_ptr);
+			_ptr = _prev_node(_ptr);
 			return *this;
 		}
 
 		// Postfix increment
 		rbt_bidirectional_iterator operator++(int) {
 			rbt_bidirectional_iterator = *this;
-			_ptr = next_node(_ptr);
+			_ptr = _next_node(_ptr);
 			return copy;
 		}
 
 		// Postfix decrement
-		random_access_iterator operator--(int) {
-			random_access_iterator copy = *this;
-			--_ptr;
+		rbt_bidirectional_iterator operator--(int) {
+			rbt_bidirectional_iterator copy = *this;
+			_ptr = _prev_node(_ptr);
 			return copy;
 		}
 
+		// === Compares ===
+		bool operator==(const rbt_bidirectional_iterator& other) const {
+			return _ptr == other._ptr;
+		}
 
+		bool operator!=(const rbt_bidirectional_iterator& other) const {
+			return _ptr != other._ptr;
+		}
 
 	// Helpers
 	private:
-		node_pointer prev_node(node_pointer node) {
-			node_pointer tmp;
+		node_ptr _prev_node(node_ptr node) {
+			node_ptr tmp;
 			if (node->left != _nil) {
 				tmp = node->left;
 				while (tmp->right && tmp->right != _nill) {
 					tmp = tmp->right;
 				}
 			} else {
-				node_pointer prev_tmp = node->parent;
+				node_ptr prev_tmp = node->parent;
 				while (prev_tmp && prev_tmp != _nil && tmp == prev_tmp->left) {
 					tmp = prev_tmp;
 					prev_tmp = prev_tmp->parent;
@@ -133,15 +140,15 @@ namespace ft
 			}
 		}
 
-		node_pointer next_node(node_pointer node) {
-			node_pointer tmp;
+		node_ptr _next_node(node_ptr node) {
+			node_ptr tmp;
 			if (node->right != _nil) {
 				tmp = node->right;
 				while (tmp->left && tmp->left != _nill) {
 					tmp = tmp->left;
 				}
 			} else {
-				node_pointer prev_tmp = node->parent;
+				node_ptr prev_tmp = node->parent;
 				while (prev_tmp && prev_tmp != _nil && tmp == prev_tmp->right) {
 					tmp = prev_tmp;
 					prev_tmp = prev_tmp->parent;

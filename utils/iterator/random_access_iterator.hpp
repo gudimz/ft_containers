@@ -49,7 +49,7 @@ namespace ft
 		}
 
 		// === Element access ===
-		random_access_iterator base() const {
+		pointer base() const {
 			return _ptr;
 		}
 
@@ -153,10 +153,6 @@ namespace ft
 
 		bool operator>=(const random_access_iterator& other) const {
 			return _ptr >= other._ptr;
-		}
-
-		pointer& get_poiner(void) {
-			return _ptr;
 		}
 	};
 	/********************************/
