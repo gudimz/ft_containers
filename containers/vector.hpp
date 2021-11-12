@@ -45,10 +45,17 @@ namespace ft
 		/*		Member functions		*/
 		/********************************/
 
-		//	Constuctors
+		/*
+		**	Default constructor.
+		**	Constructor for an empty vector.
+		*/
 		vector() : _arr(0), _size(0), _capacity(0), _alloc(allocator_type()) {}
 		explicit vector(const allocator_type& alloc) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {}
 
+		/*
+		**	Fill constructor.
+		**	Vector with n elements. Each element has a value n.
+		*/
 		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
 			if (n) {

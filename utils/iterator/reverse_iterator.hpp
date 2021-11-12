@@ -23,19 +23,35 @@ namespace ft
 		/*		Member functions		*/
 		/********************************/
 
-		//	Constuctors
+		/*
+		**	Default constructor.
+		**	The underlying iterator is value-initialized
+		*/
 		reverse_iterator() : _it(0) {}
 
+		/*
+		**	The underlying iterator is initialized with it.
+		*/
 		explicit reverse_iterator(iterator_type it) : _it(it) {}
 
-		//	Copy Constuctors
+		/*
+		**	Copy constructor
+		**	The underlying iterator is initialized with that of other
+		*/
 		template<class U>
 		reverse_iterator(const reverse_iterator<U>& other) : _it(other.base()) {}
 
-		// Destructor
+		/*
+		**	Destructor.
+		**	Destroy iterator.
+		*/
 		virtual ~reverse_iterator() {}
 
-		// Assign
+		/*
+		**	Overload operator "=".
+		**	The underlying iterator is assigned the value
+		**	of the underlying iterator of other.
+		*/
 		reverse_iterator& operator=(const reverse_iterator& other) {
 			if (this == &other) {
 				return *this;
@@ -44,59 +60,95 @@ namespace ft
 			return *this;
 		}
 		// === Element access ===
+
+
+		/*
+		**	Returns the underlying base iterator.
+		*/
 		iterator_type base() const {
 			return _it;
 		}
 
+		/*
+		**	Returns a reference to the element previous to current
+		*/
 		reference operator*() const {
 			iterator_type tmp = _it;
 			return *--tmp;
 		}
 
+		/*
+		**	Returns a pointer to the element previous to current
+		*/
 		pointer operator->() const {
 			return std::addressof(operator*());
 		}
 
+		/*
+		**	Returns a reference to the element at specified relative location.
+		**	If such an element does not exist, it causes undefined behavior.
+		*/
 		reference operator[](difference_type n) const {
 			return base()[-n - 1];
 		}
 		// === Increments and Decrements ===
-		// Prefix increment
+
+		/*
+		**	Prefix increment.
+		**	++iter
+		*/
 		reverse_iterator& operator++() {
 			--_it;
 			return *this;
 		}
 
-		// Prefix decrement
+		/*
+		**	Prefix decrement.
+		**	--iter
+		*/
 		reverse_iterator& operator--() {
 			++_it;
 			return *this;
 		}
 
-		// Postfix increment
+		/*
+		**	Postfix increment.
+		**	iter++
+		*/
 		reverse_iterator operator++(int) {
 			reverse_iterator copy = *this;
 			--_it;
 			return copy;
 		}
 
-		// Postfix decrement
+		/*
+		**	Postfix decrement.
+		**	iter--
+		*/
 		reverse_iterator operator--(int) {
 			reverse_iterator copy = *this;
 			++_it;
 			return copy;
 		}
 
+		/*
+		**	Advances the iterator by n positions respectively.
+		*/
 		reverse_iterator& operator+=(difference_type n) {
 			_it -= n;
 			return *this;
 		}
-
+		/*
+		**	Advances the iterator by -n positions respectively.
+		*/
 		reverse_iterator& operator-=(difference_type n) {
 			_it += n;
 			return *this;
 		}
 
+		/*
+		**	Returns an iterator which is advanced by n positions respectively.
+		*/
 		reverse_iterator operator+(difference_type n) const {
 			for (difference_type i = 0; i < n; ++i) {
 				--reverse_iterator<Iter>(base());
@@ -104,6 +156,9 @@ namespace ft
 			return reverse_iterator<Iter>(base());
 		}
 
+		/*
+		**	Returns an iterator which is advanced by -n positions respectively.
+		*/
 		reverse_iterator operator-(difference_type n) const {
 			for (difference_type i = 0; i < n; ++i) {
 				++reverse_iterator<Iter>(base());
@@ -170,18 +225,27 @@ namespace ft
 		return lhs.base() <= rhs._base();
 	}
 
+	/*
+	**	Returns the iterator other incremented by n.
+	*/
 	template<class Iterator>
 	reverse_iterator<Iterator> operator+(typename ft::reverse_iterator<Iterator>::difference_type n,
 															const reverse_iterator<Iterator>& other) {
 		return n + other;
 	}
 
+	/*
+	**	Returns the iterator other decremented by n.
+	*/
 	template<class Iterator>
 	reverse_iterator<Iterator> operator-(typename ft::reverse_iterator<Iterator>::difference_type n,
 															const reverse_iterator<Iterator>& other) {
 		return n - other;
 	}
 
+	/*
+	**	Returns the difference between two reverse iterators.
+	*/
 	template<class IteratorL, class IteratorR>
 	typename reverse_iterator<IteratorL>::difference_type operator-(reverse_iterator<IteratorL>& lhs, reverse_iterator<IteratorR>& rhs) {
 		return rhs.base() - lhs._base();

@@ -20,19 +20,28 @@ namespace ft
 		/*		Member functions		*/
 		/********************************/
 
-		//	Constuctors
+		/*
+		**	Default constructor.
+		**	Value-initializes both elements of the pair, first and second.
+		*/
 		pair() : first(first_type()), second(second_type()) {}
 
+		/*
+		**	Initializes first with x and second with y.
+		*/
 		pair(const first_type& x, const second_type& y) : first(x), second(y) {}
 
-		//	Copy Constuctors
+		/*
+		**	Copy constructor.
+		**	Initializes first with p.first and second with p.second.
+		*/
 		template<class U1, class U2>
 		pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
 
-		// Destructors
-		~pair() {}
-
-		// Assigns
+		/*
+		**	Assigns contents from pair object "other".
+		**	Initializes first with other.first and second with other.second.
+		*/
 		pair& operator=(const pair& other) {
 			first = other.first;
 			second = other.second;

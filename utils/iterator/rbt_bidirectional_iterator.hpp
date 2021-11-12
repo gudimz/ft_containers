@@ -32,24 +32,41 @@ namespace ft
 		/********************************/
 		/*		Member functions		*/
 		/********************************/
-		//	Constuctors
+
+		/*
+		**	Default constructor.
+		**	Constructor for empty iterator, points to NULL.
+		*/
 		rbt_bidirectional_iterator() : ptr(0) _root(0) _nil(0) {}
 
+		/*
+		**	Constructor for iterator, having one element and points to ptr.
+		*/
 		rbt_bidirectional_iterator(node_ptr ptr, node_ptr root, node_ptr nil) : _ptr(ptr)
 																							_root(_root)
 																							_nil(nil)
 																							{}
 
-		//	Copy Constuctors
+		/*
+		**	Copy constructor.
+		**	The iterator is initialized with that of other
+		*/
 		rbt_bidirectional_iterator(const rbt_bidirectional_iterator& other) :	_ptr(other._ptr)
 																				_root(other._root)
 																				_nil(other._nil)
 																				{}
 
-		// Destructor
+		/*
+		**	Destructor.
+		**	Destroy iterator.
+		*/
 		virtual ~rbt_bidirectional_iterator() {}
 
-		// Assign
+		/*
+		**	Overload operator "=".
+		**	The iterator is assigned the value
+		**	of the iterator of other.
+		*/
 		rbt_bidirectional_iterator& operator=(const rbt_bidirectional_iterator& other) {
 			if (this == &other) {
 				return *this;
@@ -60,48 +77,73 @@ namespace ft
 			return *this;
 		}
 
+		/*
+		**	Overload called when an iterator is converted to a const iterator.
+		*/
 		operator rbt_bidirectional_iterator<const value_type>() const {
 			return rbt_bidirectional_iterator<const value_type>(_ptr);
 		}
 
 		// === Element access ===
-		node_ptr base() const {
-			return _ptr;
-		}
 
+		/*
+		**	Returns a reference to the data of the node,
+		**	pointed to by the iterator
+		*/
 		reference operator*() {
 			return _ptr->data;
 		}
 
+		/*
+		**	Returns a const reference to the data of the node,
+		**	pointed to by the iterator
+		*/
 		const_reference operator*() const {
 			return _ptr->data;
 		}
 
+		/*
+		**	Returns a pointer to the data of the node,
+		**	pointed to by the iterator
+		*/
 		pointer operator->() {
 			return &_ptr->data;
 		}
 
 		// === Increments and Decrements ===
-		// Prefix increment
+
+		/*
+		**	Prefix increment.
+		**	++iter
+		*/
 		rbt_bidirectional_iterator& operator++() {
 			_ptr = _next_node(_ptr);
 			return *this;
 		}
 
-		// Prefix decrement
+		/*
+		**	Prefix decrement.
+		**	--iter
+		*/
 		rbt_bidirectional_iterator& operator--() {
 			_ptr = _prev_node(_ptr);
 			return *this;
 		}
 
-		// Postfix increment
+		/*
+		**	Postfix increment.
+		**	iter++
+		*/
 		rbt_bidirectional_iterator operator++(int) {
 			rbt_bidirectional_iterator = *this;
 			_ptr = _next_node(_ptr);
 			return copy;
 		}
 
-		// Postfix decrement
+		/*
+		**	Postfix decrement.
+		**	iter--
+		*/
 		rbt_bidirectional_iterator operator--(int) {
 			rbt_bidirectional_iterator copy = *this;
 			_ptr = _prev_node(_ptr);
@@ -109,6 +151,7 @@ namespace ft
 		}
 
 		// === Compares ===
+
 		bool operator==(const rbt_bidirectional_iterator& other) const {
 			return _ptr == other._ptr;
 		}
@@ -119,6 +162,9 @@ namespace ft
 
 	// Helpers
 	private:
+		/*
+		**	Returns the value of the previous leaf, starting at the current node.
+		*/
 		node_ptr _prev_node(node_ptr node) {
 			node_ptr tmp;
 			if (node->left != _nil) {
@@ -140,6 +186,9 @@ namespace ft
 			}
 		}
 
+		/*
+		**	Returns the value of the next leaf, starting at the current node.
+		*/
 		node_ptr _next_node(node_ptr node) {
 			node_ptr tmp;
 			if (node->right != _nil) {
