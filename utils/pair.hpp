@@ -7,7 +7,7 @@ namespace ft
 	struct pair {
 	public:
 		/****************************/
-		/*		Member types		*/
+		/*      Member types        */
 		/****************************/
 		typedef T1 			first_type;
 		typedef T2 			second_type;
@@ -17,30 +17,30 @@ namespace ft
 		first_type	first;
 		second_type	second;
 		/********************************/
-		/*		Member functions		*/
+		/*       Member function        */
 		/********************************/
 
 		/*
-		**	Default constructor.
-		**	Value-initializes both elements of the pair, first and second.
+		** Default constructor.
+		** Value-initializes both elements of the pair, first and second.
 		*/
 		pair() : first(first_type()), second(second_type()) {}
 
 		/*
-		**	Initializes first with x and second with y.
+		** Initializes first with x and second with y.
 		*/
 		pair(const first_type& x, const second_type& y) : first(x), second(y) {}
 
 		/*
-		**	Copy constructor.
-		**	Initializes first with p.first and second with p.second.
+		** Copy constructor.
+		** Initializes first with p.first and second with p.second.
 		*/
 		template<class U1, class U2>
 		pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
 
 		/*
-		**	Assigns contents from pair object "other".
-		**	Initializes first with other.first and second with other.second.
+		** Assigns contents from pair object "other".
+		** Initializes first with other.first and second with other.second.
 		*/
 		pair& operator=(const pair& other) {
 			first = other.first;
@@ -49,7 +49,7 @@ namespace ft
 		}
 	};
 	/********************************/
-	/*		Non-member functions	*/
+	/*     Non-member functions     */
 	/********************************/
 
 	template<class T1, class T2>

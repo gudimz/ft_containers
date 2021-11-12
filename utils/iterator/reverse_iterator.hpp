@@ -9,6 +9,9 @@ namespace ft
 	template<class Iter>
 	class reverse_iterator {
 	public:
+		/****************************/
+		/*      Member types        */
+		/****************************/
 		typedef Iter													iterator_type;
 		typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
 		typedef typename ft::iterator_traits<Iter>::value_type			value_type;
@@ -17,40 +20,43 @@ namespace ft
 		typedef typename ft::iterator_traits<Iter>::reference			reference;
 
 	private:
+		/********************************/
+		/*        Member object         */
+		/********************************/
 		iterator_type _it;
 	public:
 		/********************************/
-		/*		Member functions		*/
+		/*       Member function        */
 		/********************************/
 
 		/*
-		**	Default constructor.
-		**	The underlying iterator is value-initialized
+		** Default constructor.
+		** The underlying iterator is value-initialized
 		*/
 		reverse_iterator() : _it(0) {}
 
 		/*
-		**	The underlying iterator is initialized with it.
+		** The underlying iterator is initialized with it.
 		*/
 		explicit reverse_iterator(iterator_type it) : _it(it) {}
 
 		/*
-		**	Copy constructor
-		**	The underlying iterator is initialized with that of other
+		** Copy constructor
+		** The underlying iterator is initialized with that of other
 		*/
 		template<class U>
 		reverse_iterator(const reverse_iterator<U>& other) : _it(other.base()) {}
 
 		/*
-		**	Destructor.
-		**	Destroy iterator.
+		** Destructor.
+		** Destroy iterator.
 		*/
 		virtual ~reverse_iterator() {}
 
 		/*
-		**	Overload operator "=".
-		**	The underlying iterator is assigned the value
-		**	of the underlying iterator of other.
+		** Overload operator "=".
+		** The underlying iterator is assigned the value
+		** of the underlying iterator of other.
 		*/
 		reverse_iterator& operator=(const reverse_iterator& other) {
 			if (this == &other) {
@@ -63,14 +69,14 @@ namespace ft
 
 
 		/*
-		**	Returns the underlying base iterator.
+		** Returns the underlying base iterator.
 		*/
 		iterator_type base() const {
 			return _it;
 		}
 
 		/*
-		**	Returns a reference to the element previous to current
+		** Returns a reference to the element previous to current
 		*/
 		reference operator*() const {
 			iterator_type tmp = _it;
@@ -78,15 +84,15 @@ namespace ft
 		}
 
 		/*
-		**	Returns a pointer to the element previous to current
+		** Returns a pointer to the element previous to current
 		*/
 		pointer operator->() const {
 			return std::addressof(operator*());
 		}
 
 		/*
-		**	Returns a reference to the element at specified relative location.
-		**	If such an element does not exist, it causes undefined behavior.
+		** Returns a reference to the element at specified relative location.
+		** If such an element does not exist, it causes undefined behavior.
 		*/
 		reference operator[](difference_type n) const {
 			return base()[-n - 1];
@@ -94,8 +100,8 @@ namespace ft
 		// === Increments and Decrements ===
 
 		/*
-		**	Prefix increment.
-		**	++iter
+		** Prefix increment.
+		** ++iter
 		*/
 		reverse_iterator& operator++() {
 			--_it;
@@ -103,8 +109,8 @@ namespace ft
 		}
 
 		/*
-		**	Prefix decrement.
-		**	--iter
+		** Prefix decrement.
+		** --iter
 		*/
 		reverse_iterator& operator--() {
 			++_it;
@@ -112,8 +118,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix increment.
-		**	iter++
+		** Postfix increment.
+		** iter++
 		*/
 		reverse_iterator operator++(int) {
 			reverse_iterator copy = *this;
@@ -122,8 +128,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix decrement.
-		**	iter--
+		** Postfix decrement.
+		** iter--
 		*/
 		reverse_iterator operator--(int) {
 			reverse_iterator copy = *this;
@@ -132,14 +138,14 @@ namespace ft
 		}
 
 		/*
-		**	Advances the iterator by n positions respectively.
+		** Advances the iterator by n positions respectively.
 		*/
 		reverse_iterator& operator+=(difference_type n) {
 			_it -= n;
 			return *this;
 		}
 		/*
-		**	Advances the iterator by -n positions respectively.
+		** Advances the iterator by -n positions respectively.
 		*/
 		reverse_iterator& operator-=(difference_type n) {
 			_it += n;
@@ -147,7 +153,7 @@ namespace ft
 		}
 
 		/*
-		**	Returns an iterator which is advanced by n positions respectively.
+		** Returns an iterator which is advanced by n positions respectively.
 		*/
 		reverse_iterator operator+(difference_type n) const {
 			for (difference_type i = 0; i < n; ++i) {
@@ -157,7 +163,7 @@ namespace ft
 		}
 
 		/*
-		**	Returns an iterator which is advanced by -n positions respectively.
+		** Returns an iterator which is advanced by -n positions respectively.
 		*/
 		reverse_iterator operator-(difference_type n) const {
 			for (difference_type i = 0; i < n; ++i) {
@@ -193,7 +199,7 @@ namespace ft
 	};
 
 	/********************************/
-	/*		Non-member functions	*/
+	/*     Non-member functions     */
 	/********************************/
 	template<class IteratorL, class IteratorR>
 	bool operator==(reverse_iterator<IteratorL>& lhs, reverse_iterator<IteratorR>& rhs) {
@@ -226,7 +232,7 @@ namespace ft
 	}
 
 	/*
-	**	Returns the iterator other incremented by n.
+	** Returns the iterator other incremented by n.
 	*/
 	template<class Iterator>
 	reverse_iterator<Iterator> operator+(typename ft::reverse_iterator<Iterator>::difference_type n,
@@ -235,7 +241,7 @@ namespace ft
 	}
 
 	/*
-	**	Returns the iterator other decremented by n.
+	** Returns the iterator other decremented by n.
 	*/
 	template<class Iterator>
 	reverse_iterator<Iterator> operator-(typename ft::reverse_iterator<Iterator>::difference_type n,
@@ -244,7 +250,7 @@ namespace ft
 	}
 
 	/*
-	**	Returns the difference between two reverse iterators.
+	** Returns the difference between two reverse iterators.
 	*/
 	template<class IteratorL, class IteratorR>
 	typename reverse_iterator<IteratorL>::difference_type operator-(reverse_iterator<IteratorL>& lhs, reverse_iterator<IteratorR>& rhs) {

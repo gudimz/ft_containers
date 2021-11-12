@@ -9,6 +9,9 @@ namespace ft
 	template<class T>
 	class random_access_iterator {
 	public:
+		/****************************/
+		/*      Member types        */
+		/****************************/
 		typedef std::ptrdiff_t						difference_type;
 		typedef T									value_type;
 		typedef value_type*							pointer;
@@ -18,39 +21,42 @@ namespace ft
 		typedef std::random_access_iterator_tag		iterator_category;
 
 	private:
+		/********************************/
+		/*        Member object         */
+		/********************************/
 		pointer _ptr;
 	public:
 		/********************************/
-		/*		Member functions		*/
+		/*       Member function        */
 		/********************************/
 
 		/*
-		**	Default constructor.
-		**	The iterator is value-initialized
+		** Default constructor.
+		** The iterator is value-initialized
 		*/
 		random_access_iterator() : _ptr(0) {}
 
 		/*
-		**	The iterator is initialized with ptr
+		** The iterator is initialized with ptr
 		*/
 		explicit random_access_iterator(pointer ptr) : _ptr(ptr) {}
 
 		/*
-		**	Copy constructor
-		**	The iterator is initialized with that of other
+		** Copy constructor
+		** The iterator is initialized with that of other
 		*/
 		random_access_iterator(const random_access_iterator& other) : _ptr(other._ptr) {}
 
 		/*
-		**	Destructor.
-		**	Destroy iterator.
+		** Destructor.
+		** Destroy iterator.
 		*/
 		virtual ~random_access_iterator() {}
 
 		/*
-		**	Overload operator "=".
-		**	The iterator is assigned the value
-		**	of the iterator of other.
+		** Overload operator "=".
+		** The iterator is assigned the value
+		** of the iterator of other.
 		*/
 		random_access_iterator& operator=(const random_access_iterator& other) {
 			if (this == &other) {
@@ -61,7 +67,7 @@ namespace ft
 		}
 
 		/*
-		**	Overload called when an iterator is converted to a const iterator.
+		** Overload called when an iterator is converted to a const iterator.
 		*/
 		operator random_access_iterator<const value_type>() const {
 			return random_access_iterator<const value_type>(_ptr);
@@ -70,36 +76,36 @@ namespace ft
 		// === Element access ===
 
 		/*
-		**	Returns a reference to the element pointed to by the iterator
+		** Returns a reference to the element pointed to by the iterator
 		*/
 		reference operator*() {
 			return *_ptr;
 		}
 
 		/*
-		**	Returns a const reference to the element pointed to by the iterator
+		** Returns a const reference to the element pointed to by the iterator
 		*/
 		const_reference operator*() const {
 			return *_ptr;
 		}
 
 		/*
-		**	Returns a pointer to the element pointed to by the iterator
+		** Returns a pointer to the element pointed to by the iterator
 		*/
 		pointer operator->() {
 			return _ptr;
 		}
 
 		/*
-		**	Returns a const pointer to the element pointed to by the iterator
+		** Returns a const pointer to the element pointed to by the iterator
 		*/
 		const_pointer operator->() const {
 			return _ptr;
 		}
 
 		/*
-		**	Returns a reference to the element at specified relative location.
-		**	If such an element does not exist, it causes undefined behavior.
+		** Returns a reference to the element at specified relative location.
+		** If such an element does not exist, it causes undefined behavior.
 		*/
 		const_reference operator[](difference_type n) const {
 			return *(_ptr + n);
@@ -108,8 +114,8 @@ namespace ft
 		// === Increments and Decrements ===
 
 		/*
-		**	Prefix increment.
-		**	++iter
+		** Prefix increment.
+		** ++iter
 		*/
 		random_access_iterator& operator++() {
 			++_ptr;
@@ -117,8 +123,8 @@ namespace ft
 		}
 
 		/*
-		**	Prefix decrement.
-		**	--iter
+		** Prefix decrement.
+		** --iter
 		*/
 		random_access_iterator& operator--() {
 			--_ptr;
@@ -126,8 +132,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix increment.
-		**	iter++
+		** Postfix increment.
+		** iter++
 		*/
 		random_access_iterator operator++(int) {
 			random_access_iterator copy = *this;
@@ -136,8 +142,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix decrement.
-		**	iter--
+		** Postfix decrement.
+		** iter--
 		*/
 		random_access_iterator operator--(int) {
 			random_access_iterator copy = *this;
@@ -146,7 +152,7 @@ namespace ft
 		}
 
 		/*
-		**	Advances the iterator by n positions respectively.
+		** Advances the iterator by n positions respectively.
 		*/
 		random_access_iterator& operator+=(difference_type n) {
 			_ptr += n;
@@ -154,7 +160,7 @@ namespace ft
 		}
 
 		/*
-		**	Advances the iterator by -n positions respectively.
+		** Advances the iterator by -n positions respectively.
 		*/
 		random_access_iterator& operator-=(difference_type n) {
 			_ptr -= n;
@@ -162,28 +168,28 @@ namespace ft
 		}
 
 		/*
-		**	Returns an iterator which is advanced by n positions respectively.
+		** Returns an iterator which is advanced by n positions respectively.
 		*/
 		random_access_iterator operator+(difference_type n) const {
 			return random_access_iterator<T>(_ptr + n);
 		}
 
 		/*
-		**	Returns an iterator which is advanced by -n positions respectively.
+		** Returns an iterator which is advanced by -n positions respectively.
 		*/
 		random_access_iterator operator-(difference_type n) const {
 			return random_access_iterator<T>(_ptr - n);
 		}
 
 		/*
-		**	Returns the sum between iterators.
+		** Returns the sum between iterators.
 		*/
 		difference_type operator+(const random_access_iterator& other) const {
 			return _ptr + other._ptr;
 		}
 
 		/*
-		**	Returns the difference between iterators.
+		** Returns the difference between iterators.
 		*/
 		difference_type operator-(const random_access_iterator& other) const {
 			return _ptr - other._ptr;
@@ -215,7 +221,7 @@ namespace ft
 		}
 	};
 	/********************************/
-	/*		Non-member functions	*/
+	/*     Non-member functions     */
 	/********************************/
 
 	template<class T, class U>
@@ -249,7 +255,7 @@ namespace ft
 	}
 
 	/*
-	**	Returns the iterator other incremented by n.
+	** Returns the iterator other incremented by n.
 	*/
 	template<class T>
 	random_access_iterator<T> operator+(typename ft::random_access_iterator<T>::difference_type n,

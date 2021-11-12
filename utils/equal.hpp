@@ -4,11 +4,11 @@
 namespace ft
 {
 	/*
-	**	Default
-	**	Compare elements in the range first1 to last1 and first2.
-	**	If elements in range equal elemnts in first2,
-	**	return true
-	**	The elements are compared using operator==
+	** Default
+	** Compare elements in the range first1 to last1 and first2.
+	** If elements in range equal elemnts in first2,
+	** return true
+	** The elements are compared using operator==
 	*/
 	template<class InputIt1, class InputIt2>
 	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2) {
@@ -23,11 +23,11 @@ namespace ft
 	}
 
 	/*
-	**	With binary predicate.
-	**	Compare elements in the range first1 to last1 and first2.
-	**	If elements in range equal elemnts in first2,
-	**	return true
-	**	The elements are compared using binary predicate
+	** With binary predicate.
+	** Compare elements in the range first1 to last1 and first2.
+	** If elements in range equal elemnts in first2,
+	** return true
+	** The elements are compared using binary predicate
 	*/
 	template<class InputIt1, class InputIt2, class BinaryPredicate>
 	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, BinaryPredicate p) {

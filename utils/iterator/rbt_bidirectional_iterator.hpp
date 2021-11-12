@@ -11,7 +11,7 @@ namespace ft
 	class rbt_bidirectional_iterator {
 	public:
 		/****************************/
-		/*		Member types		*/
+		/*      Member types        */
 		/****************************/
 		typedef Node								value_type;
 		typedef value_type*							node_ptr;
@@ -22,7 +22,7 @@ namespace ft
 		typedef typename Node::const_reference		const_reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 		/********************************/
-		/*		Member object			*/
+		/*        Member object         */
 		/********************************/
 		node_ptr									_ptr;
 	private:
@@ -30,17 +30,17 @@ namespace ft
 		node_ptr									_nil;
 	public:
 		/********************************/
-		/*		Member functions		*/
+		/*       Member function        */
 		/********************************/
 
 		/*
-		**	Default constructor.
-		**	Constructor for empty iterator, points to NULL.
+		** Default constructor.
+		** Constructor for empty iterator, points to NULL.
 		*/
 		rbt_bidirectional_iterator() : ptr(0) _root(0) _nil(0) {}
 
 		/*
-		**	Constructor for iterator, having one element and points to ptr.
+		** Constructor for iterator, having one element and points to ptr.
 		*/
 		rbt_bidirectional_iterator(node_ptr ptr, node_ptr root, node_ptr nil) : _ptr(ptr)
 																							_root(_root)
@@ -48,8 +48,8 @@ namespace ft
 																							{}
 
 		/*
-		**	Copy constructor.
-		**	The iterator is initialized with that of other
+		** Copy constructor.
+		** The iterator is initialized with that of other
 		*/
 		rbt_bidirectional_iterator(const rbt_bidirectional_iterator& other) :	_ptr(other._ptr)
 																				_root(other._root)
@@ -57,15 +57,15 @@ namespace ft
 																				{}
 
 		/*
-		**	Destructor.
-		**	Destroy iterator.
+		** Destructor.
+		** Destroy iterator.
 		*/
 		virtual ~rbt_bidirectional_iterator() {}
 
 		/*
-		**	Overload operator "=".
-		**	The iterator is assigned the value
-		**	of the iterator of other.
+		** Overload operator "=".
+		** The iterator is assigned the value
+		** of the iterator of other.
 		*/
 		rbt_bidirectional_iterator& operator=(const rbt_bidirectional_iterator& other) {
 			if (this == &other) {
@@ -78,7 +78,7 @@ namespace ft
 		}
 
 		/*
-		**	Overload called when an iterator is converted to a const iterator.
+		** Overload called when an iterator is converted to a const iterator.
 		*/
 		operator rbt_bidirectional_iterator<const value_type>() const {
 			return rbt_bidirectional_iterator<const value_type>(_ptr);
@@ -87,24 +87,24 @@ namespace ft
 		// === Element access ===
 
 		/*
-		**	Returns a reference to the data of the node,
-		**	pointed to by the iterator
+		** Returns a reference to the data of the node,
+		** pointed to by the iterator
 		*/
 		reference operator*() {
 			return _ptr->data;
 		}
 
 		/*
-		**	Returns a const reference to the data of the node,
-		**	pointed to by the iterator
+		** Returns a const reference to the data of the node,
+		** pointed to by the iterator
 		*/
 		const_reference operator*() const {
 			return _ptr->data;
 		}
 
 		/*
-		**	Returns a pointer to the data of the node,
-		**	pointed to by the iterator
+		** Returns a pointer to the data of the node,
+		** pointed to by the iterator
 		*/
 		pointer operator->() {
 			return &_ptr->data;
@@ -113,8 +113,8 @@ namespace ft
 		// === Increments and Decrements ===
 
 		/*
-		**	Prefix increment.
-		**	++iter
+		** Prefix increment.
+		** ++iter
 		*/
 		rbt_bidirectional_iterator& operator++() {
 			_ptr = _next_node(_ptr);
@@ -122,8 +122,8 @@ namespace ft
 		}
 
 		/*
-		**	Prefix decrement.
-		**	--iter
+		** Prefix decrement.
+		** --iter
 		*/
 		rbt_bidirectional_iterator& operator--() {
 			_ptr = _prev_node(_ptr);
@@ -131,8 +131,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix increment.
-		**	iter++
+		** Postfix increment.
+		** iter++
 		*/
 		rbt_bidirectional_iterator operator++(int) {
 			rbt_bidirectional_iterator = *this;
@@ -141,8 +141,8 @@ namespace ft
 		}
 
 		/*
-		**	Postfix decrement.
-		**	iter--
+		** Postfix decrement.
+		** iter--
 		*/
 		rbt_bidirectional_iterator operator--(int) {
 			rbt_bidirectional_iterator copy = *this;
@@ -163,7 +163,7 @@ namespace ft
 	// Helpers
 	private:
 		/*
-		**	Returns the value of the previous leaf, starting at the current node.
+		** Returns the value of the previous leaf, starting at the current node.
 		*/
 		node_ptr _prev_node(node_ptr node) {
 			node_ptr tmp;
@@ -187,7 +187,7 @@ namespace ft
 		}
 
 		/*
-		**	Returns the value of the next leaf, starting at the current node.
+		** Returns the value of the next leaf, starting at the current node.
 		*/
 		node_ptr _next_node(node_ptr node) {
 			node_ptr tmp;

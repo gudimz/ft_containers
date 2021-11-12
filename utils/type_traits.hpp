@@ -6,8 +6,8 @@
 namespace ft
 {
 	/*
-	**	If B is true, enable_if has a public member typedef type, equal to T;
-	**	otherwise, there is no member typedef.
+	** If B is true, enable_if has a public member typedef type, equal to T;
+	** otherwise, there is no member typedef.
 	*/
 	template<bool B, class T = void>
 	struct enable_if {};
@@ -18,23 +18,23 @@ namespace ft
 	};
 
 	/*
-	**	This is a struct, that check, if the type is integral
+	** This is a struct, that check, if the type is integral
 	*/
 
 	template<class T, T v>
 	struct integral_constant {
 	/****************************/
-	/*		Member types		*/
+	/*       Member types       */
 	/****************************/
 	typedef T value_type;
 	typedef integral_constant<T, v> type;
 	/****************************/
-	/*		Member constants	*/
+	/*      Member constants    */
 	/****************************/
 	static const value_type value = v;
-	/****************************/
-	/*		Member functions	*/
-	/****************************/
+	/********************************/
+	/*       Member function        */
+	/********************************/
 	operator value_type() const {
 		return value;
 	}

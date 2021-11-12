@@ -33,7 +33,7 @@ namespace ft
 	public:
 
 		/****************************/
-		/*		Member types		*/
+		/*      Member types        */
 		/****************************/
 
 		typedef Key														key_type;
@@ -55,7 +55,7 @@ namespace ft
 	private:
 
 		/********************************/
-		/*		Member object			*/
+		/*        Member object         */
 		/********************************/
 
 		node_ptr		_root;
@@ -66,13 +66,13 @@ namespace ft
 	public:
 
 		/********************************/
-		/*		Member functions		*/
+		/*       Member function        */
 		/********************************/
 
 		/*
-		**	Default constructor.
-		**	Constructor for an empty tree.
-		**	Root empty tree points to a _nil(black color).
+		** Default constructor.
+		** Constructor for an empty tree.
+		** Root empty tree points to a _nil(black color).
 		*/
 		explicit red_black_tree(const key_compare& comp = key_compare(),
 								const allocator_type& alloc = allocator_type()) :	_root(0), _nil(0), _comp(comp),
@@ -84,9 +84,9 @@ namespace ft
 		}
 
 		/*
-		**	Range constructor
-		**	Сonstructor for a set of elements from a span of iterators(first and last)
-		**	Root empty tree points to a _nil(black color).
+		** Range constructor
+		** Сonstructor for a set of elements from a span of iterators(first and last)
+		** Root empty tree points to a _nil(black color).
 		*/
 		template<class InputIt>
 		red_black_tree(InputIt first, InputIt last, const key_compare& comp = key_compare(),
@@ -100,8 +100,8 @@ namespace ft
 		}
 
 		/*
-		**	Copy constructor.
-		**	Each element is copied from "other".
+		** Copy constructor.
+		** Each element is copied from "other".
 		*/
 		red_black_tree(const red_black_tree& other) :	_root(0), _nil(0), _comp(comp),
 																					_size(0), _alloc(alloc) {
@@ -113,8 +113,8 @@ namespace ft
 		}
 
 		/*
-		**	Destructor.
-		**	Destroy the tree object.
+		** Destructor.
+		** Destroy the tree object.
 		*/
 		virtual ~red_black_tree(void) {
 			clear();
@@ -123,8 +123,8 @@ namespace ft
 		}
 
 		/*
-		**	Assigns contents.
-		**	The current content replace from "other"
+		** Assigns contents.
+		** The current content replace from "other"
 		*/
 		red_black_tree& operator=(const red_black_tree& other) {
 			if (this == &other) {
@@ -138,7 +138,7 @@ namespace ft
 		}
 
 		/*
-		**	Returns copy of the allocator
+		** Returns copy of the allocator
 		*/
 		allocator_type get_allocator(void) const {
 			return _alloc;
@@ -147,7 +147,7 @@ namespace ft
 		// ==== Iterators ====
 
 		/*
-		**	Returns an iterator to the first element tree
+		** Returns an iterator to the first element tree
 		*/
 		iterator begin(void) {
 			node_ptr tmp = _root;
@@ -158,7 +158,7 @@ namespace ft
 		}
 
 		/*
-		**	Returns a const iterator to the first element tree
+		** Returns a const iterator to the first element tree
 		*/
 		const_iterator begin(void) const {
 			node_ptr tmp = _root;
@@ -169,42 +169,42 @@ namespace ft
 		}
 
 		/*
-		**	Returns an iterator to the last element tree
+		** Returns an iterator to the last element tree
 		*/
 		iterator end(void) {
 			return iterator(_nil, _root, _nil);
 		}
 
 		/*
-		**	Returns a const iterator to the last element tree
+		** Returns a const iterator to the last element tree
 		*/
 		const_iterator end(void) const {
 			return const_iterator(_nil, _root, _nil);
 		}
 
 		/*
-		**	Returns an revere iterator to the last element tree
+		** Returns an revere iterator to the last element tree
 		*/
 		reverse_iterator rbegin(void) {
 			return reverse_iterator(end());
 		}
 
 		/*
-		**	Returns an const revere iterator to the last element tree
+		** Returns an const revere iterator to the last element tree
 		*/
 		const_reverse_iterator rbegin(void) const {
 			return const_reverse_iterator(end());
 		}
 
 		/*
-		**	Returns an revere iterator to the first element tree
+		** Returns an revere iterator to the first element tree
 		*/
 		reverse_iterator rend(void) {
 			return reverse_iterator(begin());
 		}
 
 		/*
-		**	Returns an const revere iterator to the first element tree
+		** Returns an const revere iterator to the first element tree
 		*/
 		const_reverse_iterator rend(void) const {
 			return const_reverse_iterator(begin());
@@ -213,22 +213,22 @@ namespace ft
 		// ==== Capacity ====
 
 		/*
-		**	Checks if the tree has no elements.
-		**	If the tree is empty, return true.
+		** Checks if the tree has no elements.
+		** If the tree is empty, return true.
 		*/
 		bool empty(void) const {
 			return _size == 0;
 		}
 
 		/*
-		**	Return number of elemnts the tree.
+		** Return number of elemnts the tree.
 		*/
 		size_type size(void) const {
 			return _size;
 		}
 
 		/*
-		**	Return the max number of elemnts the tree is able to hold.
+		** Return the max number of elemnts the tree is able to hold.
 		*/
 		size_type max_size(void) const {
 			return _alloc.max_size();
@@ -237,8 +237,8 @@ namespace ft
 		// ==== Modifiers ====
 
 		/*
-		**	Erases all elements from the tree.
-		**	After this call, _size = 0.
+		** Erases all elements from the tree.
+		** After this call, _size = 0.
 		*/
 		void clear(void) {
 			_clear_help(_root);
@@ -248,13 +248,13 @@ namespace ft
 	private:
 
 		/********************************/
-		/*	Helpers for public function	*/
+		/* Helpers for public function  */
 		/********************************/
 
 		// ==== for Modifiers ====
 
 		/*
-		**	Destroy all elements of the tree using recursion
+		** Destroy all elements of the tree using recursion
 		*/
 		void _clear_help(node_ptr node) {
 			if (node == _nil) {
