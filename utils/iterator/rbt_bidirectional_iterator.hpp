@@ -3,16 +3,19 @@
 
 # include <cstddef> // ptrdiff_t
 # include <iterator> //std::random_access_iterator_tag
-# include "../red_black_tree.hpp"
+# include "reverse_iterator.hpp"
+# include "../rb_tree_map.hpp"
 
 namespace ft
 {
 	template<class Node>
 	class rbt_bidirectional_iterator {
 	public:
+
 		/****************************/
 		/*      Member types        */
 		/****************************/
+
 		typedef Node								value_type;
 		typedef value_type*							node_ptr;
 		typedef std::ptrdiff_t						difference_type;
@@ -21,14 +24,17 @@ namespace ft
 		typedef typename Node::reference			reference;
 		typedef typename Node::const_reference		const_reference;
 		typedef std::random_access_iterator_tag		iterator_category;
+
 		/********************************/
 		/*        Member object         */
 		/********************************/
+
 		node_ptr									_ptr;
 	private:
 		node_ptr									_root;
 		node_ptr									_nil;
 	public:
+
 		/********************************/
 		/*       Member function        */
 		/********************************/
@@ -37,22 +43,22 @@ namespace ft
 		** Default constructor.
 		** Constructor for empty iterator, points to NULL.
 		*/
-		rbt_bidirectional_iterator() : ptr(0) _root(0) _nil(0) {}
+		rbt_bidirectional_iterator() : _ptr(0), _root(0), _nil(0) {}
 
 		/*
 		** Constructor for iterator, having one element and points to ptr.
 		*/
-		rbt_bidirectional_iterator(node_ptr ptr, node_ptr root, node_ptr nil) : _ptr(ptr)
-																							_root(_root)
-																							_nil(nil)
-																							{}
+		rbt_bidirectional_iterator(node_ptr ptr, node_ptr root, node_ptr nil) : _ptr(ptr),
+																				_root(root),
+																				_nil(nil)
+																				{}
 
 		/*
 		** Copy constructor.
 		** The iterator is initialized with that of other
 		*/
-		rbt_bidirectional_iterator(const rbt_bidirectional_iterator& other) :	_ptr(other._ptr)
-																				_root(other._root)
+		rbt_bidirectional_iterator(const rbt_bidirectional_iterator& other) :	_ptr(other._ptr),
+																				_root(other._root),
 																				_nil(other._nil)
 																				{}
 
@@ -135,7 +141,7 @@ namespace ft
 		** iter++
 		*/
 		rbt_bidirectional_iterator operator++(int) {
-			rbt_bidirectional_iterator = *this;
+			rbt_bidirectional_iterator copy = *this;
 			_ptr = _next_node(_ptr);
 			return copy;
 		}
@@ -169,7 +175,7 @@ namespace ft
 			node_ptr tmp;
 			if (node->left != _nil) {
 				tmp = node->left;
-				while (tmp->right && tmp->right != _nill) {
+				while (tmp->right && tmp->right != _nil) {
 					tmp = tmp->right;
 				}
 			} else {
@@ -180,7 +186,7 @@ namespace ft
 				}
 			}
 			if (!tmp) {
-				return _nil
+				return _nil;
 			} else {
 				return tmp;
 			}
@@ -193,7 +199,7 @@ namespace ft
 			node_ptr tmp;
 			if (node->right != _nil) {
 				tmp = node->right;
-				while (tmp->left && tmp->left != _nill) {
+				while (tmp->left && tmp->left != _nil) {
 					tmp = tmp->left;
 				}
 			} else {
@@ -204,7 +210,7 @@ namespace ft
 				}
 			}
 			if (!tmp) {
-				return _nil
+				return _nil;
 			} else {
 				return tmp;
 			}

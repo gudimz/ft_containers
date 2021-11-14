@@ -8,20 +8,25 @@ namespace ft
 	template<class T, class Container = ft::vector<T> >
 	class stack {
 	public:
+
 		/****************************/
-		/*       Member types        */
+		/*       Member types       */
 		/****************************/
+
 		typedef Container																	container_type;
 		typedef typename container_type::value_type											value_type;
 		typedef typename container_type::size_type											size_type;
 		typedef typename container_type::reference											reference;
 		typedef typename container_type::const_reference 									const_reference;
 	private:
+
 		/********************************/
 		/*         Member object        */
 		/********************************/
 		container_type	_c;
+
 	public:
+
 		/********************************/
 		/*        Member functions      */
 		/********************************/
@@ -120,6 +125,7 @@ namespace ft
 		template<class U, class Cont>
 		friend bool operator>=(const ft::stack<U, Cont>& lhs, const ft::stack<U, Cont>& rhs);
 	};
+
 	/********************************/
 	/*     Non-member functions     */
 	/********************************/

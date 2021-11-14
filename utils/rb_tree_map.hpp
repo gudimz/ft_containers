@@ -1,12 +1,13 @@
-#ifndef RED_BLACK_TREE_HPP
-# define RED_BLACK_TREE_HPP
+#ifndef RB_TREE_MAP_HPP
+# define RB_TREE_MAP_HPP
 
 # include <cstddef> // ptrdiff_t
-# include <functional> // std::less<Key>
 # include <iostream>
+# include "../containers/map.hpp"
 # include "../utils/pair.hpp"
 # include "../utils/iterator/rbt_bidirectional_iterator.hpp"
-# include "../utils/iterator/reverse_iterator.hpp"
+# include "../utils/functional.hpp"
+
 
 namespace ft
 {
@@ -27,7 +28,7 @@ namespace ft
 		rbt_node(value_type data) : data(data) {}
 	};
 
-	template<class Key, class T, class Compare = std::less<Key>,
+	template<class Key, class T, class Compare = ft::less<Key>,
 			class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class red_black_tree {
 	public:
@@ -43,7 +44,7 @@ namespace ft
 		typedef	const value_type*										const_pointer;
 		typedef	value_type&												reference;
 		typedef	const value_type&										const_reference;
-		typedef	red_black_tree<value_type>								node_type;
+		typedef	rbt_node<value_type>									node_type;
 		typedef node_type*												node_ptr;
 		typedef Allocator												allocator_type;
 		typedef std::size_t												size_type;
@@ -80,7 +81,7 @@ namespace ft
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
 			_nil->color = black;
-			_root = _nill;
+			_root = _nil;
 		}
 
 		/*
@@ -95,7 +96,7 @@ namespace ft
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
 			_nil->color = black;
-			_root = _nill;
+			_root = _nil;
 			insert(first, last);
 		}
 
@@ -103,12 +104,12 @@ namespace ft
 		** Copy constructor.
 		** Each element is copied from "other".
 		*/
-		red_black_tree(const red_black_tree& other) :	_root(0), _nil(0), _comp(comp),
-																					_size(0), _alloc(alloc) {
+		red_black_tree(const red_black_tree& other) :	_root(0), _nil(0), _comp(other._comp),
+																					_size(0), _alloc(other._alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
 			_nil->color = black;
-			_root = _nill;
+			_root = _nil;
 			insert(other.begin(), other.end());
 		}
 
@@ -119,7 +120,7 @@ namespace ft
 		virtual ~red_black_tree(void) {
 			clear();
 			_alloc.destroy(_nil);
-			_alloc.deallocate(_nill, 1);
+			_alloc.deallocate(_nil, 1);
 		}
 
 		/*
@@ -142,6 +143,49 @@ namespace ft
 		*/
 		allocator_type get_allocator(void) const {
 			return _alloc;
+		}
+
+		// === Element access ===
+
+		/*
+		** Returns a reference to the mapped value of the element with key equivalent to key.
+		** If no such element exists, an exception of type std::out_of_range is thrown
+		*/
+		reference at(key_type& key) {
+			iterator it = find(key);
+			if (it) {
+				return it->_ptr->data.second;
+			} else {
+				throw std::out_of_range("Out of range");
+			}
+		}
+
+		/*
+		** Returns a const reference to the element at specified location pos, with bounds checking.
+		** If pos is not within the range of the container,
+		** an exception of type std::out_of_range is thrown.
+		*/
+		const_reference at(key_type& key) const {
+			iterator it = find(key);
+			if (it) {
+				return it->_ptr->data.second;
+			} else
+				throw std::out_of_range("Out of range");
+		}
+
+		/*
+		** Returns a reference to the value that is mapped to a key equivalent to key,
+		** performing an insertion if such key does not already exist.
+		*/
+		reference operator[](key_type& key) {
+			iterator it = find(key);
+			if (it) {
+				return it->_ptr->data.second;
+			} else {
+				insert(ft::make_pair<key_type, value_type>(key, value_type()));
+				it = find(key);
+				return it->_ptr->data.second;
+			}
 		}
 
 		// ==== Iterators ====
@@ -245,6 +289,38 @@ namespace ft
 			_root = _nil;
 		}
 
+		/*
+		** Single element.
+		** Inserts element into the container,
+		** if the container doesn't already contain an element with an equivalent key.
+		*/
+		// ft::pair<iterator, bool> insert(const value_type& value) {
+
+		// }
+
+		// ==== Lookup ====
+
+		/*
+		** Returns the number of elements with key key,
+		** which is either 1 or 0 since this container does not allow duplicates.
+		*/
+		size_type count(const key_type& key) {
+			iterator it = find(key);
+			return !it ? 0 : 1;
+		}
+
+		/*
+		** Finds an element with key equivalent to key and returns a iterator to it, if found.
+		*/
+		iterator find(const key_type& key) {
+			node_ptr node = _search_key(key, _root);
+			if (!node) {
+				return end();
+			}
+			return iterator(node, _root, _nil);
+		}
+
+
 	private:
 
 		/********************************/
@@ -254,9 +330,11 @@ namespace ft
 		// ==== for Modifiers ====
 
 		/*
+		** This is the helper func for public clear func.
 		** Destroy all elements of the tree using recursion
 		*/
 		void _clear_help(node_ptr node) {
+			//for recursion
 			if (node == _nil) {
 				return ;
 			}
@@ -267,7 +345,23 @@ namespace ft
 			--_size;
 		}
 
-
+		/*
+		** This is the helper func for public find func.
+		** Finds an element with key in the tree using recursion
+		*/
+		node_ptr _serach_key(const key_type key, node_ptr node) const {
+			if (!node) {
+				return 0;
+			}
+			if (key < node->data.first) {
+				return _serach_key(key, node->left);
+			} else if (key < node->data.first) {
+				return _serach_key(key, node->right);
+			} else if (key == node->data.first) {
+				return node;
+			}
+			return 0;
+		}
 	};
 }
 

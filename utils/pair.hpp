@@ -5,17 +5,20 @@ namespace ft
 {
 	template<class T1, class T2>
 	struct pair {
-	public:
+
 		/****************************/
 		/*      Member types        */
 		/****************************/
 		typedef T1 			first_type;
 		typedef T2 			second_type;
+
 		/********************************/
 		/*        Member object         */
 		/********************************/
+
 		first_type	first;
 		second_type	second;
+
 		/********************************/
 		/*       Member function        */
 		/********************************/
@@ -48,6 +51,7 @@ namespace ft
 			return *this;
 		}
 	};
+
 	/********************************/
 	/*     Non-member functions     */
 	/********************************/
@@ -73,7 +77,7 @@ namespace ft
 	}
 
 	template<class T1, class T2>
-	bool operator<(const ft::pair<T1, T2>& lhs, ft::pair<T1, T2>& rhs) {
+	bool operator<=(const ft::pair<T1, T2>& lhs, ft::pair<T1, T2>& rhs) {
 		return !(rhs < lhs);
 	}
 

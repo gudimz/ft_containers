@@ -9,9 +9,11 @@ namespace ft
 	template<class Iter>
 	class reverse_iterator {
 	public:
+
 		/****************************/
 		/*      Member types        */
 		/****************************/
+
 		typedef Iter													iterator_type;
 		typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
 		typedef typename ft::iterator_traits<Iter>::value_type			value_type;
@@ -20,11 +22,14 @@ namespace ft
 		typedef typename ft::iterator_traits<Iter>::reference			reference;
 
 	private:
+
 		/********************************/
 		/*        Member object         */
 		/********************************/
+
 		iterator_type _it;
 	public:
+
 		/********************************/
 		/*       Member function        */
 		/********************************/
@@ -201,6 +206,7 @@ namespace ft
 	/********************************/
 	/*     Non-member functions     */
 	/********************************/
+
 	template<class IteratorL, class IteratorR>
 	bool operator==(reverse_iterator<IteratorL>& lhs, reverse_iterator<IteratorR>& rhs) {
 		return lhs.base() == rhs._base();

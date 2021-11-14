@@ -15,9 +15,11 @@ namespace ft
 	template<class T, class Allocator = std::allocator<T> >
 	class vector {
 	public:
+
 		/****************************/
 		/*       Member types       */
 		/****************************/
+
 		typedef T																		value_type;
 		typedef Allocator																allocator_type;
 
@@ -33,16 +35,19 @@ namespace ft
 		typedef ft::reverse_iterator<iterator>											reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>									const_reverse_iterator;
 	private:
+
 		/********************************/
 		/*        Member object         */
 		/********************************/
+
 		pointer			_arr;
 		size_type 		_size;
 		size_type 		_capacity;
 		allocator_type	_alloc;
 	public:
+
 		/********************************/
-		/*		Member functions		*/
+		/*       Member functions       */
 		/********************************/
 
 		/*

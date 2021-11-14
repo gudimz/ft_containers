@@ -23,18 +23,24 @@ namespace ft
 
 	template<class T, T v>
 	struct integral_constant {
+
 	/****************************/
 	/*       Member types       */
 	/****************************/
+
 	typedef T value_type;
 	typedef integral_constant<T, v> type;
+
 	/****************************/
 	/*      Member constants    */
 	/****************************/
+
 	static const value_type value = v;
+
 	/********************************/
 	/*       Member function        */
 	/********************************/
+
 	operator value_type() const {
 		return value;
 	}
