@@ -19,10 +19,11 @@ namespace ft
 		typedef Node								value_type;
 		typedef value_type*							node_ptr;
 		typedef std::ptrdiff_t						difference_type;
-		typedef typename Node::value_type			data_type;
-		typedef typename Node::pointer				pointer;
-		typedef typename Node::reference			reference;
-		typedef typename Node::const_reference		const_reference;
+		typedef typename Node::value_type const		data_type;
+		typedef data_type*							pointer;
+		typedef data_type const*					const_pointer;
+		typedef data_type&							reference;
+		typedef data_type const&					const_reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
 		/********************************/
@@ -87,7 +88,7 @@ namespace ft
 		** Overload called when an iterator is converted to a const iterator.
 		*/
 		operator rbt_bidirectional_iterator<const value_type>() const {
-			return rbt_bidirectional_iterator<const value_type>(_ptr);
+			return rbt_bidirectional_iterator<const value_type>(_ptr, _root, _nil);
 		}
 
 		// === Element access ===
@@ -113,7 +114,15 @@ namespace ft
 		** pointed to by the iterator
 		*/
 		pointer operator->() {
-			return &_ptr->data;
+			return &(operator*());
+		}
+
+		/*
+		** Returns a pointer to the data of the node,
+		** pointed to by the iterator
+		*/
+		const_pointer operator->() const {
+			return &(operator*());
 		}
 
 		// === Increments and Decrements ===

@@ -1,6 +1,8 @@
 #include "../containers/map.hpp"
 #include "../utils/iterator/rbt_bidirectional_iterator.hpp"
+#include "../utils/pair.hpp"
 #include "../utils/rb_tree_map.hpp"
+#include "../utils/functional.hpp"
 #include <map>
 
 #define GREEN "\x1b[1;32m"
@@ -34,7 +36,7 @@ void map_compare(const ft::map<Key, T>& ft_map, const std::map<Key, T>& std_map)
 	bool flag = true;
 	typename ft::map<Key, T>::const_iterator ft_it = ft_map.begin();
 	typename std::map<Key, T>::const_iterator std_it = std_map.begin();
-	for (; std_it != std_map.end() && ft_it != ft_map.end(); ++std_it, ft_it) {
+	for (; std_it != std_map.end() && ft_it != ft_map.end(); ++std_it, ++ft_it) {
 		if (std_it->first != ft_it->first || std_it->second != ft_it->second) {
 			std::cout << RED "KO :(" REST << std::endl;
 			flag = false;
@@ -61,16 +63,16 @@ void map_compare(const ft::map<Key, T>& ft_map, const std::map<Key, T>& std_map)
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	//last element
-	if (ft_map.size()) {
-		if ((--std_map.end()) == (--ft_map.end())) {
-			std::cout << "last element:  " GREEN << std_map.begin()->second << "==" << ft_map.begin()->second << REST <<
-			GREEN " OK :)" REST << std::endl;
-		} else {
-			std::cout << "last element:  " RED << std_map.begin()->second << "!=" << ft_map.begin()->second << REST <<
-			RED " KO :(" REST << std::endl;
-		}
-	}
+	// //last element
+	// if (ft_map.size()) {
+	// 	if ((--std_map.end()) == (--ft_map.end())) {
+	// 		std::cout << "last element:  " GREEN << std_map.begin()->second << "==" << ft_map.begin()->second << REST <<
+	// 		GREEN " OK :)" REST << std::endl;
+	// 	} else {
+	// 		std::cout << "last element:  " RED << std_map.begin()->second << "!=" << ft_map.begin()->second << REST <<
+	// 		RED " KO :(" REST << std::endl;
+	// 	}
+	// }
 	std::cout << "=================================================================================="
 	<< std::endl << std::endl;
 }

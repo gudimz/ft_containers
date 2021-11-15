@@ -20,7 +20,7 @@ namespace ft
 
 		typedef Key																				key_type;
 		typedef T																				mapped_type;
-		typedef ft::pair<const Key, mapped_type>												value_type;
+		typedef ft::pair<const key_type, mapped_type>											value_type;
 		typedef Compare																			key_compare;
 		typedef Allocator																		allocator_type;
 		typedef typename ft::red_black_tree<key_type, mapped_type, key_compare, allocator_type>	tree_type;
@@ -74,6 +74,88 @@ namespace ft
 		*/
 		explicit map(const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()) : _tree(comp, allocator_type(alloc)) {}
+
+		// ==== Iterators ====
+
+		/*
+		** Returns an iterator to the first element container.
+		*/
+		iterator begin(void) {
+			return _tree.begin();
+		}
+
+		/*
+		** Returns a const iterator to the first element container.
+		*/
+		const_iterator begin(void) const {
+			return _tree.begin();
+		}
+
+		/*
+		** Returns an iterator to the last element container
+		*/
+		iterator end(void) {
+			return _tree.end();
+		}
+
+		/*
+		** Returns a const iterator to the last element container
+		*/
+		const_iterator end(void) const {
+			return _tree.end();
+		}
+
+		/*
+		** Returns an revere iterator to the last element container
+		*/
+		reverse_iterator rbegin(void) {
+			return _tree.rbegin();
+		}
+
+		/*
+		** Returns an const revere iterator to the last element container
+		*/
+		const_reverse_iterator rbegin(void) const {
+			return _tree.rbegin();
+		}
+
+		/*
+		** Returns an revere iterator to the first element container
+		*/
+		reverse_iterator rend(void) {
+			return _tree.rend();
+		}
+
+		/*
+		** Returns an const revere iterator to the first element container
+		*/
+		const_reverse_iterator rend(void) const {
+			return _tree.rend();
+		}
+
+		// ==== Capacity ====
+
+		/*
+		** Checks if the map has no elements.
+		** If the map is empty, return true.
+		*/
+		bool empty(void) const {
+			return _tree.empty();
+		}
+
+		/*
+		** Return number of elemnts the map.
+		*/
+		size_type size(void) const {
+			return _tree.size();
+		}
+
+		/*
+		** Return the max number of elemnts the map is able to hold.
+		*/
+		size_type max_size(void) const {
+			return _tree.max_size();
+		}
 
 
 

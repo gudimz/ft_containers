@@ -18,6 +18,8 @@ namespace ft
 		typedef T									value_type;
 		typedef value_type*							pointer;
 		typedef value_type&							reference;
+		typedef const value_type*					const_pointer;
+		typedef const value_type&					const_reference;
 
 		value_type		data;
 		rbt_node*		parent;
@@ -38,15 +40,16 @@ namespace ft
 		/****************************/
 
 		typedef Key														key_type;
-		typedef	T														value_type;
+		typedef T														mapped_type;
+		typedef ft::pair<const key_type, mapped_type>					value_type;
 		typedef Compare													key_compare;
 		typedef	value_type*												pointer;
 		typedef	const value_type*										const_pointer;
 		typedef	value_type&												reference;
 		typedef	const value_type&										const_reference;
-		typedef	rbt_node<value_type>									node_type;
+		typedef	rbt_node<value_type>					node_type;
 		typedef node_type*												node_ptr;
-		typedef Allocator												allocator_type;
+		typedef typename Allocator::template rebind<node_type>::other	allocator_type;
 		typedef std::size_t												size_type;
 		typedef std::ptrdiff_t											difference_type;
 		typedef ft::rbt_bidirectional_iterator<node_type>				iterator;
@@ -61,7 +64,7 @@ namespace ft
 
 		node_ptr		_root;
 		node_ptr		_nil;
-		key_type		_comp;
+		key_compare		_comp;
 		size_type		_size;
 		allocator_type	_alloc;
 	public:
@@ -79,7 +82,7 @@ namespace ft
 								const allocator_type& alloc = allocator_type()) :	_root(0), _nil(0), _comp(comp),
 																					_size(0), _alloc(alloc) {
 			_nil = _alloc.allocate(1);
-			_alloc.consruct(_nil, node_type(value_type()));
+			_alloc.construct(_nil, node_type(value_type()));
 			_nil->color = black;
 			_root = _nil;
 		}

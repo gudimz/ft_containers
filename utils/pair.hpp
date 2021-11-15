@@ -39,7 +39,7 @@ namespace ft
 		** Initializes first with p.first and second with p.second.
 		*/
 		template<class U1, class U2>
-		pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
+		pair(const pair<U1, U2>& other) : first(other.first), second(other.second) {}
 
 		/*
 		** Assigns contents from pair object "other".
