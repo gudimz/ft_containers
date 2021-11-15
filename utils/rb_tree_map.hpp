@@ -13,19 +13,14 @@ namespace ft
 {
 	enum color {red, black};
 
-	template<class T>
+	template<class Key, class T>
 	struct rbt_node {
-		typedef T									value_type;
-		typedef value_type*							pointer;
-		typedef value_type&							reference;
-		typedef const value_type*					const_pointer;
-		typedef const value_type&					const_reference;
-
-		value_type		data;
-		rbt_node*		parent;
-		rbt_node*		left;
-		rbt_node*		right;
-		color			color;
+		typedef ft::pair<Key, T>			value_type;
+		value_type							data;
+		rbt_node*							parent;
+		rbt_node*							left;
+		rbt_node*							right;
+		color								color;
 
 		rbt_node(value_type data) : data(data) {}
 	};
@@ -47,7 +42,7 @@ namespace ft
 		typedef	const value_type*										const_pointer;
 		typedef	value_type&												reference;
 		typedef	const value_type&										const_reference;
-		typedef	rbt_node<value_type>					node_type;
+		typedef	rbt_node<key_type, mapped_type>					node_type;
 		typedef node_type*												node_ptr;
 		typedef typename Allocator::template rebind<node_type>::other	allocator_type;
 		typedef std::size_t												size_type;
@@ -219,6 +214,9 @@ namespace ft
 		** Returns an iterator to the last element tree
 		*/
 		iterator end(void) {
+			if (empty()) {
+				return begin();
+			}
 			return iterator(_nil, _root, _nil);
 		}
 
@@ -226,6 +224,9 @@ namespace ft
 		** Returns a const iterator to the last element tree
 		*/
 		const_iterator end(void) const {
+				if (empty()) {
+				return begin();
+			}
 			return const_iterator(_nil, _root, _nil);
 		}
 

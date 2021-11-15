@@ -75,6 +75,23 @@ namespace ft
 		explicit map(const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()) : _tree(comp, allocator_type(alloc)) {}
 
+
+
+
+
+		/*
+		** Copy constructor.
+		** Each element is copied from "other".
+		*/
+		map(const map& other) : _tree(other._tree) {}
+
+		/*
+		** Destructor.
+		** Destructors of the elements are called and
+		** the used storage is deallocated.
+		*/
+		~map() {}
+
 		// ==== Iterators ====
 
 		/*
