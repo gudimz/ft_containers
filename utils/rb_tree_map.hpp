@@ -298,9 +298,22 @@ namespace ft
 		** Inserts element into the container,
 		** if the container doesn't already contain an element with an equivalent key.
 		*/
-		// ft::pair<iterator, bool> insert(const value_type& value) {
-
-		// }
+		ft::pair<iterator, bool> insert(const value_type& value) {
+			// Check that the key is a duplicate.
+			iterator it = find(value);
+			if (it != end()) {
+				return ft::pair<it, false>;
+			}
+			node_ptr new_node = _create_node(value);
+			if (_root == _nil) {
+				new_node->color = black;
+				_root = new_node;
+				++_size;
+			} else {
+//???????????????????????????????????????????????????????
+			}
+			return ft::make_pair(it, true);
+		}
 
 		// ==== Lookup ====
 
@@ -331,8 +344,6 @@ namespace ft
 		/* Helpers for public function  */
 		/********************************/
 
-		// ==== for Modifiers ====
-
 		/*
 		** This is the helper func for public clear func.
 		** Destroy all elements of the tree using recursion
@@ -359,15 +370,84 @@ namespace ft
 			}
 			if (key < node->data.first) {
 				return _serach_key(key, node->left);
-			} else if (key < node->data.first) {
+			} else if (key > node->data.first) {
 				return _serach_key(key, node->right);
 			} else if (key == node->data.first) {
 				return node;
 			}
 			return 0;
 		}
+
+		/*
+		** Create new node. new node. New nodes are necessarily red.
+		*/
+		node_ptr _create_node(const key_type& value) {
+			node_ptr node = _alloc.allocate(1);
+			_alloc.construct(node, node_type(value_type()));
+			node->color = red;
+			node->parent = _nil;
+			node->left = _nil;
+			node->right = _nil;
+		}
+
+		/*
+		** Rotate node x to left.
+		*/
+		void _rotate_left(node_ptr x) {
+			node_ptr y = x->right;
+			x->right = y->left;
+			if (y->left != _nil) {
+				y->left->parent = x;
+			}
+			if (y != _nil) {
+				y->parent = x->parent;
+			}
+			if (x->parent) {
+				if (x == x->parent->left) {
+					x->parent->left = y;
+				} else {
+					x->parent->right = y;
+				}
+			} else {
+				root = y;
+			}
+			y->left = x;
+			if (x != _nil) {
+				x->parent = y;
+			}
+		}
+
+		/*
+		** Rotate node x to right.
+		*/
+		void _rotate_left(node_ptr x) {
+			node_ptr y = x->left;
+			x->left = y->right;
+			if (y->right != _nil) {
+				y->right->parent = x;
+			}
+			if (y != _nil) {
+				y->parent = x->parent;
+			}
+			if (x->parent) {
+				if (x == x->parent->right) {
+					x->parent->right = y;
+				} else {
+					x->parent->left = y;
+				}
+			} else {
+				root = y;
+			}
+			y->right = x;
+			if (x != _nil) {
+				x->parent = y;
+			}
+
+		}
 	};
 }
+
+
 
 
 

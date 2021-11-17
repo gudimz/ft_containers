@@ -75,6 +75,18 @@ namespace ft
 		explicit map(const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type()) : _tree(comp, allocator_type(alloc)) {}
 
+		/*
+		** Range constructor.
+		** Constructs the container with the contents of the range [first, last).
+		** If multiple elements in the range have keys that compare equivalent,
+		** it is unspecified which element is inserted
+		*/
+		template<class InputIt>
+		map(InputIt first, InputIt last, const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type()) : _tree(comp, allocator_type(alloc)) {
+			_tree.insert(first, last);
+		}
+
 
 
 
