@@ -1,3 +1,5 @@
+//http://algolist.ru/ds/rbtree.php
+
 #ifndef RB_TREE_MAP_HPP
 # define RB_TREE_MAP_HPP
 
@@ -11,7 +13,7 @@
 
 namespace ft
 {
-	enum color {red, black};
+	enum color {RED, BLACK};
 
 	template<class Key, class T>
 	struct rbt_node {
@@ -78,7 +80,7 @@ namespace ft
 																					_size(0), _alloc(alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.construct(_nil, node_type(value_type()));
-			_nil->color = black;
+			_nil->color = BLACK;
 			_root = _nil;
 		}
 
@@ -106,7 +108,7 @@ namespace ft
 																					_size(0), _alloc(other._alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
-			_nil->color = black;
+			_nil->color = BLACK;
 			_root = _nil;
 			insert(other.begin(), other.end());
 		}
@@ -306,12 +308,13 @@ namespace ft
 			}
 			node_ptr new_node = _create_node(value);
 			if (_root == _nil) {
-				new_node->color = black;
+				new_node->color = BLACK;
 				_root = new_node;
-				++_size;
 			} else {
-//???????????????????????????????????????????????????????
+				_insert_helper(new_node, _root);
 			}
+			it = iterator(new_node, _root, _nil);
+			++_size;
 			return ft::make_pair(it, true);
 		}
 
@@ -367,24 +370,24 @@ namespace ft
 		node_ptr _serach_key(const key_type key, node_ptr node) const {
 			if (!node) {
 				return 0;
-			}
-			if (key < node->data.first) {
-				return _serach_key(key, node->left);
-			} else if (key > node->data.first) {
-				return _serach_key(key, node->right);
 			} else if (key == node->data.first) {
 				return node;
+			}
+			if (_comp(key, node->data.first)) {
+				return _serach_key(key, node->left);
+			} else {
+				return _serach_key(key, node->right);
 			}
 			return 0;
 		}
 
 		/*
-		** Create new node. new node. New nodes are necessarily red.
+		** Create new node. New nodes are necessarily red.
 		*/
 		node_ptr _create_node(const key_type& value) {
 			node_ptr node = _alloc.allocate(1);
 			_alloc.construct(node, node_type(value_type()));
-			node->color = red;
+			node->color = RED;
 			node->parent = _nil;
 			node->left = _nil;
 			node->right = _nil;
@@ -420,7 +423,7 @@ namespace ft
 		/*
 		** Rotate node x to right.
 		*/
-		void _rotate_left(node_ptr x) {
+		void _rotate_right(node_ptr x) {
 			node_ptr y = x->left;
 			x->left = y->right;
 			if (y->right != _nil) {
@@ -442,7 +445,90 @@ namespace ft
 			if (x != _nil) {
 				x->parent = y;
 			}
+		}
 
+		/*
+		** This is the helper func for public insert func.
+		** Find position in the tree and insert new_node.
+		** Call the insert_fix_up to recolor and rotate nodes in leaf.
+		*/
+		void _insert_helper(node_ptr new_node, node_ptr node) {
+			node_ptr current = node;
+			node_ptr parent = 0;
+			while (current != _nil) {
+				parent = current;
+				if (_comp(new_node->data.first, current->data.first)) {
+					current = current->left;
+				} else {
+					current = current->right;
+				}
+			}
+			new_node->parent = parent;
+			if (_comp(new_node->data.first, parent->data->first)) {
+				parent = new_node;
+			} else {
+				parent = new_node;
+			}
+			if (new_node->parent != _root) {
+				insert_fix_up(new_node);
+			}
+		}
+
+		/*
+		** Maintain red black tree baance after inserting new node.
+		*/
+		void insert_fix_up(node_ptr node) {
+			node_ptr uncle;
+			node_ptr parent = node->parent;
+			node_ptr grandparent = node->parent->parent;
+			while (node != _root && parent->color == RED) {
+				// parent of the node is a left leaf:
+				if (parent == grandparent->left) {
+					uncle = grandparent->right
+					// uncle is RED:
+					if (uncle->color == RED) {
+						parent->color = BLACK;
+						uncle->color = BLACK;
+						grandparent->color = RED;
+						node = grandparent;
+					// uncle is BLACK:
+					} else {
+						// node is right leaf:
+						if (node == parent->right) {
+							// make node a left child:
+							node = parent;
+							_rotate_left(node);
+						}
+						// recolor and rotate
+						parent->color = BLACK;
+						grandparent->color = RED;
+						_rotate_right(grandparent);
+					}
+				// parent of the node is a right leaf:
+				} else {
+					uncle = grandparent->left
+					// uncle is RED:
+					if (uncle->color == RED) {
+						parent->color = BLACK;
+						uncle->color = BLACK;
+						grandparent->color = RED;
+						node = grandparent;
+					// uncle is BLACK:
+					} else {
+						// node is left leaf:
+						if (node == parent->left) {
+							// make node a left child:
+							node = parent;
+							_rotate_right(node);
+						}
+						// recolor and rotate
+						parent->color = BLACK;
+						grandparent->color = RED;
+						_rotate_left(grandparent);
+					}
+				}
+			}
+			_root->color = BLACK;
 		}
 	};
 }
