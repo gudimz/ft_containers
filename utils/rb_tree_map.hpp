@@ -297,8 +297,8 @@ namespace ft
 
 		/*
 		** Single element.
-		** Inserts element into the container,
-		** if the container doesn't already contain an element with an equivalent key.
+		** Inserts element into the tree,
+		** if the tree doesn't already contain an element with an equivalent key.
 		*/
 		ft::pair<iterator, bool> insert(const value_type& value) {
 			// Check that the key is a duplicate.
@@ -316,6 +316,20 @@ namespace ft
 			it = iterator(new_node, _root, _nil);
 			++_size;
 			return ft::make_pair(it, true);
+		}
+
+		/*
+		** Range.
+		** Inserts elements from range [first, last).
+		** If multiple elements in the range have keys that compare equivalent,
+		** it is unspecified which element is inserted.
+		*/
+		template<class InputIt>
+		void insert(InputIt first, InputIt last) {
+			while (first != last) {
+				insert(*first);
+				++first;
+			}
 		}
 
 		// ==== Lookup ====

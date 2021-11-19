@@ -186,7 +186,46 @@ namespace ft
 			return _tree.max_size();
 		}
 
+		// ==== Modifiers ====
 
+		/*
+		** Erases all elements from the map.
+		** After this call, _size = 0.
+		*/
+
+		void clear(void) {
+			return _tree.clear();
+		}
+
+		/*
+		** Single element.
+		** Inserts element into the map,
+		** if the map doesn't already contain an element with an equivalent key.
+		*/
+		ft::pair<iterator, bool> insert(const value_type& value) {
+			return _tree.insert(value);
+		}
+
+		/*
+		** Single element with hint.
+		** Inserts value in the position as close as possible.
+		** if the map doesn't already contain an element with an equivalent key.
+		*/
+		iterator insert(iterator hint, const value_type& value) {
+			(void)hint;
+			return _tree.insert(value).first;
+		}
+
+		/*
+		** Range.
+		** Inserts elements from range [first, last).
+		** If multiple elements in the range have keys that compare equivalent,
+		** it is unspecified which element is inserted.
+		*/
+		template<class InputIt>
+		void insert(InputIt first, InputIt last) {
+			return _tree(first, last);
+		}
 
 
 	};
