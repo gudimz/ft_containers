@@ -23,7 +23,7 @@ namespace ft
 		typedef ft::pair<const key_type, mapped_type>											value_type;
 		typedef Compare																			key_compare;
 		typedef Allocator																		allocator_type;
-		typedef typename ft::red_black_tree<key_type, mapped_type, key_compare, allocator_type>	tree_type;
+		typedef typename ft::red_black_tree<value_type, key_compare, allocator_type>			tree_type;
 		typedef value_type&																		reference;
 		typedef const value_type&																const_reference;
 		typedef value_type*																		pointer;

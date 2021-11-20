@@ -17,13 +17,15 @@
 
 template<class T>
 void map_print(const T& map, int num) {
-	if (num == 1) {
+	if (!num) {
+		std::cout << CYAN "map<T>  " REST << "[ ";
+	} else if (num == 1) {
 		std::cout << CYAN "ft::map<T>  " REST << "[ ";
 	} else {
 		std::cout << YEL "std::map<T> " REST << "[ ";
 	}
 	for (typename T::const_iterator it = map.begin(); it != map.end(); ++it) {
-		std::cout << it->first << "=" << it->second << " ";
+		std::cout << it->first << ":" << it->second << " ";
 	}
 	std::cout << "]" <<std::endl;
 }
@@ -34,14 +36,14 @@ void map_compare(const ft::map<Key, T>& ft_map, const std::map<Key, T>& std_map)
 	map_print(ft_map, 1);
 	map_print(std_map, 2);
 	bool flag = true;
-	// typename ft::map<Key, T>::const_iterator ft_it = ft_map.begin();
-	// typename std::map<Key, T>::const_iterator std_it = std_map.begin();
-	// for (; std_it != std_map.end() && ft_it != ft_map.end(); ++std_it, ++ft_it) {
-	// 	if (std_it->first != ft_it->first || std_it->second != ft_it->second) {
-	// 		std::cout << RED "KO :(" REST << std::endl;
-	// 		flag = false;
-	// 	}
-	// }
+	typename ft::map<Key, T>::const_iterator ft_it = ft_map.begin();
+	typename std::map<Key, T>::const_iterator std_it = std_map.begin();
+	for (; std_it != std_map.end() && ft_it != ft_map.end(); ++std_it, ++ft_it) {
+		if (std_it->first != ft_it->first || std_it->second != ft_it->second) {
+			std::cout << RED "KO :(" REST << std::endl;
+			flag = false;
+		}
+	}
 	if (flag) {
 		std::cout << GREEN "OK :)" REST << std::endl;
 	}
@@ -54,7 +56,7 @@ void map_compare(const ft::map<Key, T>& ft_map, const std::map<Key, T>& std_map)
 		RED " KO :(" REST << std::endl;
 	}
 	// first value
-	if (ft_map.size()) {
+	if (ft_map.size() && std_map.size()) {
 		if (std_map.begin()->second == ft_map.begin()->second) {
 			std::cout << "first value: " GREEN << std_map.begin()->second << "==" << ft_map.begin()->second << REST <<
 			GREEN " OK :)" REST << std::endl;
@@ -63,16 +65,16 @@ void map_compare(const ft::map<Key, T>& ft_map, const std::map<Key, T>& std_map)
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	// //last element
-	// if (ft_map.size()) {
-	// 	if ((--std_map.end()) == (--ft_map.end())) {
-	// 		std::cout << "last element:  " GREEN << std_map.begin()->second << "==" << ft_map.begin()->second << REST <<
-	// 		GREEN " OK :)" REST << std::endl;
-	// 	} else {
-	// 		std::cout << "last element:  " RED << std_map.begin()->second << "!=" << ft_map.begin()->second << REST <<
-	// 		RED " KO :(" REST << std::endl;
-	// 	}
-	// }
+	// last element
+	if (ft_map.size() && std_map.size()) {
+		if ((--std_map.end())->second == (--ft_map.end())->second) {
+			std::cout << "last element:  " GREEN << (--std_map.end())->second << "==" << (--ft_map.end())->second << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "last element:  " RED << (--std_map.end())->second << "!=" << (--ft_map.end())->second << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+	}
 	std::cout << "=================================================================================="
 	<< std::endl << std::endl;
 }
@@ -88,6 +90,28 @@ void test_constructors(void) {
 		std::cout << "Enter: " << CYAN "map<int, int> map" REST << std::endl;
 		map_compare(ft_map, std_map);
 	}
+
+	std::cout << GREEN "*** Range ***" REST << std::endl;
+	{
+		ft::map<int, char> ft_map_fill;
+		std::map<int, char> std_map_fill;
+		char c = 'a';
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map_fill.insert(ft::make_pair(i, c));
+			std_map_fill.insert(std::make_pair(i, c));
+			++c;
+		}
+		map_print(ft_map_fill, 0);
+		std::cout << "Enter: " << CYAN "map<int, char> map(map_fill.begin(), map_fill.end())" REST << std::endl;
+		ft::map<int, char> ft_map_range(ft_map_fill.begin(), ft_map_fill.end());
+		std::map<int, char> std_map_range(std_map_fill.begin(), std_map_fill.end());
+
+		map_compare(ft_map_range, std_map_range);
+	}
+
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
 
 }
 

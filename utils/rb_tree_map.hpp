@@ -16,9 +16,9 @@ namespace ft
 {
 	enum color {RED, BLACK};
 
-	template<class Key, class T>
+	template<class T>
 	struct rbt_node {
-		typedef ft::pair<Key, T>			value_type;
+		typedef T							value_type;
 		value_type							data;
 		rbt_node*							parent;
 		rbt_node*							left;
@@ -28,8 +28,8 @@ namespace ft
 		rbt_node(value_type data) : data(data) {}
 	};
 
-	template<class Key, class T, class Compare = ft::less<Key>,
-			class Allocator = std::allocator<ft::pair<const Key, T> > >
+	template<class T, class Compare = ft::less<typename T::first_type>,
+			class Allocator = std::allocator<T> >
 	class red_black_tree {
 	public:
 
@@ -37,12 +37,11 @@ namespace ft
 		/*      Member types        */
 		/****************************/
 
-		typedef Key														key_type;
-		typedef T														mapped_type;
-		typedef ft::pair<const key_type, mapped_type>					value_type;
+		typedef T														value_type;
+		typedef typename T::first_type									key_type;
+		typedef typename T::second_type									mapped_type;
 		typedef Compare													key_compare;
-		typedef	rbt_node<key_type, mapped_type>							node_type;
-		typedef node_type*												node_ptr;
+		typedef	rbt_node<value_type>									node_type;
 		typedef	node_type*												pointer;
 		typedef	const node_type*										const_pointer;
 		typedef	node_type&												reference;
@@ -60,8 +59,8 @@ namespace ft
 		/*        Member object         */
 		/********************************/
 
-		node_ptr		_root;
-		node_ptr		_nil;
+		pointer			_root;
+		pointer			_nil;
 		key_compare		_comp;
 		size_type		_size;
 		allocator_type	_alloc;
@@ -195,7 +194,7 @@ namespace ft
 		** Returns an iterator to the first element tree
 		*/
 		iterator begin(void) {
-			node_ptr tmp = _root;
+			pointer tmp = _root;
 			while (tmp->left != _nil && tmp != _nil) {
 				tmp = tmp->left;
 			}
@@ -206,8 +205,8 @@ namespace ft
 		** Returns a const iterator to the first element tree
 		*/
 		const_iterator begin(void) const {
-			node_ptr tmp = _root;
-				while (tmp->left != _nil && tmp != _nil) {
+			pointer tmp = _root;
+			while (tmp->left != _nil && tmp != _nil) {
 				tmp = tmp->left;
 			}
 			return const_iterator(tmp, _root, _nil);
@@ -217,9 +216,6 @@ namespace ft
 		** Returns an iterator to the last element tree
 		*/
 		iterator end(void) {
-			if (empty()) {
-				return begin();
-			}
 			return iterator(_nil, _root, _nil);
 		}
 
@@ -227,9 +223,6 @@ namespace ft
 		** Returns a const iterator to the last element tree
 		*/
 		const_iterator end(void) const {
-				if (empty()) {
-				return begin();
-			}
 			return const_iterator(_nil, _root, _nil);
 		}
 
@@ -307,7 +300,7 @@ namespace ft
 			if (it != end()) {
 				return ft::make_pair(it, false);
 			}
-			node_ptr new_node = _create_node(node_type(value));
+			pointer new_node = _create_node(node_type(value));
 			if (_root == _nil) {
 				new_node->color = BLACK;
 				_root = new_node;
@@ -349,10 +342,10 @@ namespace ft
 		** Finds an element with key equivalent to key and returns a iterator to it, if found.
 		*/
 		iterator find(key_type const& key) {
-			node_ptr node = _search_key(key, _root);
-			if (!node) {
-				return end();
-			}
+			pointer node = _search_key(key);
+			// if (!node) {
+			// 	return end();
+			// }
 			return iterator(node, _root, _nil);
 		}
 
@@ -367,7 +360,7 @@ namespace ft
 		** This is the helper func for public clear func.
 		** Destroy all elements of the tree using recursion
 		*/
-		void _clear_help(node_ptr node) {
+		void _clear_help(pointer node) {
 			//for recursion
 			if (node == _nil) {
 				return ;
@@ -383,26 +376,36 @@ namespace ft
 		** This is the helper func for public find func.
 		** Finds an element with key in the tree using recursion
 		*/
-		node_ptr _search_key(key_type const key, node_ptr node) const {
-			if (!node) {
-				return 0;
-			} else if (key == node->data.first) {
-				return node;
+		pointer _search_key(key_type const key) const {
+			pointer tmp = _root;
+			pointer search_key = _nil;
+			while (tmp != _nil) {
+				if (_comp(key, tmp->data.first)) {
+					if (tmp->left != _nil) {
+						tmp = tmp->left;
+					} else {
+						break;
+					}
+				} else if (key == tmp->data.first) {
+					search_key = tmp;
+					break;
+				} else {
+					if (tmp->right != _nil) {
+						tmp = tmp->right;
+					} else {
+						break;
+					}
+				}
 			}
-			if (_comp(key, node->data.first)) {
-				return _search_key(key, node->left);
-			} else {
-				return _search_key(key, node->right);
-			}
-			return 0;
+			return search_key;
 		}
 
 		/*
 		** Create new node. New nodes are necessarily red.
 		*/
-		node_ptr _create_node(const_reference value) {
-			node_ptr node = _alloc.allocate(1);
-			_alloc.construct(node, node_type(value));
+		pointer _create_node(const_reference value) {
+			pointer node = _alloc.allocate(1);
+			_alloc.construct(node, value);
 			node->color = RED;
 			node->parent = _nil;
 			node->left = _nil;
@@ -413,8 +416,8 @@ namespace ft
 		/*
 		** Rotate node x to left.
 		*/
-		void _rotate_left(node_ptr x) {
-			node_ptr y = x->right;
+		void _rotate_left(pointer x) {
+			pointer y = x->right;
 			x->right = y->left;
 			if (y->left != _nil) {
 				y->left->parent = x;
@@ -422,7 +425,7 @@ namespace ft
 			if (y != _nil) {
 				y->parent = x->parent;
 			}
-			if (x->parent) {
+			if (x->parent != _nil) {
 				if (x == x->parent->left) {
 					x->parent->left = y;
 				} else {
@@ -440,8 +443,8 @@ namespace ft
 		/*
 		** Rotate node x to right.
 		*/
-		void _rotate_right(node_ptr x) {
-			node_ptr y = x->left;
+		void _rotate_right(pointer x) {
+			pointer y = x->left;
 			x->left = y->right;
 			if (y->right != _nil) {
 				y->right->parent = x;
@@ -449,7 +452,7 @@ namespace ft
 			if (y != _nil) {
 				y->parent = x->parent;
 			}
-			if (x->parent) {
+			if (x->parent != _nil) {
 				if (x == x->parent->right) {
 					x->parent->right = y;
 				} else {
@@ -469,9 +472,9 @@ namespace ft
 		** Find position in the tree and insert new_node.
 		** Call the insert_fix_up to recolor and rotate nodes in leaf.
 		*/
-		void _insert_helper(node_ptr new_node, node_ptr node) {
-			node_ptr current = node;
-			node_ptr parent = 0;
+		void _insert_helper(pointer new_node, pointer node) {
+			pointer current = node;
+			pointer parent = 0;
 			while (current != _nil) {
 				parent = current;
 				if (_comp(new_node->data.first, current->data.first)) {
@@ -482,9 +485,9 @@ namespace ft
 			}
 			new_node->parent = parent;
 			if (_comp(new_node->data.first, parent->data.first)) {
-				parent = new_node;
+				parent->left = new_node;
 			} else {
-				parent = new_node;
+				parent->right = new_node;
 			}
 			if (new_node->parent != _root) {
 				insert_fix_up(new_node);
@@ -494,10 +497,10 @@ namespace ft
 		/*
 		** Maintain red black tree baance after inserting new node.
 		*/
-		void insert_fix_up(node_ptr node) {
-			node_ptr uncle;
-			node_ptr parent = node->parent;
-			node_ptr grandparent = node->parent->parent;
+		void insert_fix_up(pointer node) {
+			pointer uncle = 0;
+			pointer parent = node->parent;
+			pointer grandparent = node->parent->parent;
 			while (node != _root && parent->color == RED) {
 				// parent of the node is a left leaf:
 				if (parent == grandparent->left) {

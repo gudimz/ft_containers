@@ -112,6 +112,14 @@ namespace ft
 		** Returns a reference to the element at specified relative location.
 		** If such an element does not exist, it causes undefined behavior.
 		*/
+		reference operator[](difference_type n) {
+			return *(_ptr + n);
+		}
+
+		/*
+		** Returns a const reference to the element at specified relative location.
+		** If such an element does not exist, it causes undefined behavior.
+		*/
 		const_reference operator[](difference_type n) const {
 			return *(_ptr + n);
 		}

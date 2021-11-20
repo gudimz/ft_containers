@@ -141,7 +141,14 @@ namespace ft
 		** --iter
 		*/
 		rbt_bidirectional_iterator& operator--() {
-			_ptr = _prev_node(_ptr);
+			if (_ptr == _nil) {
+				_ptr = _root;
+				while (_ptr->right != _nil && _ptr != _nil) {
+					_ptr = _ptr->right;
+				}
+			} else {
+				_ptr = _prev_node(_ptr);
+			}
 			return *this;
 		}
 
@@ -161,7 +168,7 @@ namespace ft
 		*/
 		rbt_bidirectional_iterator operator--(int) {
 			rbt_bidirectional_iterator copy = *this;
-			_ptr = _prev_node(_ptr);
+			operator--();
 			return copy;
 		}
 
@@ -181,23 +188,24 @@ namespace ft
 		** Returns the value of the previous leaf, starting at the current node.
 		*/
 		node_ptr _prev_node(node_ptr node) {
-			node_ptr tmp;
-			if (node->left != _nil) {
-				tmp = node->left;
-				while (tmp->right && tmp->right != _nil) {
+			node_ptr tmp = node;
+			if (tmp->left != _nil) {
+				tmp = tmp->left;
+				while (tmp->right != _nil && tmp != _nil) {
 					tmp = tmp->right;
 				}
+				return tmp;
 			} else {
-				node_ptr prev_tmp = node->parent;
+				node_ptr prev_tmp = tmp->parent;
 				while (prev_tmp && prev_tmp != _nil && tmp == prev_tmp->left) {
 					tmp = prev_tmp;
 					prev_tmp = prev_tmp->parent;
 				}
-			}
-			if (!tmp) {
-				return _nil;
-			} else {
-				return tmp;
+				if (!prev_tmp) {
+					return _nil;
+				} else {
+					return prev_tmp;
+				}
 			}
 		}
 
@@ -205,23 +213,24 @@ namespace ft
 		** Returns the value of the next leaf, starting at the current node.
 		*/
 		node_ptr _next_node(node_ptr node) {
-			node_ptr tmp;
-			if (node->right != _nil) {
-				tmp = node->right;
-				while (tmp->left && tmp->left != _nil) {
+			node_ptr tmp = node;
+			if (tmp->right != _nil) {
+				tmp = tmp->right;
+				while (tmp->left != _nil && tmp != _nil) {
 					tmp = tmp->left;
 				}
-			} else {
-				node_ptr prev_tmp = node->parent;
-				while (prev_tmp && prev_tmp != _nil && tmp == prev_tmp->right) {
-					tmp = prev_tmp;
-					prev_tmp = prev_tmp->parent;
-				}
-			}
-			if (!tmp) {
-				return _nil;
-			} else {
 				return tmp;
+			} else {
+				node_ptr next_tmp = tmp->parent;
+				while (next_tmp && next_tmp != _nil && tmp == next_tmp->right) {
+					tmp = next_tmp;
+					next_tmp = next_tmp->parent;
+				}
+				if (!next_tmp) {
+					return _nil;
+				} else {
+					return next_tmp;
+				}
 			}
 		}
 	};
