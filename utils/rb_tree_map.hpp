@@ -107,7 +107,7 @@ namespace ft
 		red_black_tree(red_black_tree const& other) :	_root(0), _nil(0), _comp(other._comp),
 																					_size(0), _alloc(other._alloc) {
 			_nil = _alloc.allocate(1);
-			_alloc.consruct(_nil, node_type(value_type()));
+			_alloc.construct(_nil, node_type(value_type()));
 			_nil->color = BLACK;
 			_root = _nil;
 			insert(other.begin(), other.end());
@@ -324,6 +324,13 @@ namespace ft
 			while (first != last) {
 				insert(*first);
 				++first;
+			}
+		}
+
+		void erase(iterator pos) {
+			if (pos != end()) {
+				_erase_helper(pos._ptr);
+				--_size;
 			}
 		}
 
@@ -549,6 +556,10 @@ namespace ft
 				}
 			}
 			_root->color = BLACK;
+		}
+
+		void _erase_helper(pointer node) {
+			
 		}
 	};
 }

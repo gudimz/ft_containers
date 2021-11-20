@@ -87,10 +87,6 @@ namespace ft
 			_tree.insert(first, last);
 		}
 
-
-
-
-
 		/*
 		** Copy constructor.
 		** Each element is copied from "other".
@@ -113,6 +109,40 @@ namespace ft
 		map& operator=(const map& other) {
 			_tree = other._tree;
 			return *this;
+		}
+
+		/*
+		** Returns the allocator associated with the container.
+		*/
+		allocator_type get_allocator(void) const {
+			return allocator_type(_tree.get_allocator());
+		}
+
+		// === Element access ===
+
+		/*
+		** Returns a reference to the mapped value of the element with key equivalent to key.
+		** If no such element exists, an exception of type std::out_of_range is thrown
+		*/
+		mapped_type& at(const key_type& key) {
+			return _tree.at(key);
+		}
+
+		/*
+		** Returns a const reference to the element at specified location pos, with bounds checking.
+		** If pos is not within the range of the container,
+		** an exception of type std::out_of_range is thrown.
+		*/
+		mapped_type& at(const key_type& key) const {
+			return _tree.at(key);
+		}
+
+		/*
+		** Returns a reference to the value that is mapped to a key equivalent to key,
+		** performing an insertion if such key does not already exist.
+		*/
+		mapped_type& operator[](const key_type& key) {
+			return _tree.[key];
 		}
 
 		// ==== Iterators ====

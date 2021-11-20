@@ -90,6 +90,14 @@ void test_constructors(void) {
 		std::cout << "Enter: " << CYAN "map<int, int> map" REST << std::endl;
 		map_compare(ft_map, std_map);
 	}
+	std::cout << GREEN "*** Default with alloc***" REST << std::endl;
+	{
+		std::allocator<int>  alloc;
+		ft::map<int, int> ft_map(ft::less<int>(), alloc);
+		std::map<int, int> std_map(std::less<int>(), alloc);
+		std::cout << "Enter: " << CYAN "map<int, int> map" REST << std::endl;
+		map_compare(ft_map, std_map);
+	}
 
 	std::cout << GREEN "*** Range ***" REST << std::endl;
 	{
@@ -119,13 +127,65 @@ void test_constructors(void) {
 
 		map_compare(ft_map_range, std_map_range);
 	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
 
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №1 Constructors" REST << " ===" << std::endl;
 	std::cout << GREEN "*** Copy Constructors ***" REST << std::endl;
 	{
 		std::cout << std::endl << GREEN "*** Intenger ***" REST << std::endl;
 		{
+			ft::map<int, int> ft_map_copy;
+			std::map<int, int> std_map_copy;
+			int y = 100;
+			for (size_t i = 1; i < 8; ++i) {
+			ft_map_copy.insert(ft::make_pair(i, y));
+			std_map_copy.insert(std::make_pair(i, y));
+			++y;
+			}
+			std::cout << "map_copy ";
+			map_print(ft_map_copy, 0);
+			std::cout << "Enter: " << CYAN "map<int, int> map(map_copy)" REST << std::endl;
+			ft::map<int, int> ft_map(ft_map_copy);
+			std::map<int, int> std_map(std_map_copy);
+			map_compare(ft_map, std_map);
 
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
+		}
+		std::cout << std::endl << GREEN "*** String ***" REST << std::endl;
+		{
+			ft::map<std::string, std::string> ft_map_copy;
+			std::map<std::string, std::string> std_map_copy;
+			ft_map_copy.insert(ft::make_pair("Russia", "Moscow"));
+			std_map_copy.insert(std::make_pair("Russia", "Moscow"));
+			// double key
+			ft_map_copy.insert(ft::make_pair("Russia", "Moscow"));
+			std_map_copy.insert(std::make_pair("Russia", "Moscow"));
+			ft_map_copy.insert(ft::make_pair("USA", "Washington"));
+			std_map_copy.insert(std::make_pair("USA", "Washington"));
+			ft_map_copy.insert(ft::make_pair("France", "Paris"));
+			std_map_copy.insert(std::make_pair("France", "Paris"));
+			ft_map_copy.insert(ft::make_pair("England", "London"));
+			std_map_copy.insert(std::make_pair("England", "London"));
+			ft_map_copy.insert(ft::make_pair("Spain", "Madrid"));
+			std_map_copy.insert(std::make_pair("Spain", "Madrid"));
+			ft_map_copy.insert(ft::make_pair("Japan", "Tokio"));
+			std_map_copy.insert(std::make_pair("Japan", "Tokio"));
+			ft_map_copy.insert(ft::make_pair("Canada", "Toronto"));
+			std_map_copy.insert(std::make_pair("Canada", "Toronto"));
+
+			std::cout << "map_copy ";
+			map_print(ft_map_copy, 0);
+			std::cout << "Enter: " << CYAN "map<std::string, std::string> map(map_copy)" REST << std::endl;
+			ft::map<std::string, std::string> ft_map(ft_map_copy);
+			std::map<std::string, std::string> std_map(std_map_copy);
+			map_compare(ft_map, std_map);
+
+		}
+	}
+
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/*]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
