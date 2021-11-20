@@ -95,12 +95,23 @@ void test_constructors(void) {
 	{
 		ft::map<int, char> ft_map_fill;
 		std::map<int, char> std_map_fill;
-		char c = 'a';
-		for (size_t i = 1; i < 8; ++i) {
-			ft_map_fill.insert(ft::make_pair(i, c));
-			std_map_fill.insert(std::make_pair(i, c));
-			++c;
-		}
+		ft_map_fill.insert(ft::make_pair(1, 'c'));
+		std_map_fill.insert(std::make_pair(1, 'c'));
+		// double key
+		ft_map_fill.insert(ft::make_pair(1, 'c'));
+		std_map_fill.insert(std::make_pair(1, 'c'));
+		ft_map_fill.insert(ft::make_pair(7, 'a'));
+		std_map_fill.insert(std::make_pair(7, 'a'));
+		ft_map_fill.insert(ft::make_pair(3, 'n'));
+		std_map_fill.insert(std::make_pair(3, 'n'));
+		ft_map_fill.insert(ft::make_pair(100, 'z'));
+		std_map_fill.insert(std::make_pair(100, 'z'));
+		ft_map_fill.insert(ft::make_pair(10, 'f'));
+		std_map_fill.insert(std::make_pair(10, 'f'));
+		ft_map_fill.insert(ft::make_pair(4, 'g'));
+		std_map_fill.insert(std::make_pair(4, 'g'));
+		ft_map_fill.insert(ft::make_pair(21, 's'));
+		std_map_fill.insert(std::make_pair(21, 's'));
 		map_print(ft_map_fill, 0);
 		std::cout << "Enter: " << CYAN "map<int, char> map(map_fill.begin(), map_fill.end())" REST << std::endl;
 		ft::map<int, char> ft_map_range(ft_map_fill.begin(), ft_map_fill.end());
@@ -108,6 +119,11 @@ void test_constructors(void) {
 
 		map_compare(ft_map_range, std_map_range);
 	}
+
+	std::cout << GREEN "*** Copy Constructors ***" REST << std::endl;
+	{
+		std::cout << std::endl << GREEN "*** Intenger ***" REST << std::endl;
+		{
 
 	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
 	std::cin.get();
