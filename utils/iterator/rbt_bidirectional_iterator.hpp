@@ -24,7 +24,7 @@ namespace ft
 		typedef data_type const*					const_pointer;
 		typedef data_type&							reference;
 		typedef data_type const&					const_reference;
-		typedef std::random_access_iterator_tag		iterator_category;
+		typedef std::bidirectional_iterator_tag		iterator_category;
 
 		/********************************/
 		/*        Member object         */

@@ -9,6 +9,7 @@
 # include "../utils/pair.hpp"
 # include "../utils/iterator/rbt_bidirectional_iterator.hpp"
 # include "../utils/functional.hpp"
+# include "../utils/type_traits.hpp"
 
 
 namespace ft
@@ -40,12 +41,12 @@ namespace ft
 		typedef T														mapped_type;
 		typedef ft::pair<const key_type, mapped_type>					value_type;
 		typedef Compare													key_compare;
-		typedef	value_type*												pointer;
-		typedef	const value_type*										const_pointer;
-		typedef	value_type&												reference;
-		typedef	const value_type&										const_reference;
-		typedef	rbt_node<key_type, mapped_type>					node_type;
+		typedef	rbt_node<key_type, mapped_type>							node_type;
 		typedef node_type*												node_ptr;
+		typedef	node_type*												pointer;
+		typedef	const node_type*										const_pointer;
+		typedef	node_type&												reference;
+		typedef	const node_type&										const_reference;
 		typedef typename Allocator::template rebind<node_type>::other	allocator_type;
 		typedef std::size_t												size_type;
 		typedef std::ptrdiff_t											difference_type;
@@ -95,7 +96,7 @@ namespace ft
 																			_size(0), _alloc(alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
-			_nil->color = black;
+			_nil->color = BLACK;
 			_root = _nil;
 			insert(first, last);
 		}
@@ -104,7 +105,7 @@ namespace ft
 		** Copy constructor.
 		** Each element is copied from "other".
 		*/
-		red_black_tree(const red_black_tree& other) :	_root(0), _nil(0), _comp(other._comp),
+		red_black_tree(red_black_tree const& other) :	_root(0), _nil(0), _comp(other._comp),
 																					_size(0), _alloc(other._alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.consruct(_nil, node_type(value_type()));
@@ -127,7 +128,7 @@ namespace ft
 		** Assigns contents.
 		** The current content replace from "other"
 		*/
-		red_black_tree& operator=(const red_black_tree& other) {
+		red_black_tree& operator=(red_black_tree const& other) {
 			if (this == &other) {
 				return *this;
 			}
@@ -195,7 +196,7 @@ namespace ft
 		*/
 		iterator begin(void) {
 			node_ptr tmp = _root;
-			while (tmp && tmp->left != _nil) {
+			while (tmp->left != _nil && tmp != _nil) {
 				tmp = tmp->left;
 			}
 			return iterator(tmp, _root, _nil);
@@ -206,7 +207,7 @@ namespace ft
 		*/
 		const_iterator begin(void) const {
 			node_ptr tmp = _root;
-			while (tmp && tmp->left != _nil) {
+				while (tmp->left != _nil && tmp != _nil) {
 				tmp = tmp->left;
 			}
 			return const_iterator(tmp, _root, _nil);
@@ -300,13 +301,13 @@ namespace ft
 		** Inserts element into the tree,
 		** if the tree doesn't already contain an element with an equivalent key.
 		*/
-		ft::pair<iterator, bool> insert(const value_type& value) {
+		ft::pair<iterator, bool> insert(value_type const& value) {
 			// Check that the key is a duplicate.
-			iterator it = find(value);
+			iterator it = find(value.first);
 			if (it != end()) {
-				return ft::pair<it, false>;
+				return ft::make_pair(it, false);
 			}
-			node_ptr new_node = _create_node(value);
+			node_ptr new_node = _create_node(node_type(value));
 			if (_root == _nil) {
 				new_node->color = BLACK;
 				_root = new_node;
@@ -325,7 +326,8 @@ namespace ft
 		** it is unspecified which element is inserted.
 		*/
 		template<class InputIt>
-		void insert(InputIt first, InputIt last) {
+		void insert(InputIt first, InputIt last,
+					typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = 0) {
 			while (first != last) {
 				insert(*first);
 				++first;
@@ -338,7 +340,7 @@ namespace ft
 		** Returns the number of elements with key key,
 		** which is either 1 or 0 since this container does not allow duplicates.
 		*/
-		size_type count(const key_type& key) {
+		size_type count(key_type const& key) {
 			iterator it = find(key);
 			return !it ? 0 : 1;
 		}
@@ -346,7 +348,7 @@ namespace ft
 		/*
 		** Finds an element with key equivalent to key and returns a iterator to it, if found.
 		*/
-		iterator find(const key_type& key) {
+		iterator find(key_type const& key) {
 			node_ptr node = _search_key(key, _root);
 			if (!node) {
 				return end();
@@ -381,16 +383,16 @@ namespace ft
 		** This is the helper func for public find func.
 		** Finds an element with key in the tree using recursion
 		*/
-		node_ptr _serach_key(const key_type key, node_ptr node) const {
+		node_ptr _search_key(key_type const key, node_ptr node) const {
 			if (!node) {
 				return 0;
 			} else if (key == node->data.first) {
 				return node;
 			}
 			if (_comp(key, node->data.first)) {
-				return _serach_key(key, node->left);
+				return _search_key(key, node->left);
 			} else {
-				return _serach_key(key, node->right);
+				return _search_key(key, node->right);
 			}
 			return 0;
 		}
@@ -398,13 +400,14 @@ namespace ft
 		/*
 		** Create new node. New nodes are necessarily red.
 		*/
-		node_ptr _create_node(const key_type& value) {
+		node_ptr _create_node(const_reference value) {
 			node_ptr node = _alloc.allocate(1);
-			_alloc.construct(node, node_type(value_type()));
+			_alloc.construct(node, node_type(value));
 			node->color = RED;
 			node->parent = _nil;
 			node->left = _nil;
 			node->right = _nil;
+			return node;
 		}
 
 		/*
@@ -426,7 +429,7 @@ namespace ft
 					x->parent->right = y;
 				}
 			} else {
-				root = y;
+				_root = y;
 			}
 			y->left = x;
 			if (x != _nil) {
@@ -453,7 +456,7 @@ namespace ft
 					x->parent->left = y;
 				}
 			} else {
-				root = y;
+				_root = y;
 			}
 			y->right = x;
 			if (x != _nil) {
@@ -478,7 +481,7 @@ namespace ft
 				}
 			}
 			new_node->parent = parent;
-			if (_comp(new_node->data.first, parent->data->first)) {
+			if (_comp(new_node->data.first, parent->data.first)) {
 				parent = new_node;
 			} else {
 				parent = new_node;
@@ -498,7 +501,7 @@ namespace ft
 			while (node != _root && parent->color == RED) {
 				// parent of the node is a left leaf:
 				if (parent == grandparent->left) {
-					uncle = grandparent->right
+					uncle = grandparent->right;
 					// uncle is RED:
 					if (uncle->color == RED) {
 						parent->color = BLACK;
@@ -520,7 +523,7 @@ namespace ft
 					}
 				// parent of the node is a right leaf:
 				} else {
-					uncle = grandparent->left
+					uncle = grandparent->left;
 					// uncle is RED:
 					if (uncle->color == RED) {
 						parent->color = BLACK;

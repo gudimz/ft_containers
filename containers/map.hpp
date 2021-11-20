@@ -24,12 +24,12 @@ namespace ft
 		typedef Compare																			key_compare;
 		typedef Allocator																		allocator_type;
 		typedef typename ft::red_black_tree<key_type, mapped_type, key_compare, allocator_type>	tree_type;
-		typedef typename allocator_type::reference												reference;
-		typedef typename allocator_type::const_reference										const_reference;
-		typedef typename allocator_type::size_type												size_type;
-		typedef typename allocator_type::difference_type										difference_type;
-		typedef typename allocator_type::pointer												pointer;
-		typedef typename allocator_type::const_pointer											const_pointer;
+		typedef value_type&																		reference;
+		typedef const value_type&																const_reference;
+		typedef value_type*																		pointer;
+		typedef const value_type*																const_pointer;
+		typedef std::size_t																		size_type;
+		typedef std::ptrdiff_t																	difference_type;
 		typedef typename tree_type::iterator													iterator;
 		typedef typename tree_type::const_iterator												const_iterator;
 		typedef typename tree_type::reverse_iterator											reverse_iterator;
@@ -102,7 +102,18 @@ namespace ft
 		** Destructors of the elements are called and
 		** the used storage is deallocated.
 		*/
-		~map() {}
+		~map() {
+			clear();
+		}
+
+		/*
+		** Copy assignment operator.
+		** Replaces the contents with a copy of the contents of other
+		*/
+		map& operator=(const map& other) {
+			_tree = other._tree;
+			return *this;
+		}
 
 		// ==== Iterators ====
 
