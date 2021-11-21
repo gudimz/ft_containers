@@ -104,7 +104,7 @@ namespace ft
 		** Copy constructor.
 		** Each element is copied from "other".
 		*/
-		red_black_tree(red_black_tree const& other) :	_root(0), _nil(0), _comp(other._comp),
+		red_black_tree(const red_black_tree& other) :	_root(0), _nil(0), _comp(other._comp),
 																					_size(0), _alloc(other._alloc) {
 			_nil = _alloc.allocate(1);
 			_alloc.construct(_nil, node_type(value_type()));
@@ -127,7 +127,7 @@ namespace ft
 		** Assigns contents.
 		** The current content replace from "other"
 		*/
-		red_black_tree& operator=(red_black_tree const& other) {
+		red_black_tree& operator=(const red_black_tree& other) {
 			if (this == &other) {
 				return *this;
 			}
@@ -294,7 +294,7 @@ namespace ft
 		** Inserts element into the tree,
 		** if the tree doesn't already contain an element with an equivalent key.
 		*/
-		ft::pair<iterator, bool> insert(value_type const& value) {
+		ft::pair<iterator, bool> insert(const value_type& value) {
 			// Check that the key is a duplicate.
 			iterator it = find(value.first);
 			if (it != end()) {
@@ -327,6 +327,10 @@ namespace ft
 			}
 		}
 
+		/*
+		** Single element.
+		** Removes the element at pos.
+		*/
 		void erase(iterator pos) {
 			if (pos != end()) {
 				_erase_helper(pos._ptr);
@@ -334,13 +338,40 @@ namespace ft
 			}
 		}
 
+		/*
+		** Range.
+		** Removes the elements in the range [first; last),
+		** which must be a valid range in *this.
+		*/
+		void erase(iterator first, iterator last) {
+			while (first != last) {
+				insert(*first++);
+			}
+		}
+
+
+		/*
+		** Single element.
+		** Removes the element (if one exists) with the key equivalent to key.
+		*/
+		size_type erase(const key_type& key) {
+			iterator it = find(key);
+			// Key not found.
+			if (it == end()) {
+				return 0;
+			}
+			erase(it);
+			return 1;
+		}
+
+
 		// ==== Lookup ====
 
 		/*
 		** Returns the number of elements with key key,
 		** which is either 1 or 0 since this container does not allow duplicates.
 		*/
-		size_type count(key_type const& key) {
+		size_type count(const key_type& key) {
 			iterator it = find(key);
 			return !it ? 0 : 1;
 		}
@@ -348,14 +379,100 @@ namespace ft
 		/*
 		** Finds an element with key equivalent to key and returns a iterator to it, if found.
 		*/
-		iterator find(key_type const& key) {
+		iterator find(const key_type& key) {
 			pointer node = _search_key(key);
-			// if (!node) {
-			// 	return end();
-			// }
+			if (!node) {
+				return end();
+			}
 			return iterator(node, _root, _nil);
 		}
 
+		/*
+		** Finds an element with key equivalent to key and returns a const iterator to it, if found.
+		*/
+		const_iterator find(const key_type& key) const {
+			pointer node = _search_key(key);
+			if (!node) {
+				return end();
+			}
+			return const_iterator(node, _root, _nil);
+		}
+
+		/*
+		** Returns a range containing all elements with the given key in the container.
+		** The range is defined by two iterators, one pointing to the first element that is not less than key
+		** and another pointing to the first element greater than key.
+		*/
+		ft::pair<iterator, iterator> equal_range(const key_type& key) {
+			return ft::make_pair<iterator, iterator> (lower_bound(key), upper_bound(key));
+		}
+
+		/*
+		** Returns a range containing all elements with the given key in the container.
+		** The range is defined by two const iterators, one pointing to the first element that is not less than key
+		** and another pointing to the first element greater than key.
+		*/
+		ft::pair<const_iterator, const_iterator> equal_range(const key_type& key) const {
+			return ft::make_pair<const_iterator, const_iterator> (lower_bound(key), upper_bound(key));
+		}
+
+		/*
+		** Returns an iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
+		*/
+		iterator lower_bound(const key_type& key) {
+			for (iterator it = begin(); it != end(); ++it) {
+				if (_comp(key, it._ptr->data->first) || key == it._ptr->data->first) {
+					return it;
+				}
+				return end();
+			}
+		}
+
+		/*
+		** Returns an const iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
+		*/
+		const_iterator lower_bound(const key_type& key) const {
+			for (const_iterator it = begin(); it != end(); ++it) {
+				if (_comp(key, it._ptr->data->first) || key == it._ptr->data->first) {
+					return it;
+				}
+				return end();
+			}
+		}
+
+		/*
+		** Returns an iterator pointing to the first element that is greater than key.
+		*/
+		iterator upper_bound(const key_type& key) {
+			for (iterator it = begin(); it != end(); ++it) {
+				if (!_comp(key, it._ptr->data->first)) {
+					return it;
+				}
+				return end();
+			}
+		}
+
+		/*
+		** Returns an const iterator pointing to the first element that is greater than key.
+		*/
+		const_iterator upper_bound(const key_type& key) const {
+			for (const_iterator it = begin(); it != end(); ++it) {
+				if (!_comp(key, it._ptr->data->first)) {
+					return it;
+				}
+				return end();
+			}
+		}
+
+		// ==== Observers ====
+
+		/*
+		** Returns the function object that compares the keys,
+		** which is a copy of this container's constructor argument comp.
+		*/
+		key_compare key_comp(void) const {
+			return key_compare();
+		}
 
 	private:
 
@@ -418,6 +535,11 @@ namespace ft
 			node->left = _nil;
 			node->right = _nil;
 			return node;
+		}
+
+		pointer _delete_node(pointer node) {
+			_alloc.destroy(node);
+			_alloc.deallocate(1, node);
 		}
 
 		/*
@@ -497,14 +619,14 @@ namespace ft
 				parent->right = new_node;
 			}
 			if (new_node->parent != _root) {
-				insert_fix_up(new_node);
+				_insert_fix_up(new_node);
 			}
 		}
 
 		/*
 		** Maintain red black tree baance after inserting new node.
 		*/
-		void insert_fix_up(pointer node) {
+		void _insert_fix_up(pointer node) {
 			pointer uncle = 0;
 			pointer parent = node->parent;
 			pointer grandparent = node->parent->parent;
@@ -558,14 +680,108 @@ namespace ft
 			_root->color = BLACK;
 		}
 
+		void _delete_fix_up(pointer node) {
+			pointer tmp;
+			while (node != _root && node->color == BLACK) {
+				if (node == node->parent->left) {
+					tmp = node->parent->right;
+					if (tmp->color == RED) {
+						tmp->color = BLACK;
+						node->parent->color = RED;
+						_rotate_left(node->parent);
+						tmp = node->parent->right;
+					}
+					if (tmp->left->color == BLACK && tmp->right->color == BLACK) {
+						tmp->color = RED;
+						node = node->parent;
+					} else {
+						if (tmp->right->color == BLACK) {
+							tmp->left->color = BLACK;
+							tmp->color = RED;
+							_rotate_right(tmp);
+							tmp = node->parent->right;
+						}
+						tmp->color = node->parent->color;
+						node->parent->color = BLACK;
+						tmp->right->color = BLACK;
+						_rotate_left(node->parent);
+						node = _root;
+					}
+				} else {
+					tmp = node->parent->left;
+					if (tmp->color == RED) {
+						tmp->color = BLACK;
+						node->parent->color = RED;
+						_rotate_right(node->parent);
+						tmp = node->parent->left;
+					}
+					if (tmp->right->color == BLACK && tmp->left->color == BLACK) {
+						tmp->color = RED;
+						node = node->parent;
+					} else {
+						if (tmp->left->color == BLACK) {
+							tmp->right->color = BLACK;
+							tmp->color = RED;
+							_rotate_left(tmp);
+							tmp = tmp->parent->left;
+						}
+						tmp->color = node->parent->color;
+						node->parent->color = BLACK;
+						tmp->left->color = BLACK;
+						_rotate_right(node->parent);
+						node = _root;
+					}
+					node->color = BLACK;
+				}
+			}
+		}
+
+		/*
+		** This is the helper func for public erase func.
+		** Delete node from tree.
+		*/
 		void _erase_helper(pointer node) {
-			
+			pointer x;
+			pointer y;
+			if (!node || node == _nil) {
+				return;
+			}
+			if (node->left == _nil || node->right == _nil) {
+				// y has f _nil node as a child
+				y = node;
+			} else {
+				// find tree successor with a _nil node as a child
+				y = node->right;
+				while (y->left != _nil) {
+					y = y->left;
+				}
+			}
+			// x is y's only child
+			if (y->left != _nil) {
+				x = y->left;
+			} else {
+				x = y->right;
+			}
+			// remove y from the parent chain
+			x->parent = y->parent;
+			if (y->parent) {
+				if (y == y->parent->left) {
+					y->parent->left = x;
+				} else {
+					y->parent->right = x;
+				}
+			} else {
+				_root = x;
+			}
+			if (y != node) {
+				node->data = y->data;
+			}
+			if (y->color == BLACK) {
+				_delete_fix_up(x);
+			}
+			_delete_node(y);
 		}
 	};
 }
-
-
-
-
 
 #endif

@@ -18,22 +18,22 @@ namespace ft
 		/*        Member types      */
 		/****************************/
 
-		typedef Key																				key_type;
-		typedef T																				mapped_type;
-		typedef ft::pair<const key_type, mapped_type>											value_type;
-		typedef Compare																			key_compare;
-		typedef Allocator																		allocator_type;
-		typedef typename ft::red_black_tree<value_type, key_compare, allocator_type>			tree_type;
-		typedef value_type&																		reference;
-		typedef const value_type&																const_reference;
-		typedef value_type*																		pointer;
-		typedef const value_type*																const_pointer;
-		typedef std::size_t																		size_type;
-		typedef std::ptrdiff_t																	difference_type;
-		typedef typename tree_type::iterator													iterator;
-		typedef typename tree_type::const_iterator												const_iterator;
-		typedef typename tree_type::reverse_iterator											reverse_iterator;
-		typedef typename tree_type::const_reverse_iterator										const_reverse_iterator;
+		typedef Key																		key_type;
+		typedef T																		mapped_type;
+		typedef ft::pair<const key_type, mapped_type>									value_type;
+		typedef Compare																	key_compare;
+		typedef Allocator																allocator_type;
+		typedef typename ft::red_black_tree<value_type, key_compare, allocator_type>	tree_type;
+		typedef value_type&																reference;
+		typedef const value_type&														const_reference;
+		typedef value_type*																pointer;
+		typedef const value_type*														const_pointer;
+		typedef std::size_t																size_type;
+		typedef std::ptrdiff_t															difference_type;
+		typedef typename tree_type::iterator											iterator;
+		typedef typename tree_type::const_iterator										const_iterator;
+		typedef typename tree_type::reverse_iterator									reverse_iterator;
+		typedef typename tree_type::const_reverse_iterator								const_reverse_iterator;
 
 		/****************************/
 		/*      Member classes      */
@@ -142,7 +142,7 @@ namespace ft
 		** performing an insertion if such key does not already exist.
 		*/
 		mapped_type& operator[](const key_type& key) {
-			return _tree.[key];
+			return _tree[key];
 		}
 
 		// ==== Iterators ====
@@ -235,7 +235,7 @@ namespace ft
 		*/
 
 		void clear(void) {
-			return _tree.clear();
+			_tree.clear();
 		}
 
 		/*
@@ -265,11 +265,141 @@ namespace ft
 		*/
 		template<class InputIt>
 		void insert(InputIt first, InputIt last) {
-			return _tree(first, last);
+			_tree(first, last);
+		}
+
+		/*
+		** Single element.
+		** Removes the element at pos.
+		*/
+		void erase(iterator pos) {
+			_tree.erase(pos);
+		}
+
+		/*
+		** Range.
+		** Removes the elements in the range [first; last),
+		** which must be a valid range in *this.
+		*/
+		void erase(iterator first, iterator last) {
+			_tree.erase(first, last);
 		}
 
 
+		/*
+		** Single element.
+		** Removes the element (if one exists) with the key equivalent to key.
+		*/
+		size_type erase(const key_type& key) {
+			return _tree.erase(key);
+		}
+
+		/*
+		** Exchanges the contents of the container with those of other.
+		** Does not invoke any move, copy, or swap operations on individual elements.
+		** All iterators and references remain valid.
+		** The past-the-end iterator is invalidated.
+		*/
+		void swap(map& other) {
+			map tmp = *this;
+			*this = other;
+			other = tmp;
+		}
+
+		// ==== Lookup ====
+
+		/*
+		** Returns the number of elements with key key,
+		** which is either 1 or 0 since this container does not allow duplicates.
+		*/
+		size_type count(const key_type& key) {
+			return _tree.count(key);
+		}
+
+		/*
+		** Finds an element with key equivalent to key and returns a iterator to it, if found.
+		*/
+		iterator find(const key_type& key) {
+			return _tree.find(key);
+		}
+
+		/*
+		** Finds an element with key equivalent to key and returns a const iterator to it, if found.
+		*/
+		const_iterator find(const key_type& key) const {
+			return _tree.find(key);
+		}
+
+		/*
+		** Returns a range containing all elements with the given key in the container.
+		** The range is defined by two iterators, one pointing to the first element that is not less than key
+		** and another pointing to the first element greater than key.
+		*/
+		ft::pair<iterator, iterator> equal_range(const key_type& key) {
+			return _tree.equal_range(key);
+		}
+
+		/*
+		** Returns a range containing all elements with the given key in the container.
+		** The range is defined by two const iterators, one pointing to the first element that is not less than key
+		** and another pointing to the first element greater than key.
+		*/
+		ft::pair<const_iterator, const_iterator> equal_range(const key_type& key) const {
+			return _tree.equal_range(key);
+		}
+
+		/*
+		** Returns an iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
+		*/
+		iterator lower_bound(const key_type& key) {
+			_tree.lower_bound(key);
+		}
+
+		/*
+		** Returns an const iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
+		*/
+		const_iterator lower_bound(const key_type& key) const {
+			_tree.lower_bound(key);
+		}
+
+		/*
+		** Returns an iterator pointing to the first element that is greater than key.
+		*/
+		iterator upper_bound(const key_type& key) {
+			_tree.upper_bound(key);
+		}
+
+		/*
+		** Returns an const iterator pointing to the first element that is greater than key.
+		*/
+		const_iterator upper_bound(const key_type& key) const {
+			_tree.upper_bound(key);
+		}
+
+		// ==== Observers ====
+
+		/*
+		** Returns the function object that compares the keys,
+		** which is a copy of this container's constructor argument comp.
+		*/
+		key_compare key_comp(void) const {
+			return _tree.key_comp();
+		}
+
+		/*
+		** Returns a function object that compares objects of type std::map::value_type (key-value pairs)
+		** by using key_comp to compare the first components of the pairs.
+		*/
+		value_compare value_comp(void) const {
+			return value_compare(key_comp);
+		}
 	};
+
+	/********************************/
+	/*      Non-member functions    */
+	/********************************/
+
+
 
 }
 #endif
