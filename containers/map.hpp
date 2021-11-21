@@ -6,6 +6,8 @@
 #include "../utils/pair.hpp"
 #include "../utils/rb_tree_map.hpp"
 #include "../utils/iterator/rbt_bidirectional_iterator.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/lexicographical_compare.hpp"
 
 namespace ft
 {
@@ -399,7 +401,44 @@ namespace ft
 	/*      Non-member functions    */
 	/********************************/
 
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator==(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && lhs.size() == rhs.size();
+	}
 
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator!=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return !(lhs == rhs);
+	}
 
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator<(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator<=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return lhs < rhs || lhs == rhs;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator>(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return rhs < lhs;
+	}
+
+	template<class Key, class T, class Compare, class Alloc>
+	bool operator>=(const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs) {
+		return rhs <= lhs;
+	}
+
+	/*
+	** Specializes the std::swap algorithm for std::map.
+	** Swaps the contents of lhs and rhs. Calls lhs.swap(rhs).
+	*/
+	template<class Key, class T, class Compare, class Alloc>
+	void swap(ft::map<Key, T, Compare, Alloc>& lhs, ft::map<Key, T, Compare, Alloc>& rhs) {
+		lhs.swap(rhs);
+	}
 }
+
 #endif
