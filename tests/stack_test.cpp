@@ -383,6 +383,5 @@ int main(void) {
 	test_capacity();
 	test_modifiers();
 	test_non_member();
-
 	return 0;
 }

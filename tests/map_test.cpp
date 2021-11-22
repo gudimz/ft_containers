@@ -322,12 +322,365 @@ void test_iterators(void) {
 	std::cout << "=== " << MAG "TEST №4 Iterators" REST << " ===" << std::endl;
 
 	std::cout << std::endl << GREEN "*** empty map ***" REST << std::endl;
+	ft::map<int, int> ft_map;
+	ft::map<int, int> const ft_map_const;
+	std::cout << "Enter: " << CYAN "map<int, int> ft_map;" REST << std::endl;
+	if (ft_map.begin() == ft_map.end()) {
+		std::cout << "ft_map.begin() == ft_map.end()" << std::endl;
+		std::cout << GREEN "OK :)" REST << std::endl;
+	} else {
+		std::cout << "ft_map.begin() != ft_map.end()" << std::endl;
+		std::cout << RED "KO :(" REST << std::endl;
+	}
+
+	if (ft_map.rbegin() == ft_map.rend()) {
+		std::cout << "ft_map.rbegin() == ft_map.rend()" << std::endl;
+		std::cout << GREEN "OK :)" REST << std::endl;
+	} else {
+		std::cout << "ft_map.rbegin() != ft_map.rend()" << std::endl;
+		std::cout << RED "KO :(" REST << std::endl;
+	}
+	std::cout << "=================================================================================="
+	<< std::endl << std::endl;
+	std::cout << "Enter: " << CYAN "map<int, int> const ft_map_const;" REST << std::endl;
+	if (ft_map_const.begin() == ft_map_const.end()) {
+		std::cout << "ft_map_const.begin() == ft_map_const.end()" << std::endl;
+		std::cout << GREEN "OK :)" REST << std::endl;
+	} else {
+		std::cout << "ft_map_const.begin() != ft_map_const.end()" << std::endl;
+		std::cout << RED "KO :(" REST << std::endl;
+	}
+
+	if (ft_map_const.rbegin() == ft_map_const.rend()) {
+		std::cout << "ft_map_const.rbegin() == ft_map_const.rend()" << std::endl;
+		std::cout << GREEN "OK :)" REST << std::endl;
+	} else {
+		std::cout << "ft_map_const.rbegin() != ft_map_const.rend()" << std::endl;
+		std::cout << RED "KO :(" REST << std::endl;
+	}
+	std::cout << std::endl << GREEN "*** fill map, iterator ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		int y = 100;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map.insert(ft::make_pair(i, y));
+			std_map.insert(std::make_pair(i, y));
+			++y;
+		}
+		map_print(ft_map, 0);
+
+		if (ft_map.begin()->first == std_map.begin()->first) {
+			std::cout << "ft_map.begin()->first == std_map.begin()->first" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_map.begin()->first != std_map.begin()->first" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		if (ft_map.rbegin()->second == std_map.rbegin()->second) {
+			std::cout << "ft_map.rbegin()->second == std_map.rbegin()->second" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_map.rbegin()->second != std_map.rbegin()->second)" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << std::endl << GREEN "*** fill map, const iterator ***" REST << std::endl;
+
+		ft::map<int, int> const ft_map_const(ft_map);
+		std::map<int, int> const std_map_const(std_map);
+		map_print(ft_map, 0);
+		if (ft_map_const.begin()->first == std_map_const.begin()->first) {
+			std::cout << "ft_map_const.begin()->first == std_map_const()->first" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_map_const.begin()->first != std_map_const.begin()->first" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+
+		if (ft_map_const.rbegin()->second == std_map_const.rbegin()->second) {
+			std::cout << "ft_map_const.rbegin()->second == std_map_const.rbegin()->second" << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << "ft_map_const.rbegin()->second != std_map_const.rbegin()->second)" << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №4 Iterators" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** arithmetic with iterators ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		int y = 21;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map.insert(ft::make_pair(i, y));
+			std_map.insert(std::make_pair(i, y));
+			++y;
+		}
+		map_print(ft_map, 0);
+		std::cout << RED "=== for iterator ===" REST << std::endl;
+		ft::map<int, int>::iterator ft_iter = ft_map.begin();
+		std::map<int, int>::iterator std_iter = std_map.begin();
+		std::cout << "Enter: " << CYAN "++iter" REST << std::endl;
+		++ft_iter;
+		++std_iter;
+		if (ft_iter->first == std_iter->first && ft_iter->second == std_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter++" REST << std::endl;
+		ft_iter++;
+		std_iter++;
+		if (ft_iter->first == std_iter->first && ft_iter->second == std_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--iter" REST << std::endl;
+		--ft_iter;
+		--std_iter;
+		if (ft_iter->first == std_iter->first && ft_iter->second == std_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "iter--" REST << std::endl;
+		ft_iter--;
+		std_iter--;
+		if (ft_iter->first == std_iter->first && ft_iter->second == std_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+
+		std::cout << RED "=== for reverse_iterator ===" REST << std::endl;
+		ft::map<int, int>::reverse_iterator ft_rev_iter = ft_map.rbegin();
+		std::map<int, int>::reverse_iterator std_rev_iter = std_map.rbegin();
+		std::cout << "Enter: " << CYAN "++rev_iter" REST << std::endl;
+		++ft_rev_iter;
+		++std_rev_iter;
+		if (ft_rev_iter->first == std_rev_iter->first && ft_rev_iter->second == std_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter++" REST << std::endl;
+		ft_rev_iter++;
+		std_rev_iter++;
+		if (ft_rev_iter->first == std_rev_iter->first && ft_rev_iter->second == std_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--rev_iter" REST << std::endl;
+		--ft_rev_iter;
+		--std_rev_iter;
+		if (ft_rev_iter->first == std_rev_iter->first && ft_rev_iter->second == std_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "rev_iter--" REST << std::endl;
+		ft_rev_iter--;
+		std_rev_iter--;
+		if (ft_rev_iter->first == std_rev_iter->first && ft_rev_iter->second == std_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/*]" << REST << std::endl;
+		std::cin.get();
+		std::cout << CLEAR;
+
+		std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+		std::cout << "=== " << MAG "TEST №4 Iterators" REST << " ===" << std::endl;
+
+		std::cout << RED "=== for const_iterator ===" REST << std::endl;
+		ft::map<int, int>::const_iterator ft_const_iter = ft_map.begin();
+		std::map<int, int>::const_iterator std_const_iter = std_map.begin();
+		std::cout << "Enter: " << CYAN "++const_iter" REST << std::endl;
+		++ft_const_iter;
+		++std_const_iter;
+		if (ft_const_iter->first == std_const_iter->first && ft_const_iter->second == std_const_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter++" REST << std::endl;
+		ft_const_iter++;
+		std_const_iter++;
+		if (ft_const_iter->first == std_const_iter->first && ft_const_iter->second == std_const_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--const_iter" REST << std::endl;
+		--ft_const_iter;
+		--std_const_iter;
+		if (ft_const_iter->first == std_const_iter->first && ft_const_iter->second == std_const_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_iter--" REST << std::endl;
+		ft_const_iter--;
+		std_const_iter--;
+		if (ft_const_iter->first == std_const_iter->first && ft_const_iter->second == std_const_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << RED "=== for const_reverse_iterator ===" REST << std::endl;
+		ft::map<int, int>::const_reverse_iterator ft_const_rev_iter = ft_map.rbegin();
+		std::map<int, int>::const_reverse_iterator std_const_rev_iter = std_map.rbegin();
+		std::cout << "Enter: " << CYAN "++const_rev_iter" REST << std::endl;
+		++ft_const_rev_iter;
+		++std_const_rev_iter;
+		if (ft_const_rev_iter->first == std_const_rev_iter->first && ft_const_rev_iter->second == std_const_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter++" REST << std::endl;
+		ft_const_rev_iter++;
+		std_const_rev_iter++;
+		if (ft_const_rev_iter->first == std_const_rev_iter->first && ft_const_rev_iter->second == std_const_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "--const_rev_iter" REST << std::endl;
+		--ft_const_rev_iter;
+		--std_const_rev_iter;
+		if (ft_const_rev_iter->first == std_const_rev_iter->first && ft_const_rev_iter->second == std_const_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "const_rev_iter--" REST << std::endl;
+		ft_const_rev_iter--;
+		std_const_rev_iter--;
+		if (ft_const_rev_iter->first == std_const_rev_iter->first && ft_const_rev_iter->second == std_const_rev_iter->second) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_capacity(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №5 Capacity" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** empty ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		std::cout << "Enter: " << CYAN "map<int, int> map" REST << std::endl;
+		if (std_map.empty() == ft_map.empty()) {
+			std::cout << "std_map.empty() == ft_map.empty()" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.empty() != ft_map.empty()" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+		map_compare(ft_map, std_map);
+	}
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		int y = 21;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map.insert(ft::make_pair(i, y));
+			std_map.insert(std::make_pair(i, y));
+			++y;
+		}
+		map_print(ft_map, 0);
+		if (std_map.empty() == ft_map.empty()) {
+			std::cout << "std_map.empty() == ft_map.empty()" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.empty() != ft_map.empty()" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+		map_compare(ft_map, std_map);
+	}
+	std::cout << std::endl << GREEN "*** max_size ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		int y = 42;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map.insert(ft::make_pair(i, y));
+			std_map.insert(std::make_pair(i, y));
+			++y;
+		}
+		map_print(ft_map, 0);
+		if (std_map.max_size() == ft_map.max_size()) {
+			std::cout << "std_map.max_size() == ft_map.max_size()" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.max_size() != ft_map.max_size()" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+		map_compare(ft_map, std_map);
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [9/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_modifiers(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №6 Modifiers" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** clear ***" REST << std::endl;
+
+
+}
 
 int main(void) {
 	// test_constructors();
 	// test_assigns();
 	// test_element_access();
-	test_iterators();
+	// test_iterators();
+	// test_capacity();
+	test_modifiers();
 	return 0;
 
 }
