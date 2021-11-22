@@ -5,6 +5,7 @@
 
 # include <cstddef> // ptrdiff_t
 # include <iostream>
+# include <stdexcept>
 # include "../containers/map.hpp"
 # include "../utils/pair.hpp"
 # include "../utils/iterator/rbt_bidirectional_iterator.hpp"
@@ -151,10 +152,10 @@ namespace ft
 		** Returns a reference to the mapped value of the element with key equivalent to key.
 		** If no such element exists, an exception of type std::out_of_range is thrown
 		*/
-		reference at(key_type& key) {
-			iterator it = find(key);
-			if (it) {
-				return it->_ptr->data.second;
+		mapped_type& at(key_type& key) {
+			pointer pos = _search_key(key, _root);
+			if (pos) {
+				return pos->data.second;
 			} else {
 				throw std::out_of_range("Out of range");
 			}
@@ -165,27 +166,26 @@ namespace ft
 		** If pos is not within the range of the container,
 		** an exception of type std::out_of_range is thrown.
 		*/
-		const_reference at(key_type& key) const {
-			iterator it = find(key);
-			if (it) {
-				return it->_ptr->data.second;
-			} else
+		const mapped_type& at(key_type& key) const {
+			pointer pos = _search_key(key);
+			if (pos) {
+				return pos->data.second;
+			} else {
 				throw std::out_of_range("Out of range");
+			}
 		}
 
 		/*
 		** Returns a reference to the value that is mapped to a key equivalent to key,
 		** performing an insertion if such key does not already exist.
 		*/
-		reference operator[](key_type& key) {
-			iterator it = find(key);
-			if (it) {
-				return it->_ptr->data.second;
-			} else {
-				insert(ft::make_pair<key_type, value_type>(key, value_type()));
-				it = find(key);
-				return it->_ptr->data.second;
+		mapped_type& operator[](key_type& key) {
+			pointer pos = _search_key(key, _root);
+			if (!pos) {
+				insert(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
+				pos = _search_key(key, _root);
 			}
+			return pos->data.second;
 		}
 
 		// ==== Iterators ====
@@ -380,7 +380,7 @@ namespace ft
 		** Finds an element with key equivalent to key and returns a iterator to it, if found.
 		*/
 		iterator find(const key_type& key) {
-			pointer node = _search_key(key);
+			pointer node = _search_key(key, _root);
 			if (!node) {
 				return end();
 			}
@@ -391,7 +391,7 @@ namespace ft
 		** Finds an element with key equivalent to key and returns a const iterator to it, if found.
 		*/
 		const_iterator find(const key_type& key) const {
-			pointer node = _search_key(key);
+			pointer node = _search_key(key, _root);
 			if (!node) {
 				return end();
 			}
@@ -500,28 +500,18 @@ namespace ft
 		** This is the helper func for public find func.
 		** Finds an element with key in the tree using recursion
 		*/
-		pointer _search_key(key_type const key) const {
-			pointer tmp = _root;
-			pointer search_key = _nil;
-			while (tmp != _nil) {
-				if (_comp(key, tmp->data.first)) {
-					if (tmp->left != _nil) {
-						tmp = tmp->left;
-					} else {
-						break;
-					}
-				} else if (key == tmp->data.first) {
-					search_key = tmp;
-					break;
-				} else {
-					if (tmp->right != _nil) {
-						tmp = tmp->right;
-					} else {
-						break;
-					}
-				}
+		pointer _search_key(const key_type& key, const pointer& node) const {
+			// Base case of recursion
+			if (node == _nil) {
+				return 0;
+			} else if (node->data.first == key) {
+				return node;
 			}
-			return search_key;
+			if (_comp(key, node->data.first)) {
+				return _search_key(key, node->left);
+			} else {
+				return _search_key(key, node->right);
+			}
 		}
 
 		/*

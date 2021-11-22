@@ -95,7 +95,7 @@ void test_constructors(void) {
 		std::allocator<int>  alloc;
 		ft::map<int, int> ft_map(ft::less<int>(), alloc);
 		std::map<int, int> std_map(std::less<int>(), alloc);
-		std::cout << "Enter: " << CYAN "map<int, int> map" REST << std::endl;
+		std::cout << "Enter: " << CYAN "map<int, int> map(less<int>(), alloc)" REST << std::endl;
 		map_compare(ft_map, std_map);
 	}
 
@@ -191,9 +191,143 @@ void test_constructors(void) {
 
 }
 
+void test_assigns(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №2 Assigns" REST << " ===" << std::endl;
+
+	std::cout << GREEN "*** Operator= ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map_copy;
+		std::map<int, int> std_map_copy;
+		int y = 100;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map_copy.insert(ft::make_pair(i, y));
+			std_map_copy.insert(std::make_pair(i, y));
+			++y;
+		}
+		std::cout << "map_copy ";
+		map_print(ft_map_copy, 0);
+		std::cout << "Enter: " << CYAN "map<int, int> map = map_copy" REST << std::endl;
+		ft::map<int, int> ft_map(ft_map_copy);
+		std::map<int, int> std_map(std_map_copy);
+		map_compare(ft_map, std_map);
+	}
+
+	std::cout << GREEN "*** Get allocator ***" REST << std::endl;
+	{
+		ft::map<int, int> ft_map;
+		std::map<int, int> std_map;
+		int y = 100;
+		for (size_t i = 1; i < 8; ++i) {
+			ft_map.insert(ft::make_pair(i, y));
+			std_map.insert(std::make_pair(i, y));
+			++y;
+		}
+		std::cout << "map<int, int> ";
+		map_print(ft_map, 0);
+		if (std_map.get_allocator() == ft_map.get_allocator()) {
+			std::cout << "std_map.get_allocator() == ft_map.get_allocator()" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_vec.get_allocator() != ft_vec.get_allocator()" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_element_access(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №3 Element access" REST << " ===" << std::endl;
+
+	std::cout << std::endl << GREEN "*** At ***" REST << std::endl;
+	{
+		ft::map<std::string, std::string> ft_map;
+		ft_map.insert(ft::make_pair("Russia", "Empty"));
+		ft_map.insert(ft::make_pair("USA", "Empty"));
+		ft_map.insert(ft::make_pair("France", "Empty"));
+		map_print(ft_map, 1);
+		std::cout << "Enter: " << CYAN "ft_map.at(\"Russia\") = \"Moscow\"" REST << std::endl;
+		ft_map.at("Russia") = "Moscow";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "ft_map.at(\"USA\") = \"Washington\"" REST << std::endl;
+		ft_map.at("USA") = "Washington";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "ft_map.at(\"France\") = \"Paris\"" REST << std::endl;
+		ft_map.at("France") = "Paris";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		try {
+			std::cout << "Enter: " << CYAN "ft_map.at(\"Canada\") = \"Toronto\"" REST << std::endl;
+			ft_map.at("Canada");
+		} catch (const std::exception& e) {
+			std::cerr << RED "exception : " REST << e.what() << std::endl;
+			std::cout << "=================================================================================="
+			<< std::endl << std::endl;
+		}
+		map_print(ft_map, 1);
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №3 Element access" REST << " ===" << std::endl;
+
+	std::cout << std::endl << GREEN "*** operator[] ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		std::map<int, std::string> std_map;
+
+		std::cout << "Enter: " << CYAN "map[1] = \"one\"" REST << std::endl;
+		ft_map[1] = "one";
+		std_map[1] = "one";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+
+		std::cout << "Enter: " << CYAN "map[3] = \"three\"" REST << std::endl;
+		ft_map[3] = "three";
+		std_map[3] = "three";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+
+		std::cout << "Enter: " << CYAN "map[2] = \"two\"" REST << std::endl;
+		ft_map[2] = "two";
+		std_map[2] = "two";
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		map_compare(ft_map, std_map);
+
+		for (size_t i = 1; i <= ft_map.size() && i <= std_map.size(); ++i) {
+			if (std_map[i] == ft_map[i]) {
+				std::cout << "std_map[" << i << "] == ft_map[" << i << "])" << REST <<
+				GREEN " OK :)" REST << std::endl;
+			} else {
+				std::cout << "std_map[" << i << "] == ft_map[" << i << "])" << REST <<
+				RED " KO :(" REST << std::endl;
+			}
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_iterators(void) {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №4 Iterators" REST << " ===" << std::endl;
+
+	std::cout << std::endl << GREEN "*** empty map ***" REST << std::endl;
+
 int main(void) {
-	test_constructors();
-	
+	// test_constructors();
+	// test_assigns();
+	// test_element_access();
+	test_iterators();
 	return 0;
 
 }
