@@ -120,8 +120,7 @@ namespace ft
 		*/
 		virtual ~red_black_tree(void) {
 			clear();
-			_alloc.destroy(_nil);
-			_alloc.deallocate(_nil, 1);
+			_delete_node(_nil);
 		}
 
 		/*
@@ -491,8 +490,7 @@ namespace ft
 			}
 			_clear_help(node->left);
 			_clear_help(node->right);
-			_alloc.destroy(node);
-			_alloc.deallocate(node, 1);
+			_delete_node(node);
 			--_size;
 		}
 
@@ -527,9 +525,9 @@ namespace ft
 			return node;
 		}
 
-		pointer _delete_node(pointer node) {
+		void _delete_node(pointer node) {
 			_alloc.destroy(node);
-			_alloc.deallocate(1, node);
+			_alloc.deallocate(node, 1);
 		}
 
 		/*
@@ -731,8 +729,8 @@ namespace ft
 		** Delete node from tree.
 		*/
 		void _erase_helper(pointer node) {
-			pointer x;
-			pointer y;
+			pointer x = 0;
+			pointer y = 0;
 			if (!node || node == _nil) {
 				return;
 			}
@@ -764,7 +762,7 @@ namespace ft
 				_root = x;
 			}
 			if (y != node) {
-				node->data = y->data;
+				node = y;
 			}
 			if (y->color == BLACK) {
 				_delete_fix_up(x);

@@ -235,7 +235,6 @@ namespace ft
 		** Erases all elements from the map.
 		** After this call, _size = 0.
 		*/
-
 		void clear(void) {
 			_tree.clear();
 		}
@@ -267,7 +266,7 @@ namespace ft
 		*/
 		template<class InputIt>
 		void insert(InputIt first, InputIt last) {
-			_tree(first, last);
+			_tree.insert(first, last);
 		}
 
 		/*
