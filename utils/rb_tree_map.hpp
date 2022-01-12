@@ -371,8 +371,10 @@ namespace ft
 		** which is either 1 or 0 since this container does not allow duplicates.
 		*/
 		size_type count(const key_type& key) {
-			iterator it = find(key);
-			return !it ? 0 : 1;
+			if (find(key) != end()) {
+				return 1;
+			}
+			return 0;
 		}
 
 		/*
@@ -420,11 +422,11 @@ namespace ft
 		*/
 		iterator lower_bound(const key_type& key) {
 			for (iterator it = begin(); it != end(); ++it) {
-				if (_comp(key, it._ptr->data->first) || key == it._ptr->data->first) {
+				if (!_comp(key, it._ptr->data.first) || key == it._ptr->data.first) {
 					return it;
 				}
-				return end();
 			}
+			return end();
 		}
 
 		/*
@@ -432,11 +434,11 @@ namespace ft
 		*/
 		const_iterator lower_bound(const key_type& key) const {
 			for (const_iterator it = begin(); it != end(); ++it) {
-				if (_comp(key, it._ptr->data->first) || key == it._ptr->data->first) {
+				if (!_comp(key, it._ptr->data.first) || key == it._ptr->data.first) {
 					return it;
 				}
-				return end();
 			}
+			return end();
 		}
 
 		/*
@@ -444,11 +446,11 @@ namespace ft
 		*/
 		iterator upper_bound(const key_type& key) {
 			for (iterator it = begin(); it != end(); ++it) {
-				if (!_comp(key, it._ptr->data->first)) {
+				if (_comp(key, it._ptr->data.first)) {
 					return it;
 				}
-				return end();
 			}
+			return end();
 		}
 
 		/*
@@ -456,11 +458,11 @@ namespace ft
 		*/
 		const_iterator upper_bound(const key_type& key) const {
 			for (const_iterator it = begin(); it != end(); ++it) {
-				if (!_comp(key, it._ptr->data->first)) {
+				if (_comp(key, it._ptr->data.first)) {
 					return it;
 				}
-				return end();
 			}
+			return end();
 		}
 
 		// ==== Observers ====

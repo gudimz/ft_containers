@@ -802,14 +802,157 @@ void test_modifiers(void) {
 		map_print(ft_map, 0);
 
 		std::cout << "Enter: " << CYAN "map.erase(\"England\")" REST << std::endl;
-		ft_map.erase("Spain");
-		std_map.erase("Spain");
+		ft_map.erase("England");
+		std_map.erase("England");
 
 		std::cout << "Enter: " << CYAN "map.erase(\"Germany\")" REST << std::endl;
 		ft_map.erase("Germany");
 		std_map.erase("Germany");
 		map_compare(ft_map, std_map);
 	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №6 Modifiers" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** swap ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map_first;
+		ft::map<int, std::string> ft_map_second;
+		ft_map_first.insert(ft::make_pair(21, "School 21"));
+		ft_map_first.insert(ft::make_pair(1, "School 21"));
+		ft_map_first.insert(ft::make_pair(77, "School 21"));
+		ft_map_first.insert(ft::make_pair(5, "School 21"));
+		map_print(ft_map_first, 1);
+		ft_map_second.insert(ft::make_pair(42, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(3, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(15, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(23, "Ecole 42"));
+		map_print(ft_map_second, 1);
+
+		std::map<int, std::string> std_map_first;
+		std::map<int, std::string> std_map_second;
+		std_map_first.insert(std::make_pair(21, "School 21"));
+		std_map_first.insert(std::make_pair(1, "School 21"));
+		std_map_first.insert(std::make_pair(77, "School 21"));
+		std_map_first.insert(std::make_pair(5, "School 21"));
+		map_print(std_map_first, 2);
+		std_map_second.insert(std::make_pair(42, "Ecole 42"));
+		std_map_second.insert(std::make_pair(3, "Ecole 42"));
+		std_map_second.insert(std::make_pair(15, "Ecole 42"));
+		std_map_second.insert(std::make_pair(23, "Ecole 42"));
+		map_print(std_map_second, 2);
+
+		std::cout << "Enter: " << CYAN "map_first.swap(map_second)" REST << std::endl;
+		ft_map_first.swap(ft_map_second);
+		std_map_first.swap(std_map_second);
+
+		map_compare(ft_map_first, std_map_first);
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [14/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_lookup() {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №7 Lookup" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** count ***" REST << std::endl;
+	{
+		ft::map<std::string, std::string> ft_map;
+		std::map<std::string, std::string> std_map;
+		ft_map.insert(ft::make_pair("Russia", "Moscow"));
+		std_map.insert(std::make_pair("Russia", "Moscow"));
+		ft_map.insert(ft::make_pair("USA", "Washington"));
+		std_map.insert(std::make_pair("USA", "Washington"));
+		ft_map.insert(ft::make_pair("France", "Paris"));
+		std_map.insert(std::make_pair("France", "Paris"));
+		map_print(ft_map, 0);
+
+		if (std_map.count("USA") == ft_map.count("USA")) {
+			std::cout << "std_map.count(\"USA\") == ft_map.count(\"USA\")" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.count(\"USA\") != ft_map.count(\"USA\")" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+
+		if (std_map.count("Germany") == ft_map.count("Germany")) {
+			std::cout << "std_map.count(\"Germany\") == ft_map.count(\"Germany\")" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.count(\"Germany\") != ft_map.count(\"Germany\")" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "*** find key ***" REST << std::endl;
+	{
+		ft::map<std::string, std::string> ft_map;
+		std::map<std::string, std::string> std_map;
+		ft_map.insert(ft::make_pair("Russia", "Moscow"));
+		std_map.insert(std::make_pair("Russia", "Moscow"));
+		ft_map.insert(ft::make_pair("USA", "Washington"));
+		std_map.insert(std::make_pair("USA", "Washington"));
+		ft_map.insert(ft::make_pair("France", "Paris"));
+		std_map.insert(std::make_pair("France", "Paris"));
+		map_print(ft_map, 0);
+
+		if (std_map.find("USA")->second  == ft_map.find("USA")->second) {
+			std::cout << "std_map.find(\"USA\")->second == ft_map.find(\"USA\")->second" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "std_map.find(\"USA\")->second != ft_map.find(\"USA\")->second" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+		if ((std_map.find("Germany") == std_map.end() && ft_map.find("Germany") == ft_map.end())) {
+			std::cout << "if (std_map.find(\"Germany\") == std_map.end() && ft_map.find(\"Germany\") == ft_map.end())" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "if (std_map.find(\"Germany\") == std_map.end() && ft_map.find(\"Germany\") == ft_map.end())" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [15/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №7 Lookup" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** equal_range ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> ft_map_pair;
+		std::map<int, std::string> std_map;
+		std::pair<std::map<int, std::string>::iterator, std::map<int, std::string>::iterator > std_map_pair;
+		ft_map.insert(ft::make_pair(1, "one"));
+		std_map.insert(std::make_pair(1, "one"));
+		ft_map.insert(ft::make_pair(5, "five"));
+		std_map.insert(std::make_pair(5, "five"));
+		ft_map.insert(ft::make_pair(2, "two"));
+		std_map.insert(std::make_pair(2, "two"));
+		ft_map.insert(ft::make_pair(9, "nine"));
+		std_map.insert(std::make_pair(9, "nine"));
+		map_print(ft_map, 0);
+
+		std::cout << "Enter: " << CYAN "map_pair = map.equal_range(2)" REST << std::endl;
+		ft_map_pair = ft_map.equal_range(2);
+		std_map_pair = std_map.equal_range(2);
+		std::cout << "first " << ft_map_pair.first ->first  << " " << std_map_pair.first ->first  << std::endl;
+		if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second) {
+			std::cout << "if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second)" << REST <<
+			GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << "if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second)" << REST <<
+			RED " KO :(" REST << std::endl;
+		}
+
+
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
 }
 
 int main(void) {
@@ -818,7 +961,8 @@ int main(void) {
 	// test_element_access();
 	// test_iterators();
 	// test_capacity();
-	test_modifiers();
+	// test_modifiers();
+	test_lookup();
 	return 0;
 
 }
