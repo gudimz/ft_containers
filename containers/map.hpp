@@ -353,28 +353,28 @@ namespace ft
 		** Returns an iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
 		*/
 		iterator lower_bound(const key_type& key) {
-			_tree.lower_bound(key);
+			return _tree.lower_bound(key);
 		}
 
 		/*
 		** Returns an const iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
 		*/
 		const_iterator lower_bound(const key_type& key) const {
-			_tree.lower_bound(key);
+			return _tree.lower_bound(key);
 		}
 
 		/*
 		** Returns an iterator pointing to the first element that is greater than key.
 		*/
 		iterator upper_bound(const key_type& key) {
-			_tree.upper_bound(key);
+			return _tree.upper_bound(key);
 		}
 
 		/*
 		** Returns an const iterator pointing to the first element that is greater than key.
 		*/
 		const_iterator upper_bound(const key_type& key) const {
-			_tree.upper_bound(key);
+			return _tree.upper_bound(key);
 		}
 
 		// ==== Observers ====
@@ -392,7 +392,7 @@ namespace ft
 		** by using key_comp to compare the first components of the pairs.
 		*/
 		value_compare value_comp(void) const {
-			return value_compare(key_comp);
+			return value_compare(key_comp());
 		}
 	};
 

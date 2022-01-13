@@ -939,18 +939,242 @@ void test_lookup() {
 		std::cout << "Enter: " << CYAN "map_pair = map.equal_range(2)" REST << std::endl;
 		ft_map_pair = ft_map.equal_range(2);
 		std_map_pair = std_map.equal_range(2);
-		std::cout << "first " << ft_map_pair.first ->first  << " " << std_map_pair.first ->first  << std::endl;
+		std::cout << CYAN "ft_map_pair: " REST << "first(" << ft_map_pair.first ->first  << GREEN " => " REST
+				<< ft_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(" << ft_map_pair.second ->first  << GREEN " => " REST
+				<< ft_map_pair.second ->second << ")"  << std::endl;
+		std::cout << CYAN "std_map_pair: " REST << "first(" << std_map_pair.first ->first  << GREEN " => " REST
+				<< std_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(" << std_map_pair.second ->first  << GREEN " => " REST
+				<< std_map_pair.second ->second << ")"  << std::endl;
 		if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second) {
-			std::cout << "if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second)" << REST <<
-			GREEN " OK :)" REST << std::endl;
+			std::cout << GREEN "OK :)" REST << std::endl;
 		} else {
-			std::cout << "if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second)" << REST <<
-			RED " KO :(" REST << std::endl;
+			std::cout << RED "KO :(" REST << std::endl;
 		}
 
+		std::cout << "Enter: " << CYAN "map_pair = map.equal_range(7)" REST << std::endl;
+		ft_map_pair = ft_map.equal_range(7);
+		std_map_pair = std_map.equal_range(7);
+		std::cout << CYAN "ft_map_pair: " REST << "first(" << ft_map_pair.first ->first  << GREEN " => " REST
+				<< ft_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(" << ft_map_pair.second ->first  << GREEN " => " REST
+				<< ft_map_pair.second ->second << ")"  << std::endl;
+		std::cout << CYAN "std_map_pair: " REST << "first(" << std_map_pair.first ->first  << GREEN " => " REST
+				<< std_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(" << std_map_pair.second ->first  << GREEN " => " REST
+				<< std_map_pair.second ->second << ")"  << std::endl;
+		if (ft_map_pair.first->first == std_map_pair.first->first && ft_map_pair.second->second == std_map_pair.second->second) {
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << RED " KO :(" REST << std::endl;
+		}
 
+		std::cout << "Enter: " << CYAN "map_pair = map.equal_range(9)" REST << std::endl;
+		ft_map_pair = ft_map.equal_range(9);
+		std_map_pair = std_map.equal_range(9);
+		std::cout << CYAN "ft_map_pair: " REST << "first(" << ft_map_pair.first ->first  << GREEN " => " REST
+				<< ft_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(ft_map.end())" << std::endl;
+		std::cout << CYAN "std_map_pair: " REST << "first(" << std_map_pair.first ->first  << GREEN " => " REST
+				<< std_map_pair.first ->second << ")";
+		std::cout << YEL " and " REST << "second(std_map.end())" << std::endl;
+		if (ft_map_pair.second == ft_map.end() && std_map_pair.second == std_map.end()) {
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "*** lower_bound ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		std::map<int, std::string> std_map;
+		ft_map.insert(ft::make_pair(1, "one"));
+		std_map.insert(std::make_pair(1, "one"));
+		ft_map.insert(ft::make_pair(5, "five"));
+		std_map.insert(std::make_pair(5, "five"));
+		ft_map.insert(ft::make_pair(10, "ten"));
+		std_map.insert(std::make_pair(10, "ten"));
+		ft_map.insert(ft::make_pair(2, "two"));
+		std_map.insert(std::make_pair(2, "two"));
+		ft_map.insert(ft::make_pair(7, "seven"));
+		std_map.insert(std::make_pair(7, "seven"));
+		map_print(ft_map, 0);
+
+		ft_map.lower_bound(5);
+		std_map.lower_bound(5);
+		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		if (ft_map.lower_bound(5)->first == std_map.lower_bound(5)->first) {
+			std::cout << ft_map.lower_bound(5)->first << " == " << std_map.lower_bound(5)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.lower_bound(5)->first << " != " << std_map.lower_bound(5)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		ft_map.lower_bound(-10);
+		std_map.lower_bound(-10);
+		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		if (ft_map.lower_bound(-10)->first == std_map.lower_bound(-10)->first) {
+			std::cout << ft_map.lower_bound(-10)->first << " == " << std_map.lower_bound(-10)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.lower_bound(-10)->first << " != " << std_map.lower_bound(-10)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		ft_map.lower_bound(9);
+		std_map.lower_bound(9);
+		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		if (ft_map.lower_bound(9)->first == std_map.lower_bound(9)->first) {
+			std::cout << ft_map.lower_bound(9)->first << " == " << std_map.lower_bound(9)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.lower_bound(9)->first << " != " << std_map.lower_bound(9)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "*** upper_bound ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		std::map<int, std::string> std_map;
+		ft_map.insert(ft::make_pair(1, "one"));
+		std_map.insert(std::make_pair(1, "one"));
+		ft_map.insert(ft::make_pair(5, "five"));
+		std_map.insert(std::make_pair(5, "five"));
+		ft_map.insert(ft::make_pair(10, "ten"));
+		std_map.insert(std::make_pair(10, "ten"));
+		ft_map.insert(ft::make_pair(2, "two"));
+		std_map.insert(std::make_pair(2, "two"));
+		ft_map.insert(ft::make_pair(7, "seven"));
+		std_map.insert(std::make_pair(7, "seven"));
+		map_print(ft_map, 0);
+
+		ft_map.upper_bound(5);
+		std_map.upper_bound(5);
+		std::cout << "Enter: " << CYAN "map.upper_bound(5)" REST << std::endl;
+		if (ft_map.upper_bound(5)->first == std_map.upper_bound(5)->first) {
+			std::cout << ft_map.upper_bound(5)->first << " == " << std_map.upper_bound(5)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.upper_bound(5)->first << " != " << std_map.upper_bound(5)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		ft_map.upper_bound(-10);
+		std_map.upper_bound(-10);
+		std::cout << "Enter: " << CYAN "map.upper_bound(5)" REST << std::endl;
+		if (ft_map.upper_bound(-10)->first == std_map.upper_bound(-10)->first) {
+			std::cout << ft_map.upper_bound(-10)->first << " == " << std_map.upper_bound(-10)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.upper_bound(-10)->first << " != " << std_map.upper_bound(-10)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		ft_map.upper_bound(9);
+		std_map.upper_bound(9);
+		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		if (ft_map.upper_bound(9)->first == std_map.upper_bound(9)->first) {
+			std::cout << ft_map.upper_bound(9)->first << " == " << std_map.upper_bound(9)->first << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.upper_bound(9)->first << " != " << std_map.upper_bound(9)->first << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
 	}
 	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/*]" << REST << std::endl;
+	std::cin.get();
+	std::cout << CLEAR;
+}
+
+void test_observers() {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №8 Observers" REST << " ===" << std::endl;
+	std::cout << std::endl << GREEN "*** key_comp ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		std::map<int, std::string> std_map;
+		ft_map.insert(ft::make_pair(1, "one"));
+		std_map.insert(std::make_pair(1, "one"));
+		ft_map.insert(ft::make_pair(5, "five"));
+		std_map.insert(std::make_pair(5, "five"));
+		ft_map.insert(ft::make_pair(10, "ten"));
+		std_map.insert(std::make_pair(10, "ten"));
+		ft_map.insert(ft::make_pair(2, "two"));
+		std_map.insert(std::make_pair(2, "two"));
+		ft_map.insert(ft::make_pair(7, "seven"));
+		std_map.insert(std::make_pair(7, "seven"));
+		map_print(ft_map, 0);
+
+		std::cout << "Enter: " << CYAN "map<int, std::string>::key_compare comp = map.key_comp()" REST << std::endl << std::endl;
+		ft::map<int, std::string>::key_compare ft_comp = ft_map.key_comp();
+		std::map<int, std::string>::key_compare std_comp = std_map.key_comp();
+
+		std::cout << "Enter: " << CYAN "comp(map.begin()->first, map.rbegin()->first)" REST << std::endl;
+		if (ft_comp(ft_map.begin()->first, ft_map.rbegin()->first) == std_comp(std_map.begin()->first, std_map.rbegin()->first)) {
+			std::cout << ft_comp(ft_map.begin()->first, ft_map.rbegin()->first) << " == "
+			<< std_comp(std_map.begin()->first, std_map.rbegin()->first) << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_comp(ft_map.begin()->first, ft_map.rbegin()->first) << " != "
+			<< std_comp(std_map.begin()->first, std_map.rbegin()->first) << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		std::cout << "Enter: " << CYAN "comp(map.rbegin()->first, map.begin()->first)" REST << std::endl;
+		if (ft_comp(ft_map.rbegin()->first, ft_map.begin()->first) == std_comp(std_map.rbegin()->first, std_map.begin()->first)) {
+			std::cout << ft_comp(ft_map.rbegin()->first, ft_map.begin()->first) << " == "
+			<< std_comp(std_map.rbegin()->first, std_map.begin()->first) << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_comp(ft_map.rbegin()->first, ft_map.begin()->first) << " != "
+			<< std_comp(std_map.rbegin()->first, std_map.begin()->first) << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+	}
+
+	std::cout << std::endl << GREEN "*** value_comp ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map;
+		std::map<int, std::string> std_map;
+		ft_map.insert(ft::make_pair(1, "one"));
+		std_map.insert(std::make_pair(1, "one"));
+		ft_map.insert(ft::make_pair(5, "five"));
+		std_map.insert(std::make_pair(5, "five"));
+		ft_map.insert(ft::make_pair(10, "ten"));
+		std_map.insert(std::make_pair(10, "ten"));
+		ft_map.insert(ft::make_pair(2, "two"));
+		std_map.insert(std::make_pair(2, "two"));
+		ft_map.insert(ft::make_pair(7, "seven"));
+		std_map.insert(std::make_pair(7, "seven"));
+		map_print(ft_map, 0);
+
+		std::cout << "Enter: " << CYAN "map.value_comp()(*map.begin(), *map.rbegin())" REST << std::endl;
+		if (ft_map.value_comp()(*ft_map.begin(), *ft_map.rbegin()) == std_map.value_comp()(*std_map.begin(), *std_map.rbegin())) {
+			std::cout << ft_map.value_comp()(*ft_map.begin(), *ft_map.rbegin()) << " == "
+			<< std_map.value_comp()(*std_map.begin(), *std_map.rbegin()) << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.value_comp()(*ft_map.begin(), *ft_map.rbegin()) << " != "
+			<< std_map.value_comp()(*std_map.begin(), *std_map.rbegin()) << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+
+		std::cout << "Enter: " << CYAN "map.value_comp()(*map.rbegin(), *map.begin())" REST << std::endl;
+		if (ft_map.value_comp()(*ft_map.rbegin(), *ft_map.begin()) == std_map.value_comp()(*std_map.rbegin(), *std_map.begin())) {
+			std::cout << ft_map.value_comp()(*ft_map.rbegin(), *ft_map.begin()) << " == "
+			<< std_map.value_comp()(*std_map.rbegin(), *std_map.begin()) << std::endl;
+			std::cout << GREEN " OK :)" REST << std::endl;
+		} else {
+			std::cout << ft_map.value_comp()(*ft_map.rbegin(), *ft_map.begin()) << " != "
+			<< std_map.value_comp()(*std_map.rbegin(), *std_map.begin()) << std::endl;
+			std::cout << RED " KO :(" REST << std::endl;
+		}
+	}
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [17/*]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -962,7 +1186,8 @@ int main(void) {
 	// test_iterators();
 	// test_capacity();
 	// test_modifiers();
-	test_lookup();
+	// test_lookup();
+	test_observers();
 	return 0;
 
 }

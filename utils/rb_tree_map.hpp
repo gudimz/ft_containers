@@ -422,7 +422,7 @@ namespace ft
 		*/
 		iterator lower_bound(const key_type& key) {
 			for (iterator it = begin(); it != end(); ++it) {
-				if (!_comp(key, it._ptr->data.first) || key == it._ptr->data.first) {
+				if (!_comp(it._ptr->data.first, key)) {
 					return it;
 				}
 			}
@@ -434,7 +434,7 @@ namespace ft
 		*/
 		const_iterator lower_bound(const key_type& key) const {
 			for (const_iterator it = begin(); it != end(); ++it) {
-				if (!_comp(key, it._ptr->data.first) || key == it._ptr->data.first) {
+				if (!_comp(it._ptr->data.first, key)) {
 					return it;
 				}
 			}
