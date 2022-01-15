@@ -1179,15 +1179,143 @@ void test_observers() {
 	std::cout << CLEAR;
 }
 
+void test_non_member() {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №9 Non members" REST << " ===" << std::endl;
+	{
+		ft::map<int, std::string> ft_lhs;
+		ft::map<int, std::string> ft_rhs;
+		std::map<int, std::string> std_lhs;
+		std::map<int, std::string> std_rhs;
+		ft_lhs.insert(ft::make_pair(1, "one"));
+		ft_rhs.insert(ft::make_pair(2, "two"));
+		std_lhs.insert(std::make_pair(1, "one"));
+		std_rhs.insert(std::make_pair(2, "two"));
+		ft_lhs.insert(ft::make_pair(5, "five"));
+		ft_rhs.insert(ft::make_pair(5, "five"));
+		std_lhs.insert(std::make_pair(5, "five"));
+		std_rhs.insert(std::make_pair(5, "five"));
+		ft_lhs.insert(ft::make_pair(10, "ten"));
+		ft_rhs.insert(ft::make_pair(7, "seven"));
+		std_lhs.insert(std::make_pair(10, "ten"));
+		std_rhs.insert(std::make_pair(7, "seven"));
+		ft_lhs.insert(ft::make_pair(3, "three"));
+		ft_rhs.insert(ft::make_pair(9, "nine"));
+		std_lhs.insert(std::make_pair(3, "three"));
+		std_rhs.insert(std::make_pair(9, "nine"));
+		ft_lhs.insert(ft::make_pair(4, "four"));
+		ft_rhs.insert(ft::make_pair(6, "six"));
+		std_lhs.insert(std::make_pair(4, "four"));
+		std_rhs.insert(std::make_pair(6, "six"));
+		std::cout << CYAN "lhs ";
+		map_print(ft_lhs, 0);
+		std::cout << CYAN "rhs ";
+		map_print(ft_rhs, 0);
+
+		std::cout << "Enter: " << CYAN "!(lhs == rhs)" << std::endl;
+		if (!(ft_lhs == ft_rhs) && !(std_lhs == std_rhs)) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "lhs != rhs" << std::endl;
+		if (ft_lhs != ft_rhs && std_lhs != std_rhs) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "lhs < rhs" << std::endl;
+		if (ft_lhs < ft_rhs && std_lhs < std_rhs) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "lhs <= rhs" << std::endl;
+		if (ft_lhs <= ft_rhs && std_lhs <= std_rhs) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "!(lhs > rhs)" << std::endl;
+		if (!(ft_lhs > ft_rhs) && !(std_lhs > std_rhs)) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+		std::cout << "Enter: " << CYAN "!(lhs >= rhs)" << std::endl;
+		if (!(ft_lhs >= ft_rhs) && !(std_lhs >= std_rhs)) {
+			std::cout << GREEN "OK :)" REST << std::endl;
+		} else {
+			std::cout << RED "KO :(" REST << std::endl;
+		}
+		std::cout << "=================================================================================="
+		<< std::endl << std::endl;
+
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [18/*]" << REST << std::endl;
+		std::cin.get();
+		std::cout << CLEAR;
+	}
+
+	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
+	std::cout << std::endl << GREEN "*** swap(non member) ***" REST << std::endl;
+	{
+		ft::map<int, std::string> ft_map_first;
+		ft::map<int, std::string> ft_map_second;
+		ft_map_first.insert(ft::make_pair(21, "School 21"));
+		ft_map_first.insert(ft::make_pair(1, "School 21"));
+		ft_map_first.insert(ft::make_pair(77, "School 21"));
+		ft_map_first.insert(ft::make_pair(5, "School 21"));
+		map_print(ft_map_first, 1);
+		ft_map_second.insert(ft::make_pair(42, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(3, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(15, "Ecole 42"));
+		ft_map_second.insert(ft::make_pair(23, "Ecole 42"));
+		map_print(ft_map_second, 1);
+
+		std::map<int, std::string> std_map_first;
+		std::map<int, std::string> std_map_second;
+		std_map_first.insert(std::make_pair(21, "School 21"));
+		std_map_first.insert(std::make_pair(1, "School 21"));
+		std_map_first.insert(std::make_pair(77, "School 21"));
+		std_map_first.insert(std::make_pair(5, "School 21"));
+		map_print(std_map_first, 2);
+		std_map_second.insert(std::make_pair(42, "Ecole 42"));
+		std_map_second.insert(std::make_pair(3, "Ecole 42"));
+		std_map_second.insert(std::make_pair(15, "Ecole 42"));
+		std_map_second.insert(std::make_pair(23, "Ecole 42"));
+		map_print(std_map_second, 2);
+
+		std::cout << "Enter: " << CYAN "map_first.swap(map_second)" REST << std::endl;
+		swap(ft_map_first, ft_map_second);
+		swap(std_map_first, std_map_second);
+
+		map_compare(ft_map_first, std_map_first);
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [19/*]" << REST << std::endl;
+		std::cin.get();
+		std::cout << CLEAR;
+	}
+}
+
 int main(void) {
-	// test_constructors();
-	// test_assigns();
-	// test_element_access();
-	// test_iterators();
-	// test_capacity();
-	// test_modifiers();
-	// test_lookup();
+	test_constructors();
+	test_assigns();
+	test_element_access();
+	test_iterators();
+	test_capacity();
+	test_modifiers();
+	test_lookup();
 	test_observers();
+	test_non_member();
 	return 0;
 
 }
