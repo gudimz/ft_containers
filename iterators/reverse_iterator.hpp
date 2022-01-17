@@ -1,7 +1,7 @@
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "../utils/iterator_traits.hpp"
 # include <memory> //std::addressof()
 
 namespace ft
@@ -14,12 +14,12 @@ namespace ft
 		/*      Member types        */
 		/****************************/
 
-		typedef Iter													iterator_type;
-		typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
-		typedef typename ft::iterator_traits<Iter>::value_type			value_type;
-		typedef typename ft::iterator_traits<Iter>::difference_type		difference_type;
-		typedef typename ft::iterator_traits<Iter>::pointer				pointer;
-		typedef typename ft::iterator_traits<Iter>::reference			reference;
+		typedef Iter														iterator_type;
+		typedef typename iterator_traits<Iter>::iterator_category			iterator_category;
+		typedef typename iterator_traits<Iter>::value_type					value_type;
+		typedef typename iterator_traits<Iter>::difference_type				difference_type;
+		typedef typename iterator_traits<Iter>::pointer						pointer;
+		typedef typename iterator_traits<Iter>::reference					reference;
 
 	private:
 
@@ -241,7 +241,7 @@ namespace ft
 	** Returns the iterator other incremented by n.
 	*/
 	template<class Iterator>
-	reverse_iterator<Iterator> operator+(typename ft::reverse_iterator<Iterator>::difference_type n,
+	reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n,
 															const reverse_iterator<Iterator>& other) {
 		return n + other;
 	}
@@ -250,7 +250,7 @@ namespace ft
 	** Returns the iterator other decremented by n.
 	*/
 	template<class Iterator>
-	reverse_iterator<Iterator> operator-(typename ft::reverse_iterator<Iterator>::difference_type n,
+	reverse_iterator<Iterator> operator-(typename reverse_iterator<Iterator>::difference_type n,
 															const reverse_iterator<Iterator>& other) {
 		return n - other;
 	}

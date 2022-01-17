@@ -1,8 +1,4 @@
-#include "../containers/map.hpp"
-#include "../utils/iterator/rbt_bidirectional_iterator.hpp"
-#include "../utils/pair.hpp"
-#include "../utils/rb_tree_map.hpp"
-#include "../utils/functional.hpp"
+#include "../containers/map/map.hpp"
 #include <map>
 
 #define GREEN "\x1b[1;32m"

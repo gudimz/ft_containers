@@ -10,4 +10,4 @@ clang++ -Wall -Wextra -Werror -fsanitize=address -std=c++98 map_test.cpp -o run 
 rm -rf ./run
 
 
-leaks --atExit -- ./run
+# leaks --atExit -- ./run

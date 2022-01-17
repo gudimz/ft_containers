@@ -1,16 +1,16 @@
 //http://algolist.ru/ds/rbtree.php
 
-#ifndef RB_TREE_MAP_HPP
-# define RB_TREE_MAP_HPP
+#ifndef RB_TREE_SET_HPP
+# define RB_TREE_SET_HPP
 
 # include <cstddef> // ptrdiff_t
 # include <iostream>
 # include <stdexcept>
-# include "../containers/map.hpp"
-# include "../utils/pair.hpp"
-# include "../utils/iterator/rbt_bidirectional_iterator.hpp"
-# include "../utils/functional.hpp"
-# include "../utils/type_traits.hpp"
+# include "set.hpp"
+# include "../../utils/pair.hpp"
+# include "../iterators/rbt_bidirectional_iterator.hpp"
+# include "../../utils/functional.hpp"
+# include "../../utils/type_traits.hpp"
 
 
 namespace ft
@@ -26,10 +26,10 @@ namespace ft
 		rbt_node*							right;
 		color								color;
 
-		rbt_node(value_type data) : data(data) {}
+		rbt_node(value_type data) : data(data), parent(0), left(0), right(0), color(BLACK) {}
 	};
 
-	template<class T, class Compare = ft::less<typename T::first_type>,
+	template<class T, class Compare = less<T>,
 			class Allocator = std::allocator<T> >
 	class red_black_tree {
 	public:
@@ -38,22 +38,20 @@ namespace ft
 		/*      Member types        */
 		/****************************/
 
-		typedef T														value_type;
-		typedef typename T::first_type									key_type;
-		typedef typename T::second_type									mapped_type;
-		typedef Compare													key_compare;
-		typedef	rbt_node<value_type>									node_type;
-		typedef	node_type*												pointer;
-		typedef	const node_type*										const_pointer;
-		typedef	node_type&												reference;
-		typedef	const node_type&										const_reference;
-		typedef typename Allocator::template rebind<node_type>::other	allocator_type;
-		typedef std::size_t												size_type;
-		typedef std::ptrdiff_t											difference_type;
-		typedef ft::rbt_bidirectional_iterator<node_type>				iterator;
-		typedef ft::rbt_bidirectional_iterator<const node_type>			const_iterator;
-		typedef ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+		typedef T																value_type;
+		typedef Compare															key_compare;
+		typedef	rbt_node<value_type>											node_type;
+		typedef	node_type*														pointer;
+		typedef	const node_type*												const_pointer;
+		typedef	node_type&														reference;
+		typedef	const node_type&												const_reference;
+		typedef typename Allocator::template rebind<node_type>::other			allocator_type;
+		typedef std::size_t														size_type;
+		typedef std::ptrdiff_t													difference_type;
+		typedef ft::rbt_bidirectional_iterator<node_type>						iterator;
+		typedef ft::rbt_bidirectional_iterator<const node_type>					const_iterator;
+		typedef ft::reverse_iterator<iterator>									reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>							const_reverse_iterator;
 	private:
 
 		/********************************/
@@ -143,48 +141,6 @@ namespace ft
 		*/
 		allocator_type get_allocator(void) const {
 			return _alloc;
-		}
-
-		// === Element access ===
-
-		/*
-		** Returns a reference to the mapped value of the element with key equivalent to key.
-		** If no such element exists, an exception of type std::out_of_range is thrown
-		*/
-		mapped_type& at(key_type& key) {
-			pointer pos = _search_key(key, _root);
-			if (pos) {
-				return pos->data.second;
-			} else {
-				throw std::out_of_range("Out of range");
-			}
-		}
-
-		/*
-		** Returns a const reference to the element at specified location pos, with bounds checking.
-		** If pos is not within the range of the container,
-		** an exception of type std::out_of_range is thrown.
-		*/
-		const mapped_type& at(key_type& key) const {
-			pointer pos = _search_key(key);
-			if (pos) {
-				return pos->data.second;
-			} else {
-				throw std::out_of_range("Out of range");
-			}
-		}
-
-		/*
-		** Returns a reference to the value that is mapped to a key equivalent to key,
-		** performing an insertion if such key does not already exist.
-		*/
-		mapped_type& operator[](key_type& key) {
-			pointer pos = _search_key(key, _root);
-			if (!pos) {
-				insert(ft::make_pair<key_type, mapped_type>(key, mapped_type()));
-				pos = _search_key(key, _root);
-			}
-			return pos->data.second;
 		}
 
 		// ==== Iterators ====
@@ -312,6 +268,15 @@ namespace ft
 		}
 
 		/*
+		** Single element
+		** Inserts value in the position as close as possible to hint
+		*/
+		itertor insert(iterator hint, const value_type& value) {
+			(void)hint;
+			return insert(value).first;
+		}
+
+		/*
 		** Range.
 		** Inserts elements from range [first, last).
 		** If multiple elements in the range have keys that compare equivalent,
@@ -344,7 +309,7 @@ namespace ft
 		*/
 		void erase(iterator first, iterator last) {
 			while (first != last) {
-				insert(*first++);
+				erase(*first++);
 			}
 		}
 
@@ -353,7 +318,7 @@ namespace ft
 		** Single element.
 		** Removes the element (if one exists) with the key equivalent to key.
 		*/
-		size_type erase(const key_type& key) {
+		size_type erase(const value_type& key) {
 			iterator it = find(key);
 			// Key not found.
 			if (it == end()) {
@@ -370,7 +335,7 @@ namespace ft
 		** Returns the number of elements with key key,
 		** which is either 1 or 0 since this container does not allow duplicates.
 		*/
-		size_type count(const key_type& key) {
+		size_type count(const value_type& key) {
 			if (find(key) != end()) {
 				return 1;
 			}
@@ -380,7 +345,7 @@ namespace ft
 		/*
 		** Finds an element with key equivalent to key and returns a iterator to it, if found.
 		*/
-		iterator find(const key_type& key) {
+		iterator find(const value_type& key) {
 			pointer node = _search_key(key, _root);
 			if (!node) {
 				return end();
@@ -391,7 +356,7 @@ namespace ft
 		/*
 		** Finds an element with key equivalent to key and returns a const iterator to it, if found.
 		*/
-		const_iterator find(const key_type& key) const {
+		const_iterator find(const value_type& key) const {
 			pointer node = _search_key(key, _root);
 			if (!node) {
 				return end();
@@ -404,7 +369,7 @@ namespace ft
 		** The range is defined by two iterators, one pointing to the first element that is not less than key
 		** and another pointing to the first element greater than key.
 		*/
-		ft::pair<iterator, iterator> equal_range(const key_type& key) {
+		ft::pair<iterator, iterator> equal_range(const value_type& key) {
 			return ft::make_pair<iterator, iterator> (lower_bound(key), upper_bound(key));
 		}
 
@@ -413,16 +378,16 @@ namespace ft
 		** The range is defined by two const iterators, one pointing to the first element that is not less than key
 		** and another pointing to the first element greater than key.
 		*/
-		ft::pair<const_iterator, const_iterator> equal_range(const key_type& key) const {
+		ft::pair<const_iterator, const_iterator> equal_range(const value_type& key) const {
 			return ft::make_pair<const_iterator, const_iterator> (lower_bound(key), upper_bound(key));
 		}
 
 		/*
 		** Returns an iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
 		*/
-		iterator lower_bound(const key_type& key) {
+		iterator lower_bound(const value_type& key) {
 			for (iterator it = begin(); it != end(); ++it) {
-				if (!_comp(it._ptr->data.first, key)) {
+				if (!_comp(it._ptr->data, key)) {
 					return it;
 				}
 			}
@@ -432,9 +397,9 @@ namespace ft
 		/*
 		** Returns an const iterator pointing to the first element that is not less than (i.e. greater or equal to) key.
 		*/
-		const_iterator lower_bound(const key_type& key) const {
+		const_iterator lower_bound(const value_type& key) const {
 			for (const_iterator it = begin(); it != end(); ++it) {
-				if (!_comp(it._ptr->data.first, key)) {
+				if (!_comp(it._ptr->data, key)) {
 					return it;
 				}
 			}
@@ -444,9 +409,9 @@ namespace ft
 		/*
 		** Returns an iterator pointing to the first element that is greater than key.
 		*/
-		iterator upper_bound(const key_type& key) {
+		iterator upper_bound(const value_type& key) {
 			for (iterator it = begin(); it != end(); ++it) {
-				if (_comp(key, it._ptr->data.first)) {
+				if (_comp(key, it._ptr->data)) {
 					return it;
 				}
 			}
@@ -456,9 +421,9 @@ namespace ft
 		/*
 		** Returns an const iterator pointing to the first element that is greater than key.
 		*/
-		const_iterator upper_bound(const key_type& key) const {
+		const_iterator upper_bound(const value_type& key) const {
 			for (const_iterator it = begin(); it != end(); ++it) {
-				if (_comp(key, it._ptr->data.first)) {
+				if (_comp(key, it._ptr->data)) {
 					return it;
 				}
 			}
@@ -500,14 +465,14 @@ namespace ft
 		** This is the helper func for public find func.
 		** Finds an element with key in the tree using recursion
 		*/
-		pointer _search_key(const key_type& key, const pointer& node) const {
+		pointer _search_key(const value_type& key, const pointer& node) const {
 			// Base case of recursion
 			if (node == _nil) {
 				return 0;
-			} else if (node->data.first == key) {
+			} else if (node->data == key) {
 				return node;
 			}
-			if (_comp(key, node->data.first)) {
+			if (_comp(key, node->data)) {
 				return _search_key(key, node->left);
 			} else {
 				return _search_key(key, node->right);
@@ -596,14 +561,14 @@ namespace ft
 			pointer parent = 0;
 			while (current != _nil) {
 				parent = current;
-				if (_comp(new_node->data.first, current->data.first)) {
+				if (_comp(new_node->data, current->data)) {
 					current = current->left;
 				} else {
 					current = current->right;
 				}
 			}
 			new_node->parent = parent;
-			if (_comp(new_node->data.first, parent->data.first)) {
+			if (_comp(new_node->data, parent->data)) {
 				parent->left = new_node;
 			} else {
 				parent->right = new_node;
@@ -771,7 +736,9 @@ namespace ft
 			}
 			_delete_node(y);
 		}
+
 	};
 }
+
 
 #endif

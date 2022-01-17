@@ -1,11 +1,11 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include "../utils/type_traits.hpp"
-# include "../utils/iterator/random_access_iterator.hpp"
-# include "../utils/iterator/reverse_iterator.hpp"
-# include "../utils/equal.hpp"
-# include "../utils/lexicographical_compare.hpp"
+# include "../../utils/type_traits.hpp"
+# include "../../iterators/random_access_iterator.hpp"
+# include "../../iterators/reverse_iterator.hpp"
+# include "../../utils/equal.hpp"
+# include "../../utils/lexicographical_compare.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
 
