@@ -8,7 +8,7 @@
 # include <stdexcept>
 # include "set.hpp"
 # include "../../utils/pair.hpp"
-# include "../iterators/rbt_bidirectional_iterator.hpp"
+# include "../../iterators/rbt_bidirectional_iterator.hpp"
 # include "../../utils/functional.hpp"
 # include "../../utils/type_traits.hpp"
 
@@ -251,7 +251,7 @@ namespace ft
 		*/
 		ft::pair<iterator, bool> insert(const value_type& value) {
 			// Check that the key is a duplicate.
-			iterator it = find(value.first);
+			iterator it = find(value);
 			if (it != end()) {
 				return ft::make_pair(it, false);
 			}
@@ -271,7 +271,7 @@ namespace ft
 		** Single element
 		** Inserts value in the position as close as possible to hint
 		*/
-		itertor insert(iterator hint, const value_type& value) {
+		iterator insert(iterator hint, const value_type& value) {
 			(void)hint;
 			return insert(value).first;
 		}

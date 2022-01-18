@@ -1119,11 +1119,15 @@ void test_modifiers(void) {
 	{
 		ft::vector<int> vec_1(10, 42);
 		ft::vector<int> vec_2(5, 21);
+		std::cout << "vec_1 ";
 		vec_print(vec_1, 1);
+		std::cout << "vec_2 ";
 		vec_print(vec_2, 1);
 		std::cout << "Enter: " << CYAN "vector<int> vec_1.swap(vec_2)" REST << std::endl;
 		vec_1.swap(vec_2);
+		std::cout << "vec_1 ";
 		vec_print(vec_1, 1);
+		std::cout << "vec_2 ";
 		vec_print(vec_2, 1);
 	}
 	std::cout << "=================================================================================="
@@ -1135,7 +1139,9 @@ void test_modifiers(void) {
 		vec_print(vec_2, 1);
 		std::cout << "Enter: " << CYAN "vector<int> vec_1.swap(vec_2)" REST << std::endl;
 		vec_1.swap(vec_2);
+		std::cout << "vec_1 ";
 		vec_print(vec_1, 1);
+		std::cout << "vec_2 ";
 		vec_print(vec_2, 1);
 	}
 	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [22/23]" << REST << std::endl;

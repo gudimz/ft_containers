@@ -123,7 +123,7 @@ void test_constructors(void) {
 
 		map_compare(ft_map_range, std_map_range);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -181,7 +181,7 @@ void test_constructors(void) {
 		}
 	}
 
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -229,7 +229,7 @@ void test_assigns(void) {
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -267,7 +267,7 @@ void test_element_access(void) {
 		}
 		map_print(ft_map, 1);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -308,7 +308,7 @@ void test_element_access(void) {
 			}
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -402,7 +402,7 @@ void test_iterators(void) {
 			std::cout << RED "KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -506,7 +506,7 @@ void test_iterators(void) {
 		}
 		std::cout << "=================================================================================="
 		<< std::endl << std::endl;
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/*]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/19]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 
@@ -596,7 +596,7 @@ void test_iterators(void) {
 			std::cout << RED "KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -657,7 +657,7 @@ void test_capacity(void) {
 		}
 		map_compare(ft_map, std_map);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [9/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [9/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -686,7 +686,7 @@ void test_modifiers(void) {
 		std_map[21] = 42;
 		map_compare(ft_map, std_map);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [10/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [10/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -740,7 +740,7 @@ void test_modifiers(void) {
 		std_map.insert(std_hint, std::make_pair(6, 6));
 		map_compare(ft_map, std_map);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [11/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [11/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -775,7 +775,7 @@ void test_modifiers(void) {
 		std_map.insert(std_map_copy.begin(), std_map_copy.end());
 		map_compare(ft_map, std_map);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [12/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [12/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -806,7 +806,7 @@ void test_modifiers(void) {
 		std_map.erase("Germany");
 		map_compare(ft_map, std_map);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -820,11 +820,13 @@ void test_modifiers(void) {
 		ft_map_first.insert(ft::make_pair(1, "School 21"));
 		ft_map_first.insert(ft::make_pair(77, "School 21"));
 		ft_map_first.insert(ft::make_pair(5, "School 21"));
+		std::cout << "map_first ";
 		map_print(ft_map_first, 1);
 		ft_map_second.insert(ft::make_pair(42, "Ecole 42"));
 		ft_map_second.insert(ft::make_pair(3, "Ecole 42"));
 		ft_map_second.insert(ft::make_pair(15, "Ecole 42"));
 		ft_map_second.insert(ft::make_pair(23, "Ecole 42"));
+		std::cout << "map_second ";
 		map_print(ft_map_second, 1);
 
 		std::map<int, std::string> std_map_first;
@@ -833,11 +835,13 @@ void test_modifiers(void) {
 		std_map_first.insert(std::make_pair(1, "School 21"));
 		std_map_first.insert(std::make_pair(77, "School 21"));
 		std_map_first.insert(std::make_pair(5, "School 21"));
+		std::cout << "map_first ";
 		map_print(std_map_first, 2);
 		std_map_second.insert(std::make_pair(42, "Ecole 42"));
 		std_map_second.insert(std::make_pair(3, "Ecole 42"));
 		std_map_second.insert(std::make_pair(15, "Ecole 42"));
 		std_map_second.insert(std::make_pair(23, "Ecole 42"));
+		std::cout << "map_second ";
 		map_print(std_map_second, 2);
 
 		std::cout << "Enter: " << CYAN "map_first.swap(map_second)" REST << std::endl;
@@ -846,7 +850,7 @@ void test_modifiers(void) {
 
 		map_compare(ft_map_first, std_map_first);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [14/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [14/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -910,7 +914,7 @@ void test_lookup() {
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [15/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [15/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -1011,7 +1015,7 @@ void test_lookup() {
 
 		ft_map.lower_bound(-10);
 		std_map.lower_bound(-10);
-		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		std::cout << "Enter: " << CYAN "map.lower_bound(-10)" REST << std::endl;
 		if (ft_map.lower_bound(-10)->first == std_map.lower_bound(-10)->first) {
 			std::cout << ft_map.lower_bound(-10)->first << " == " << std_map.lower_bound(-10)->first << std::endl;
 			std::cout << GREEN " OK :)" REST << std::endl;
@@ -1022,7 +1026,7 @@ void test_lookup() {
 
 		ft_map.lower_bound(9);
 		std_map.lower_bound(9);
-		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		std::cout << "Enter: " << CYAN "map.lower_bound(9)" REST << std::endl;
 		if (ft_map.lower_bound(9)->first == std_map.lower_bound(9)->first) {
 			std::cout << ft_map.lower_bound(9)->first << " == " << std_map.lower_bound(9)->first << std::endl;
 			std::cout << GREEN " OK :)" REST << std::endl;
@@ -1061,7 +1065,7 @@ void test_lookup() {
 
 		ft_map.upper_bound(-10);
 		std_map.upper_bound(-10);
-		std::cout << "Enter: " << CYAN "map.upper_bound(5)" REST << std::endl;
+		std::cout << "Enter: " << CYAN "map.upper_bound(-10)" REST << std::endl;
 		if (ft_map.upper_bound(-10)->first == std_map.upper_bound(-10)->first) {
 			std::cout << ft_map.upper_bound(-10)->first << " == " << std_map.upper_bound(-10)->first << std::endl;
 			std::cout << GREEN " OK :)" REST << std::endl;
@@ -1072,7 +1076,7 @@ void test_lookup() {
 
 		ft_map.upper_bound(9);
 		std_map.upper_bound(9);
-		std::cout << "Enter: " << CYAN "map.lower_bound(5)" REST << std::endl;
+		std::cout << "Enter: " << CYAN "map.lower_bound(9)" REST << std::endl;
 		if (ft_map.upper_bound(9)->first == std_map.upper_bound(9)->first) {
 			std::cout << ft_map.upper_bound(9)->first << " == " << std_map.upper_bound(9)->first << std::endl;
 			std::cout << GREEN " OK :)" REST << std::endl;
@@ -1081,7 +1085,7 @@ void test_lookup() {
 			std::cout << RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -1170,7 +1174,7 @@ void test_observers() {
 			std::cout << RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [17/*]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [17/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -1257,7 +1261,7 @@ void test_non_member() {
 		std::cout << "=================================================================================="
 		<< std::endl << std::endl;
 
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [18/*]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [18/19]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 	}
@@ -1296,7 +1300,7 @@ void test_non_member() {
 		swap(std_map_first, std_map_second);
 
 		map_compare(ft_map_first, std_map_first);
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [19/*]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [19/19]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 	}
