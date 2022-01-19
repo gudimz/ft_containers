@@ -8,6 +8,7 @@
 # include "../../utils/lexicographical_compare.hpp"
 # include <memory> // std::allocator<T>
 # include <stdexcept> // std::out_of_range
+# include <algorithm> // std::swap
 
 
 namespace ft
@@ -63,13 +64,13 @@ namespace ft
 		*/
 		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
-			if (n) {
+			if (n > 0) {
 				reserve(n);
 				for (size_t i = 0; i < n; ++i) {
 					_alloc.construct(_arr + i, value);
 				}
+				this->_size = n;
 			}
-			this->_size = n;
 		}
 
 		/*
@@ -84,8 +85,9 @@ namespace ft
 																								_size(0),
 																								_capacity(0),
 																								_alloc(alloc) {
+			clear();
 			reserve(std::distance(first, last));
-			for (iterator it = first; it != last; ++it) {
+			for (InputIt it = first; it != last; ++it) {
 				_alloc.construct(_arr + _size, *it);
 				++_size;
 			}
@@ -96,6 +98,7 @@ namespace ft
 		** Each element is copied from "other".
 		*/
 		vector(const vector& other) : _arr(0), _size(0), _capacity(0), _alloc(other._alloc) {
+			clear();
 			reserve(other._capacity);
 			for (size_t i = 0; i < other._size; ++i) {
 				this->_alloc.construct(this->_arr + i, other._arr[i]);
@@ -120,14 +123,13 @@ namespace ft
 		** Replaces the contents with a copy of the contents of other
 		*/
 		vector& operator=(const vector& other) {
-			if (this == &other) {
-				return *this;
-			}
-			this->~vector();
-			reserve(other._capacity);
-			for (size_t i = 0; i < other._size; ++i) {
-				this->_alloc.construct(this->_arr + i, other._arr[i]);
-			this->_size = other._size;
+			if (this != &other) {
+				clear();
+				reserve(other._capacity);
+				for (size_t i = 0; i < other._size; ++i) {
+					this->_alloc.construct(this->_arr + i, other._arr[i]);
+				this->_size = other._size;
+				}
 			}
 			return *this;
 		}
@@ -137,9 +139,12 @@ namespace ft
 		** Replaces the contents with count copies of value value.
 		*/
 		void assign(size_type count, const value_type& value) {
-			clear();
-			for (size_t i = 0; i < count; ++i) {
-				push_back(value);
+			if (count > 0) {
+				clear();
+				reserve(count);
+				for (size_t i = 0; i < count; ++i) {
+					push_back(value);
+				}
 			}
 		}
 
@@ -151,6 +156,7 @@ namespace ft
 		void assign(inputIt first, inputIt last,
 					typename ft::enable_if<!ft::is_integral<inputIt>::value, inputIt>::type* = 0) {
 			clear();
+			reserve(std::distance(first, last));
 			for (; first != last; ++first) {
 				push_back(*first);
 			}
@@ -352,15 +358,16 @@ namespace ft
 		** Reserve does not change the size of the vector.
 		*/
 		void reserve(size_type n) {
-			if (n <= _capacity) return;
-			pointer newArr = _alloc.allocate(n);
-			for (size_t i = 0; i < _size; ++i) {
-				_alloc.construct(newArr + i, _arr[i]);
-				_alloc.destroy(_arr + i);
+			if (n > _capacity) {
+				pointer newArr = _alloc.allocate(n);
+				for (size_t i = 0; i < _size; ++i) {
+					_alloc.construct(newArr + i, _arr[i]);
+					_alloc.destroy(_arr + i);
+				}
+				_alloc.deallocate(_arr, _capacity);
+				this->_arr = newArr;
+				this->_capacity = n;
 			}
-			_alloc.deallocate(_arr, _capacity);
-			this->_arr = newArr;
-			this->_capacity = n;
 		}
 
 		/*
@@ -519,17 +526,10 @@ namespace ft
 		** Does not invoke any move, copy, or swap operations on individual elements.
 		*/
 		void swap(vector& other) {
-			pointer tmp_arr = _arr;
-			_arr = other._arr;
-			other._arr = tmp_arr;
-
-			size_type tmp_size = _size;
-			_size = other._size;
-			other._size = tmp_size;
-
-			size_type tmp_capacity = _capacity;
-			_capacity = other._capacity;
-			other._capacity = tmp_capacity;
+			std::swap(_arr, other._arr);
+			std::swap(_size, other._size);
+			std::swap(_capacity, other._capacity);
+			std::swap(_alloc, other._alloc);
 		}
 	};
 

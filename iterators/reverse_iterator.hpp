@@ -92,7 +92,7 @@ namespace ft
 		** Returns a pointer to the element previous to current
 		*/
 		pointer operator->() const {
-			return std::addressof(operator*());
+			return &operator*();
 		}
 
 		/*
