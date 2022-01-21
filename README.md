@@ -1,8 +1,6 @@
 # ft_containers.
 -------------
 
-### Introduction.
-
 In this project, you will implement the various container types of the C++ standard template library.
 ---------------
 
