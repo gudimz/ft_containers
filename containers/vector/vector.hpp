@@ -64,7 +64,7 @@ namespace ft
 		*/
 		explicit vector(size_type n, const value_type& value = value_type(),
 						const allocator_type& alloc = allocator_type()) : _arr(0), _size(0), _capacity(0), _alloc(alloc) {
-			if (n > 0) {
+			if (n >= 0) {
 				reserve(n);
 				for (size_t i = 0; i < n; ++i) {
 					_alloc.construct(_arr + i, value);
@@ -125,10 +125,12 @@ namespace ft
 		vector& operator=(const vector& other) {
 			if (this != &other) {
 				clear();
-				reserve(other._capacity);
+				this->_alloc.deallocate(_arr, _capacity);
+				this->_size = other.size();
+				this->_capacity = other.capacity();
+				this->_arr = _alloc.allocate(_capacity);
 				for (size_t i = 0; i < other._size; ++i) {
 					this->_alloc.construct(this->_arr + i, other._arr[i]);
-				this->_size = other._size;
 				}
 			}
 			return *this;
@@ -396,9 +398,19 @@ namespace ft
 		** Inserts element in the container before pos.
 		*/
 		iterator insert(iterator pos, const value_type& value) {
-			difference_type posInsert = std::distance(this->begin(), pos);
-			this->insert(pos, 1, value);
-			return iterator(_arr + posInsert);
+			difference_type start = std::distance(this->begin(), pos);
+			size_type i = 0;
+			if (_capacity == _size && _capacity) {
+				reserve(2 * _capacity);
+			} else {
+				reserve(1);
+			}
+			for (i = _size; i > static_cast<size_type>(start); --i) {
+				_arr[i] = _arr[i - 1];
+			}
+			_alloc.construct(_arr + i, value);
+			++_size;
+			return iterator(_arr + start);
 		}
 
 		/*
@@ -406,19 +418,25 @@ namespace ft
 		** inserts count copies of the value before pos
 		*/
 		void insert(iterator pos, size_type count, const value_type& value) {
-			vector tmp(pos, this->end());
-			iterator tmp_it(tmp.begin());
-
-			while (this->end() != pos) {
-				pop_back();
+			difference_type start = std::distance(this->begin(), pos);
+			if (count == 0) {
+				return;
 			}
-			for (size_t i = count; i > 0; --i) {
-				push_back(value);
+			size_type i = 0;
+			if (_size + count > _capacity) {
+				if (count > _size) {
+					reserve(_size + count);
+				} else {
+					reserve(2 * _capacity);
+				}
 			}
-			while (tmp_it != tmp.end()) {
-				push_back(*tmp_it);
-				++tmp_it;
+			for (i = _size; i > static_cast<size_type>(start); --i) {
+				_arr[i + count - 1] = _arr[i - 1];
 			}
+			for (i = 0; i < count; ++i) {
+				_alloc.construct(_arr + start + i, value);
+			}
+			_size += count;
 		}
 
 		/*
@@ -428,20 +446,29 @@ namespace ft
 		template<class InputIt>
 		void insert(iterator pos, InputIt first, InputIt last,
 					typename ft::enable_if< !ft::is_integral< InputIt >::value, InputIt >::type* = 0) {
-			vector tmp(pos, this->end());
-			iterator tmp_it(tmp.begin());
-
-			while (this->end() != pos) {
-				pop_back();
+			if (first == last) {
+				return;
 			}
-			while (first != last) {
-				push_back(*first);
-				++first;
+			difference_type start = std::distance(this->begin(), pos);
+			difference_type count = std::distance(first, last);
+			if (!check_value(first, last, count)) {
+				throw std::exception();
 			}
-			while (tmp_it != tmp.end()) {
-				push_back(*tmp_it);
-				++tmp_it;
+			if (_size + static_cast<size_type>(count) > _capacity) {
+				if (static_cast<size_type>(count) > _size) {
+					reserve(_size + static_cast<size_type>(count));
+				} else {
+					reserve(2 * _capacity);
+				}
 			}
+			size_type i = 0;
+			for (i = _size; i > static_cast<size_type>(start); --i) {
+				_arr[i + static_cast<size_type>(count) - 1] = _arr[i - 1];
+			}
+			for (i = 0; i < static_cast<size_type>(count); ++i, ++first) {
+				_alloc.construct(_arr + start + i, *first);
+			}
+			_size += count;
 		}
 
 		/*
@@ -449,19 +476,13 @@ namespace ft
 		** Removes the element at pos from the container.
 		*/
 		iterator erase(iterator pos) {
-			vector tmp(pos + 1, this->end());
-			iterator tmp_it(tmp.begin());
-
-			for (size_t i = 0; i < tmp.size(); ++i) {
-				pop_back();
+			difference_type start = std::distance(this->begin(), pos);
+			_alloc.destroy(_arr + start);
+			for (size_type i = static_cast<size_type>(start); i < _size - 1; ++i) {
+				_arr[i] = _arr[i + 1];
 			}
-			pop_back();
-			while (tmp_it != tmp.end()) {
-				push_back(*tmp_it);
-				++tmp_it;
-			}
+			--_size;
 			return pos;
-
 		}
 
 		/*
@@ -469,12 +490,18 @@ namespace ft
 		** Removes the elements at range from the container.
 		*/
 		iterator erase(iterator first, iterator last) {
-			iterator ret(first);
-
-			while (ret != last) {
-				erase(first);
-				++ret;
+			difference_type start = std::distance(this->begin(), first);
+			if (first == last) {
+				return iterator(_arr + start);
 			}
+			difference_type count = std::distance(first, last);
+			for (iterator it = first; it != last; ++it) {
+				_alloc.destroy(&(*it));
+			}
+			for (size_type i = static_cast<size_type>(start); i < _size - count; ++i) {
+				_arr[i] = _arr[i + count];
+			}
+			_size -= count;
 			return first;
 		}
 
@@ -531,6 +558,22 @@ namespace ft
 			std::swap(_capacity, other._capacity);
 			std::swap(_alloc, other._alloc);
 		}
+
+		private:
+			template<class InputIt>
+			bool check_value(InputIt first, InputIt last, size_type count) {
+				pointer buffer = _alloc.allocate(count);
+				for (size_type i = 0; first != last; ++i, ++first) {
+					try {
+						buffer[i] = *first;
+					} catch (...) {
+						_alloc.deallocate(buffer, count);
+						return false;
+					}
+				}
+				_alloc.deallocate(buffer, count);
+				return true;
+			}
 	};
 
 	/********************************/

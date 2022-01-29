@@ -161,20 +161,14 @@ namespace ft
 		** Returns an iterator which is advanced by n positions respectively.
 		*/
 		reverse_iterator operator+(difference_type n) const {
-			for (difference_type i = 0; i < n; ++i) {
-				--reverse_iterator<Iter>(base());
-			}
-			return reverse_iterator<Iter>(base());
+			return reverse_iterator<Iter>(_it - n);
 		}
 
 		/*
 		** Returns an iterator which is advanced by -n positions respectively.
 		*/
 		reverse_iterator operator-(difference_type n) const {
-			for (difference_type i = 0; i < n; ++i) {
-				++reverse_iterator<Iter>(base());
-			}
-			return reverse_iterator<Iter>(base());
+			return reverse_iterator<Iter>(_it + n);
 		}
 
 		// === Compares ===

@@ -131,7 +131,9 @@ namespace ft
 		** ++iter
 		*/
 		rbt_bidirectional_iterator& operator++() {
-			_ptr = _next_node(_ptr);
+			if (_ptr != _nil) {
+				_ptr = _next_node(_ptr);
+			}
 			return *this;
 		}
 
@@ -190,13 +192,13 @@ namespace ft
 			node_ptr tmp = node;
 			if (tmp->left != _nil) {
 				tmp = tmp->left;
-				while (tmp->right != _nil && tmp != _nil) {
+				while (tmp->right != _nil) {
 					tmp = tmp->right;
 				}
 				return tmp;
 			} else {
 				node_ptr prev_tmp = tmp->parent;
-				while (prev_tmp && prev_tmp != _nil && tmp == prev_tmp->left) {
+				while (prev_tmp && tmp == prev_tmp->left) {
 					tmp = prev_tmp;
 					prev_tmp = prev_tmp->parent;
 				}
@@ -213,6 +215,9 @@ namespace ft
 		*/
 		node_ptr _next_node(node_ptr node) {
 			node_ptr tmp = node;
+			if (tmp == _nil) {
+				return _nil;
+			}
 			if (tmp->right != _nil) {
 				tmp = tmp->right;
 				while (tmp->left != _nil && tmp != _nil) {
@@ -221,7 +226,7 @@ namespace ft
 				return tmp;
 			} else {
 				node_ptr next_tmp = tmp->parent;
-				while (next_tmp && next_tmp != _nil && tmp == next_tmp->right) {
+				while (next_tmp != _nil && tmp == next_tmp->right) {
 					tmp = next_tmp;
 					next_tmp = next_tmp->parent;
 				}

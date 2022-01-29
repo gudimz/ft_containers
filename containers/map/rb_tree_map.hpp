@@ -353,7 +353,8 @@ namespace ft
 		*/
 		void erase(iterator first, iterator last) {
 			while (first != last) {
-				erase(*first++);
+				erase(first);
+				++first;
 			}
 		}
 
@@ -722,7 +723,7 @@ namespace ft
 							tmp->right->color = BLACK;
 							tmp->color = RED;
 							_rotate_left(tmp);
-							tmp = tmp->parent->left;
+							tmp = node->parent->left;
 						}
 						tmp->color = node->parent->color;
 						node->parent->color = BLACK;
@@ -730,9 +731,9 @@ namespace ft
 						_rotate_right(node->parent);
 						node = _root;
 					}
-					node->color = BLACK;
 				}
 			}
+			node->color = BLACK;
 		}
 
 		/*

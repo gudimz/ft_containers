@@ -806,6 +806,35 @@ void test_modifiers(void) {
 		std_map.erase("Germany");
 		map_compare(ft_map, std_map);
 	}
+
+	std::cout << std::endl << GREEN "*** erase range ***" REST << std::endl;
+	{
+		ft::map<std::string, std::string> ft_map;
+		std::map<std::string, std::string> std_map;
+		ft_map.insert(ft::make_pair("Russia", "Moscow"));
+		std_map.insert(std::make_pair("Russia", "Moscow"));
+		ft_map.insert(ft::make_pair("USA", "Washington"));
+		std_map.insert(std::make_pair("USA", "Washington"));
+		ft_map.insert(ft::make_pair("France", "Paris"));
+		std_map.insert(std::make_pair("France", "Paris"));
+		ft_map.insert(ft::make_pair("England", "London"));
+		std_map.insert(std::make_pair("England", "London"));
+		ft_map.insert(ft::make_pair("Spain", "Madrid"));
+		std_map.insert(std::make_pair("Spain", "Madrid"));
+		ft_map.insert(ft::make_pair("Germany", "Berlin"));
+		std_map.insert(std::make_pair("Germany", "Berlin"));
+		ft_map.insert(ft::make_pair("Canada", "Toronto"));
+		std_map.insert(std::make_pair("Canada", "Toronto"));
+		ft_map.insert(ft::make_pair("Japan", "Tokio"));
+		std_map.insert(std::make_pair("Japan", "Tokio"));
+		map_print(ft_map, 0);
+
+		std::cout << "Enter: " << CYAN "map.erase(++map.begin(), --map.end())" REST << std::endl;
+		ft_map.erase(++ft_map.begin(), --ft_map.end());
+		std_map.erase(++std_map.begin(), --std_map.end());
+		map_compare(ft_map, std_map);
+
+	}
 	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/19]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;

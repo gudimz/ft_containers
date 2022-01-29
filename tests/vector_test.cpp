@@ -47,6 +47,14 @@ void vec_compare(const ft::vector<T>& ft_vec, const std::vector<T>& std_vec) {
 		std::cout << "size:  " RED << std_vec.size() << "!=" << ft_vec.size() << REST <<
 		RED " KO :(" REST << std::endl;
 	}
+	//capacity
+	if (std_vec.capacity() == ft_vec.capacity()) {
+		std::cout << "capacity:  " GREEN << std_vec.capacity() << "==" << ft_vec.capacity() << REST <<
+		GREEN " OK :)" REST << std::endl;
+	} else {
+		std::cout << "capacity:  " RED << std_vec.capacity() << "!=" << ft_vec.capacity() << REST <<
+		RED " KO :(" REST << std::endl;
+	}
 	// front
 	if (ft_vec.size()) {
 		if (std_vec.front() == ft_vec.front()) {
@@ -1215,12 +1223,12 @@ void test_non_member() {
 }
 
 int main(void) {
-	test_constructors();
-	test_assigns();
-	test_element_access();
-	test_iterators();
-	test_capacity();
+	// test_constructors();
+	// test_assigns();
+	// test_element_access();
+	// test_iterators();
+	// test_capacity();
 	test_modifiers();
-	test_non_member();
+	// test_non_member();
 	return 0;
 }
