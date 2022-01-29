@@ -830,8 +830,22 @@ void test_modifiers(void) {
 		map_print(ft_map, 0);
 
 		std::cout << "Enter: " << CYAN "map.erase(++map.begin(), --map.end())" REST << std::endl;
-		ft_map.erase(++ft_map.begin(), --ft_map.end());
-		std_map.erase(++std_map.begin(), --std_map.end());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(++ft_map.begin());
+		// ft_map.erase(ft_map.begin()++);
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(++std_map.begin());
+		// std_map.erase(std_map.begin()++);
+		ft_map.erase(ft_map.begin()++, --ft_map.end());
+		std_map.erase(std_map.begin()++, --std_map.end());
 		map_compare(ft_map, std_map);
 
 	}
@@ -1336,15 +1350,15 @@ void test_non_member() {
 }
 
 int main(void) {
-	test_constructors();
-	test_assigns();
-	test_element_access();
-	test_iterators();
-	test_capacity();
+	// test_constructors();
+	// test_assigns();
+	// test_element_access();
+	// test_iterators();
+	// test_capacity();
 	test_modifiers();
-	test_lookup();
-	test_observers();
-	test_non_member();
+	// test_lookup();
+	// test_observers();
+	// test_non_member();
 	return 0;
 
 }
