@@ -431,12 +431,12 @@ void test_non_member(void) {
 }
 
 int main(void) {
-	// test_constructors();
-	// test_assigns();
-	// test_element_access();
-	// test_capacity();
-	// test_modifiers();
-	// test_non_member();
+	test_constructors();
+	test_assigns();
+	test_element_access();
+	test_capacity();
+	test_modifiers();
+	test_non_member();
 	speed_test();
 	return 0;
 }

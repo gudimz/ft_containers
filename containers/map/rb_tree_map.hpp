@@ -773,7 +773,9 @@ namespace ft
 				_root = x;
 			}
 			if (y != node) {
-				node = y;
+				_delete_node(node);
+				pointer p = _create_node(node_type(y->data));
+				node = p;
 			}
 			if (y->color == BLACK) {
 				_delete_fix_up(x);
