@@ -123,7 +123,7 @@ void test_constructors(void) {
 
 		set_compare(ft_set_range, std_set_range);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -179,7 +179,7 @@ void test_constructors(void) {
 		}
 	}
 
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -223,7 +223,7 @@ void test_assigns(void) {
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -315,7 +315,7 @@ void test_iterators(void) {
 			std::cout << RED "KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -417,7 +417,7 @@ void test_iterators(void) {
 		}
 		std::cout << "=================================================================================="
 		<< std::endl << std::endl;
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/17]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/18]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 
@@ -507,7 +507,7 @@ void test_iterators(void) {
 			std::cout << RED "KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -568,7 +568,7 @@ void test_capacity(void) {
 		}
 		set_compare(ft_set, std_set);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -595,7 +595,7 @@ void test_modifiers(void) {
 		std_set.insert(21);
 		set_compare(ft_set, std_set);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -649,7 +649,7 @@ void test_modifiers(void) {
 		std_set.insert(std_hint, 6);
 		set_compare(ft_set, std_set);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [9/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [9/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -684,7 +684,7 @@ void test_modifiers(void) {
 		std_set.insert(std_set_copy.begin(), std_set_copy.end());
 		set_compare(ft_set, std_set);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [10/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [10/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -715,7 +715,7 @@ void test_modifiers(void) {
 		std_set.erase("Germany");
 		set_compare(ft_set, std_set);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [11/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [11/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -759,7 +759,7 @@ void test_modifiers(void) {
 		std::cout << "Enter: " << CYAN "set_compare(ft_set_first, std_set_first);" REST << std::endl;
 		set_compare(ft_set_first, std_set_first);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [12/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [12/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -823,7 +823,7 @@ void test_lookup() {
 			RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [13/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 
@@ -988,7 +988,7 @@ void test_lookup() {
 			std::cout << RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [14/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [14/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -1081,7 +1081,7 @@ void test_observers() {
 			std::cout << RED " KO :(" REST << std::endl;
 		}
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [15/17]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [15/18]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -1168,7 +1168,7 @@ void test_non_member() {
 		std::cout << "=================================================================================="
 		<< std::endl << std::endl;
 
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/17]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [16/18]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 	}
@@ -1207,7 +1207,58 @@ void test_non_member() {
 		swap(std_set_first, std_set_second);
 
 		set_compare(ft_set_first, std_set_first);
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [17/17]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [17/18]" << REST << std::endl;
+		std::cin.get();
+		std::cout << CLEAR;
+	}
+}
+
+void speed_test() {
+	std::cout << std::endl << "*** " << CYAN "TEST FT_SET" REST << " ***" << std::endl << std::endl;
+	std::cout << "=== " << MAG "TEST №9 speed test" REST << " ===" << std::endl;
+	{
+		std::cout << RED "=== insert ===" REST << std::endl;
+
+		ft::set<int> ft_set;
+		clock_t ft_start = clock();
+		for (size_t i = 0; i < 100; ++i) {
+			ft_set.insert(i);
+		}
+		clock_t ft_finish = clock();
+		double ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
+
+		std::set<int> std_set;
+		clock_t std_start = clock();
+		for (size_t i = 0; i < 100; ++i) {
+			std_set.insert(i);
+		}
+		clock_t std_finish = clock();
+		double std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
+
+		if (ft_ret <= std_ret) {
+			std::cout << GREEN << "ft: " << ft_ret << " <= " << "std: " << std_ret << std::endl;
+		} else {
+			std::cout << RED << "ft: " << ft_ret << " >= " << "std: " << std_ret << std::endl;
+		}
+
+		std::cout << RED "=== erase ===" REST << std::endl;
+		ft_start = clock();
+		ft_set.clear();
+		ft_finish = clock();
+		ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
+
+		std_start = clock();
+		std_set.clear();
+		std_finish = clock();
+		std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
+
+		if (ft_ret >= std_ret) {
+			std::cout << GREEN << "ft: " << ft_ret << " >= " << "std: " << std_ret << std::endl;
+		} else {
+			std::cout << GREEN << "ft: " << ft_ret << " < " << "std: " << std_ret << std::endl;
+		}
+		set_compare(ft_set, std_set);
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [18/18]" << REST << std::endl;
 		std::cin.get();
 		std::cout << CLEAR;
 	}
@@ -1222,6 +1273,7 @@ int main(void) {
 	test_lookup();
 	test_observers();
 	test_non_member();
+	speed_test();
 	return 0;
 
 }

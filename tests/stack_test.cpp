@@ -129,7 +129,7 @@ void test_constructors(void) {
 		std::cout << "Enter: " << CYAN "stack<int, vector<int> > stack" REST << std::endl;
 		stack_compare(ft_stack, std_stack);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [1/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 	std::cout << GREEN "*** copy constuctor ***" REST << std::endl;
@@ -160,7 +160,7 @@ void test_constructors(void) {
 		std::cout << "Enter: " << CYAN "stack<int> stack(copy)" REST << std::endl;
 		stack_compare(ft_stack, std_stack);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [2/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -188,7 +188,7 @@ void test_assigns(void) {
 		std::cout << "Enter: " << CYAN "stack<int> stack = copy" REST << std::endl;
 		stack_compare(ft_stack, std_stack);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [3/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -207,7 +207,7 @@ void test_element_access(void) {
 	ft_stack.top() = 21;
 	std_stack.top() = 21;
 	stack_compare(ft_stack, std_stack);
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [4/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -274,7 +274,7 @@ void test_capacity(void) {
 	}
 	stack_compare(ft_stack, std_stack);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [5/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -301,7 +301,7 @@ void test_modifiers(void) {
 		}
 		stack_compare(ft_stack, std_stack);
 	}
-	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/7]" << REST << std::endl;
+	std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [6/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
@@ -371,17 +371,72 @@ void test_non_member(void) {
 		}
 		std::cout << "=================================================================================="
 		<< std::endl << std::endl;
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/7]" << REST << std::endl;
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [7/8]" << REST << std::endl;
 	std::cin.get();
 	std::cout << CLEAR;
 }
 
+	void speed_test() {
+		std::cout << std::endl << "*** " << CYAN "TEST FT_STACK" REST << " ***" << std::endl << std::endl;
+		std::cout << "=== " << MAG "TEST №6 speed test" REST << " ===" << std::endl;
+
+		std::cout << RED "=== push ===" REST << std::endl;
+		ft::stack<int> ft_stack;
+		clock_t ft_start = clock();
+		for (size_t i = 0; i < 100000; ++i) {
+			ft_stack.push(i);
+		}
+		clock_t ft_finish = clock();
+		double ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
+
+		std::stack<int> std_stack;
+		clock_t std_start = clock();
+		for (size_t i = 0; i < 100000; ++i) {
+			std_stack.push(i);
+		}
+		clock_t std_finish = clock();
+		double std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
+
+		if (ft_ret <= std_ret) {
+			std::cout << GREEN << "ft: " << ft_ret << " <= " << "std: " << std_ret << std::endl;
+		} else {
+			std::cout << RED << "ft: " << ft_ret << " > " << "std: " << std_ret << std::endl;
+		}
+
+		std::cout << RED "=== pop ===" REST << std::endl;
+
+		ft_start = clock();
+		for (size_t i = 0; i < 100000; ++i) {
+			ft_stack.pop();
+		}
+		ft_finish = clock();
+		ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
+
+		std_start = clock();
+		for (size_t i = 0; i < 100000; ++i) {
+			std_stack.pop();
+		}
+		std_finish = clock();
+		std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
+
+		if (ft_ret <= std_ret) {
+			std::cout << GREEN << "ft: " << ft_ret << " <= " << "std: " << std_ret << std::endl;
+		} else {
+			std::cout << RED << "ft: " << ft_ret << " > " << "std: " << std_ret << std::endl;
+		}
+		stack_compare(ft_stack, std_stack);
+		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [8/8]" << REST << std::endl;
+		std::cin.get();
+		std::cout << CLEAR;
+}
+
 int main(void) {
-	test_constructors();
-	test_assigns();
-	test_element_access();
-	test_capacity();
-	test_modifiers();
-	test_non_member();
+	// test_constructors();
+	// test_assigns();
+	// test_element_access();
+	// test_capacity();
+	// test_modifiers();
+	// test_non_member();
+	speed_test();
 	return 0;
 }

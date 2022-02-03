@@ -681,10 +681,9 @@ namespace ft
 		}
 
 		void _delete_fix_up(pointer node) {
-			pointer tmp;
 			while (node != _root && node->color == BLACK) {
 				if (node == node->parent->left) {
-					tmp = node->parent->right;
+					pointer tmp = node->parent->right;
 					if (tmp->color == RED) {
 						tmp->color = BLACK;
 						node->parent->color = RED;
@@ -708,7 +707,7 @@ namespace ft
 						node = _root;
 					}
 				} else {
-					tmp = node->parent->left;
+					pointer tmp = node->parent->left;
 					if (tmp->color == RED) {
 						tmp->color = BLACK;
 						node->parent->color = RED;

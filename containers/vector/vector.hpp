@@ -451,9 +451,6 @@ namespace ft
 			}
 			difference_type start = std::distance(this->begin(), pos);
 			difference_type count = std::distance(first, last);
-			if (!check_value(first, last, count)) {
-				throw std::exception();
-			}
 			if (_size + static_cast<size_type>(count) > _capacity) {
 				if (static_cast<size_type>(count) > _size) {
 					reserve(_size + static_cast<size_type>(count));
@@ -558,22 +555,6 @@ namespace ft
 			std::swap(_capacity, other._capacity);
 			std::swap(_alloc, other._alloc);
 		}
-
-		private:
-			template<class InputIt>
-			bool check_value(InputIt first, InputIt last, size_type count) {
-				pointer buffer = _alloc.allocate(count);
-				for (size_type i = 0; first != last; ++i, ++first) {
-					try {
-						buffer[i] = *first;
-					} catch (...) {
-						_alloc.deallocate(buffer, count);
-						return false;
-					}
-				}
-				_alloc.deallocate(buffer, count);
-				return true;
-			}
 	};
 
 	/********************************/
