@@ -1307,57 +1307,6 @@ void test_non_member() {
 	}
 }
 
-void speed_test() {
-	std::cout << std::endl << "*** " << CYAN "TEST FT_MAP" REST << " ***" << std::endl << std::endl;
-	std::cout << "=== " << MAG "TEST №10 speed test" REST << " ===" << std::endl;
-	{
-		std::cout << RED "=== insert ===" REST << std::endl;
-
-		ft::map<int, int> ft_map;
-		clock_t ft_start = clock();
-		for (size_t i = 0; i < 100; ++i) {
-			ft_map.insert(ft::make_pair(i, i));
-		}
-		clock_t ft_finish = clock();
-		double ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
-
-		std::map<int, int> std_map;
-		clock_t std_start = clock();
-		for (size_t i = 0; i < 100; ++i) {
-			std_map.insert(std::make_pair(i, i));
-		}
-		clock_t std_finish = clock();
-		double std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
-
-		if (ft_ret <= std_ret) {
-			std::cout << GREEN << "ft: " << ft_ret << " <= " << "std: " << std_ret << std::endl;
-		} else {
-			std::cout << RED << "ft: " << ft_ret << " >= " << "std: " << std_ret << std::endl;
-		}
-
-		std::cout << RED "=== erase ===" REST << std::endl;
-		ft_start = clock();
-		ft_map.clear();
-		ft_finish = clock();
-		ft_ret = (double)(ft_finish - ft_start) / (CLOCKS_PER_SEC / 1000);
-
-		std_start = clock();
-		std_map.clear();
-		std_finish = clock();
-		std_ret = (double)(std_finish - std_start) / (CLOCKS_PER_SEC / 1000);
-
-		if (ft_ret >= std_ret) {
-			std::cout << GREEN << "ft: " << ft_ret << " >= " << "std: " << std_ret << std::endl;
-		} else {
-			std::cout << GREEN << "ft: " << ft_ret << " < " << "std: " << std_ret << std::endl;
-		}
-		map_compare(ft_map, std_map);
-		std::cout << std::endl << GREEN "Press any key to continue ..." REST << YEL "    [20/20]" << REST << std::endl;
-		std::cin.get();
-		std::cout << CLEAR;
-	}
-}
-
 int main(void) {
 	test_constructors();
 	test_assigns();
@@ -1368,7 +1317,6 @@ int main(void) {
 	test_lookup();
 	test_observers();
 	test_non_member();
-	speed_test();
 	return 0;
 
 }
